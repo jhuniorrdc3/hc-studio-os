@@ -238,6 +238,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <button class="nb" onclick="ir('cotizaciones',this)">💰 Cotizaciones</button>
   <button class="nb" onclick="ir('entrega',this)">📦 Entrega</button>
   <button class="nb" onclick="ir('kpis',this)">📊 KPIs</button>
+  <button class="nb" onclick="ir('diagnostico',this)">🔬 Diagnóstico</button>
   <button class="nb" onclick="ir('config',this)">⚙️ Ajustes</button>
 </div>
 
@@ -947,6 +948,168 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="ck-item"><div class="ck-num" style="color:var(--err)">!</div><div><div class="ck-txt">Más de 3 cambios fuera de alcance sin cobrar en un proyecto</div></div></div>
       <div class="ck-item"><div class="ck-num" style="color:var(--err)">!</div><div><div class="ck-txt">Cero publicaciones en Instagram 2 semanas seguidas</div></div></div>
       <div class="ck-item"><div class="ck-num" style="color:var(--err)">!</div><div><div class="ck-txt">ROI de BNI menor a 1× después de 3 meses activos</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ DIAGNÓSTICO ESTRATÉGICO ══════════ -->
+<div id="sec-diagnostico" class="sec">
+  <div class="sh">
+    <div class="stitle">Diagnóstico Estratégico de Impacto</div>
+    <div class="ssub">Ficha de impacto por proyecto + respaldo científico de cada decisión de diseño.</div>
+  </div>
+  <div class="alr ai mb14" style="font-size:12px">💡 <div><strong>Por qué esto importa:</strong> Cuando un cliente dice "no puedo saber si fue tu diseño lo que trajo más clientes", la respuesta no es convencerlos con palabras — es mostrar la investigación que respalda cada decisión antes de ejecutarla. No decoran, aplican ciencia del comportamiento.</div></div>
+  <div class="type-tabs mb14">
+    <button class="ttab on" onclick="diagTab('ficha',this)">📋 Ficha de Impacto</button>
+    <button class="ttab" onclick="diagTab('ciencia',this)">🔬 Respaldo Científico</button>
+    <button class="ttab" onclick="diagTab('argumento',this)">💬 Cómo Responder al Escepticismo</button>
+  </div>
+
+  <!-- FICHA -->
+  <div id="dtab-ficha">
+    <div class="card-guide mb14">
+      <div class="guide-label">¿Cómo funciona?</div>
+      <div class="guide-text">Se llena dos veces con el cliente: <strong style="color:#ccc">antes de intervenir</strong> (línea base) y <strong style="color:#ccc">a los 90 días</strong> (resultado). El cliente firma la primera parte — eso convierte la medición en un compromiso compartido, no en una afirmación unilateral de H&C.</div>
+    </div>
+    <div class="g2" style="align-items:start">
+      <div class="card">
+        <div class="disp mb10" style="font-size:14px">DATOS DEL PROYECTO</div>
+        <div class="fg"><label class="fl">Cliente / Empresa</label><input class="fi" id="di-cli" placeholder="Nombre del cliente"></div>
+        <div class="fg"><label class="fl">Tipo de espacio</label>
+          <select class="fsel" id="di-tipo" onchange="renderKPIFields()">
+            <option value="retail">Retail / Local comercial</option>
+            <option value="restaurante">Restaurante / Cafetería</option>
+            <option value="corporativo">Corporativo / Oficina</option>
+            <option value="residencial">Residencial</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">Fecha del diagnóstico inicial</label><input class="fi" type="date" id="di-fecha"></div>
+        <div class="fg"><label class="fl">Responsable H&C</label><select class="fsel" id="di-resp"><option>Jhunior</option><option>Daniela</option><option>Nick</option><option>Los 3</option></select></div>
+        <div class="div"></div>
+        <div class="disp mb8" style="font-size:13px">DECISIONES DE DISEÑO APLICADAS</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;cursor:pointer"><input type="checkbox" style="accent-color:var(--hot)"> Aroma ambiental</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;cursor:pointer"><input type="checkbox" style="accent-color:var(--hot)"> Iluminación estratégica</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;cursor:pointer"><input type="checkbox" style="accent-color:var(--hot)"> Música / sonido</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;cursor:pointer"><input type="checkbox" style="accent-color:var(--hot)"> Plantas / biofilia</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;cursor:pointer"><input type="checkbox" style="accent-color:var(--hot)"> Flujo de circulación</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;cursor:pointer"><input type="checkbox" style="accent-color:var(--hot)"> Paleta de color</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;cursor:pointer"><input type="checkbox" style="accent-color:var(--hot)"> Zona de descompresión</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;cursor:pointer"><input type="checkbox" style="accent-color:var(--hot)"> Señalética / jerarquía visual</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;cursor:pointer"><input type="checkbox" style="accent-color:var(--hot)"> Materiales y texturas</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:12px;cursor:pointer"><input type="checkbox" style="accent-color:var(--hot)"> Temperatura del espacio</label>
+        </div>
+        <div class="div"></div>
+        <button class="btn bh w100" onclick="generarFicha()">Generar ficha de impacto</button>
+      </div>
+      <div>
+        <div class="card mb12">
+          <div class="disp mb2" style="font-size:13px;color:var(--cold)">LÍNEA BASE — Antes de intervenir</div>
+          <div class="muted mb10" style="font-size:10px">El cliente llena esto. Se firma como parte del Brief.</div>
+          <div id="kpi-antes-fields"></div>
+        </div>
+        <div class="card">
+          <div class="disp mb2" style="font-size:13px;color:var(--ok)">RESULTADO — A los 90 días</div>
+          <div class="muted mb10" style="font-size:10px">Se llena en el check-in de 3 meses de Post-Entrega.</div>
+          <div id="kpi-despues-fields"></div>
+        </div>
+      </div>
+    </div>
+    <div id="ficha-preview" style="margin-top:14px"></div>
+  </div>
+
+  <!-- RESPALDO CIENTÍFICO -->
+  <div id="dtab-ciencia" style="display:none">
+    <div class="card-guide mb14">
+      <div class="guide-label">¿Cómo usar esto?</div>
+      <div class="guide-text">Cuando documentan un proyecto, citan la investigación detrás de cada decisión. No es "pusimos plantas porque se ve bien" — es "aplicamos principios de biofilia del Human Spaces Report: +15% creatividad, reducción de cortisol medida". Eso no se debate con "es subjetivo".</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="card" style="border-left:3px solid var(--hot)">
+        <div class="disp mb6" style="font-size:15px;color:var(--hot)">👃 AROMA AMBIENTAL</div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">01</div><div><div class="ck-txt"><strong>Universidad de Washington:</strong> el aroma ambiental aumenta el tiempo de permanencia en retail hasta un <strong style="color:var(--hot)">32%</strong>.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">02</div><div><div class="ck-txt"><strong>Nike:</strong> tiendas con aroma de marca reportaron <strong style="color:var(--hot)">+80%</strong> en intención de compra vs tiendas sin aroma.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">03</div><div><div class="ck-txt"><strong>Starbucks:</strong> eliminó el aroma de sus sándwiches porque datos de comportamiento mostraban que competía con el café y reducía la permanencia.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">04</div><div><div class="ck-txt"><strong>Spangenberg et al. (2006):</strong> aroma + música coherente con la marca aumenta ventas vs solo uno de los dos estímulos.</div></div></div>
+        <div style="background:var(--s2);border-radius:5px;padding:9px;margin-top:8px;font-size:11px;color:var(--muted)"><strong style="color:var(--text)">H&C:</strong> En cada proyecto gastronómico o retail documentamos el aroma elegido con justificación basada en el perfil del cliente. No es decoración — es ingeniería sensorial.</div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--warn)">
+        <div class="disp mb6" style="font-size:15px;color:var(--warn)">💡 ILUMINACIÓN</div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">01</div><div><div class="ck-txt"><strong>Cornell (Wansink):</strong> iluminación cálida + música suave en restaurantes aumenta el gasto promedio por comensal entre <strong style="color:var(--warn)">12–18%</strong>.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">02</div><div><div class="ck-txt"><strong>Temperatura de color:</strong> luz cálida (2700–3000K) = mayor permanencia y confort. Luz fría (5000K+) = mayor alerta y velocidad de decisión en zonas de pago.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">03</div><div><div class="ck-txt"><strong>Veitch & Newsham (1998):</strong> iluminación insuficiente en oficinas reduce productividad. La correcta reduce la fatiga visual hasta un <strong style="color:var(--warn)">50%</strong>.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">04</div><div><div class="ck-txt"><strong>Accent lighting:</strong> productos iluminados individualmente perciben un valor hasta <strong style="color:var(--warn)">30% mayor</strong> que los mismos en luz general difusa.</div></div></div>
+        <div style="background:var(--s2);border-radius:5px;padding:9px;margin-top:8px;font-size:11px;color:var(--muted)"><strong style="color:var(--text)">H&C:</strong> Definimos temperatura, intensidad y tipo de luminaria por zona funcional. Cada decisión tiene un objetivo conductual, no solo estético.</div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--cold)">
+        <div class="disp mb6" style="font-size:15px;color:var(--cold)">🎵 MÚSICA Y SONIDO</div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">01</div><div><div class="ck-txt"><strong>Milliman (1982) — Journal of Consumer Research:</strong> música lenta en restaurantes = mayor permanencia y mayor consumo. Clásico de la bibliografía de comportamiento del consumidor.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">02</div><div><div class="ck-txt"><strong>North et al. (1999):</strong> música clásica en tienda de vinos = los clientes compraron vinos <strong style="color:var(--cold)">más caros</strong>. La música condiciona la percepción de sofisticación.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">03</div><div><div class="ck-txt"><strong>Volumen:</strong> música alta = menor permanencia pero mayor velocidad de compra. Música baja = mayor exploración del local y mayor gasto promedio.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">04</div><div><div class="ck-txt"><strong>Coherencia sensorial:</strong> cuando la música es coherente con la marca, los clientes evalúan mejor la calidad del producto (North & Hargreaves, 1998).</div></div></div>
+        <div style="background:var(--s2);border-radius:5px;padding:9px;margin-top:8px;font-size:11px;color:var(--muted)"><strong style="color:var(--text)">H&C:</strong> Recomendamos tempo, volumen y género según el objetivo del espacio. En la entrega dejamos la especificación de audio como parte del expediente.</div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--ok)">
+        <div class="disp mb6" style="font-size:15px;color:var(--ok)">🌿 PLANTAS Y BIOFILIA</div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">01</div><div><div class="ck-txt"><strong>Human Spaces Report (2015) — 7,600 empleados, 16 países:</strong> espacios con elementos naturales reportan <strong style="color:var(--ok)">+15% creatividad</strong> y <strong style="color:var(--ok)">+6% productividad</strong>.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">02</div><div><div class="ck-txt"><strong>Ulrich (1984) — Science:</strong> pacientes con vista a naturaleza se recuperaban más rápido y usaban menos analgésicos. Respuesta fisiológica — no percepción.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">03</div><div><div class="ck-txt"><strong>Medición de cortisol:</strong> presencia de plantas reduce los niveles de cortisol (hormona del estrés) de manera medible. No es subjetivo — es bioquímica.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">04</div><div><div class="ck-txt"><strong>Retail premium:</strong> elementos biofílicos aumentan la disposición a pagar precios premium y la percepción de calidad del producto.</div></div></div>
+        <div style="background:var(--s2);border-radius:5px;padding:9px;margin-top:8px;font-size:11px;color:var(--muted)"><strong style="color:var(--text)">H&C:</strong> Especificamos tipo de planta, posición y mantenimiento. No es decoración verde — es regulación emocional del espacio.</div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--purple)">
+        <div class="disp mb6" style="font-size:15px;color:var(--purple)">🚶 FLUJO Y CIRCULACIÓN</div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">01</div><div><div class="ck-txt"><strong>Paco Underhill — "Why We Buy":</strong> los primeros 3–5 metros de un local son la "zona de descompresión" — los clientes no compran ahí. Colocar productos en esa zona es desperdiciar espacio prime.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">02</div><div><div class="ck-txt"><strong>Dirección de flujo:</strong> en países de conducción por la derecha, los clientes giran a la derecha al entrar. Diseñar el flujo en esa dirección aumenta la exploración total del local.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">03</div><div><div class="ck-txt"><strong>Altura de productos:</strong> nivel de ojos = nivel de compra. Productos al nivel de los ojos se venden hasta <strong style="color:var(--purple)">30% más</strong> que los mismos en estantes altos o bajos.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">04</div><div><div class="ck-txt"><strong>Puntos de fricción:</strong> cada obstáculo en el recorrido reduce la permanencia y la probabilidad de compra. Cada esquina mal diseñada es dinero que no entra.</div></div></div>
+        <div style="background:var(--s2);border-radius:5px;padding:9px;margin-top:8px;font-size:11px;color:var(--muted)"><strong style="color:var(--text)">H&C:</strong> Cada plano tiene un mapa de flujo con zonas de alta y baja atracción. No es distribución estética — es un algoritmo de comportamiento.</div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--err)">
+        <div class="disp mb6" style="font-size:15px;color:var(--err)">🎨 COLOR</div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">01</div><div><div class="ck-txt"><strong>Rojo y naranja:</strong> aumentan la frecuencia cardíaca y el apetito. McDonald's, KFC, Burger King — no es casualidad, está respaldado en neuromarketing.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">02</div><div><div class="ck-txt"><strong>Azul:</strong> genera confianza, reduce percepción de riesgo. Dominante en banca y tecnología. Contraproducente en gastronomía — suprime el apetito.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">03</div><div><div class="ck-txt"><strong>Verde:</strong> salud, frescura, sostenibilidad. Aumenta percepción de calidad en productos orgánicos. Ideal en cafeterías saludables y espacios de bienestar.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:10px;color:var(--muted);width:30px">04</div><div><div class="ck-txt"><strong>Neutros en retail de lujo:</strong> amplían el espacio percibido y hacen que los productos "hablen" sin competencia visual. Asociados a exclusividad.</div></div></div>
+        <div style="background:var(--s2);border-radius:5px;padding:9px;margin-top:8px;font-size:11px;color:var(--muted)"><strong style="color:var(--text)">H&C:</strong> La paleta no se elige porque "queda bien". Se elige porque activa la respuesta emocional correcta en el perfil de cliente del negocio.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARGUMENTOS -->
+  <div id="dtab-argumento" style="display:none">
+    <div class="card-guide mb14">
+      <div class="guide-label">El escenario</div>
+      <div class="guide-text">Un cliente potencial dice: "no puedo saber si fue tu diseño lo que me trajo más clientes — puede haber otros factores". Esta sección te da los argumentos para responder sin ponerte a la defensiva y sin perder el proyecto.</div>
+    </div>
+    <div class="g2 mb14">
+      <div class="card" style="border-top:3px solid var(--err)">
+        <div class="disp mb8" style="font-size:14px;color:var(--err)">❌ LO QUE NO FUNCIONA</div>
+        <div class="ck-item"><div class="ck-num" style="color:var(--err)">✗</div><div><div class="ck-txt">"Confía en nosotros, el diseño sí funciona"</div><div class="ck-sub">Sin datos, es solo una afirmación de parte.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="color:var(--err)">✗</div><div><div class="ck-txt">"Mira este café que vendía S/800 y ahora vende S/1,400"</div><div class="ck-sub">Sin línea base firmada, el cliente puede atribuirlo a otras variables. Y tiene razón.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="color:var(--err)">✗</div><div><div class="ck-txt">Intentar demostrar causalidad absoluta</div><div class="ck-sub">Nunca podrán probar que fue SOLO el diseño. No intenten hacerlo — perderán el argumento.</div></div></div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--ok)">
+        <div class="disp mb8" style="font-size:14px;color:var(--ok)">✅ LO QUE SÍ FUNCIONA</div>
+        <div class="ck-item"><div class="ck-num" style="color:var(--ok)">✓</div><div><div class="ck-txt">Mostrar la investigación antes de ejecutar cada decisión</div><div class="ck-sub">No "creemos que funciona" — "esto está documentado en X estudio con Y resultado".</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="color:var(--ok)">✓</div><div><div class="ck-txt">Medir la línea base antes de empezar, con firma del cliente</div><div class="ck-sub">Si el cliente registra sus propios números antes, no puede negar los resultados después.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="color:var(--ok)">✓</div><div><div class="ck-txt">Hablar de correlación, no de causalidad</div><div class="ck-sub">"Estos indicadores mejoraron. El único cambio fue el diseño." No necesitas decir más.</div></div></div>
+      </div>
+    </div>
+    <div class="card mb12" style="border-left:3px solid var(--hot)">
+      <div class="disp mb8" style="font-size:14px">💬 ARGUMENTO 1 — La analogía del médico</div>
+      <div style="background:var(--s2);border-radius:6px;padding:14px;font-size:13px;line-height:1.85;font-style:italic;color:#ccc;margin-bottom:8px">"Tienes toda la razón — no podemos probar que fue únicamente el diseño. Ningún profesional puede garantizar eso con certeza absoluta. Un médico tampoco puede garantizar que fue solo el medicamento lo que curó al paciente — puede haber sido también el descanso, la alimentación, el tiempo. Pero el médico usa datos clínicos para sustentar su decisión. Nosotros hacemos lo mismo: medimos los indicadores antes de entrar y después de entregar. Si las ventas suben y el único cambio fue el espacio, eso es evidencia sólida — no prueba matemática, pero es suficiente para tomar decisiones de negocio."</div>
+      <div class="muted" style="font-size:10px">Usar cuando: el cliente duda de la atribución del impacto.</div>
+    </div>
+    <div class="card mb12" style="border-left:3px solid var(--cold)">
+      <div class="disp mb8" style="font-size:14px">💬 ARGUMENTO 2 — La ciencia detrás de cada decisión</div>
+      <div style="background:var(--s2);border-radius:6px;padding:14px;font-size:13px;line-height:1.85;font-style:italic;color:#ccc;margin-bottom:8px">"Cada decisión que tomamos en este proyecto tiene una justificación basada en investigación publicada. El aroma que elegimos está respaldado por estudios de la Universidad de Washington que muestran un aumento del 32% en tiempo de permanencia. La temperatura de luz que instalamos está documentada en investigaciones de Cornell que correlacionan con mayor gasto por cliente. No te estamos pidiendo que confíes en nuestra intuición — te estamos mostrando la ciencia que ya comprobó que esto funciona antes de que lo apliquemos en tu espacio."</div>
+      <div class="muted" style="font-size:10px">Usar cuando: el cliente es analítico y necesita datos antes de comprometerse.</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--ok)">
+      <div class="disp mb8" style="font-size:14px">💬 ARGUMENTO 3 — La propuesta de la línea base</div>
+      <div style="background:var(--s2);border-radius:6px;padding:14px;font-size:13px;line-height:1.85;font-style:italic;color:#ccc;margin-bottom:8px">"Entiendo la duda, y es completamente válida. Por eso nosotros proponemos algo diferente: antes de tocar una sola cosa en tu local, registramos juntos los números actuales — cuántos clientes entran por día, cuánto venden en promedio, cuánto tiempo se quedan. Lo firmamos los dos. A los 3 meses de la entrega, volvemos y medimos los mismos indicadores. Si no cambiaron, tienes todo el derecho de cuestionarnos. Si cambiaron, tenemos evidencia compartida. ¿Empezamos por ahí?"</div>
+      <div class="muted" style="font-size:10px">Usar cuando: el cliente es escéptico desde el inicio. Esta propuesta convierte el escepticismo en un proceso de medición conjunto.</div>
     </div>
   </div>
 </div>
@@ -2021,7 +2184,111 @@ function generarCotizacion(){
   </div>`;
 }
 // init q items on load
-document.addEventListener('DOMContentLoaded',()=>renderQItems());
+
+// ═══════════════════════════════════════
+// DIAGNÓSTICO
+// ═══════════════════════════════════════
+function diagTab(id,btn){
+  ['ficha','ciencia','argumento'].forEach(t=>{
+    const el=document.getElementById('dtab-'+t);if(el)el.style.display=t===id?'block':'none';
+  });
+  document.querySelectorAll('#sec-diagnostico .ttab').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+}
+
+const KPIS_POR_TIPO={
+  retail:[
+    {id:'ventas_dia',label:'Ventas promedio por día (S/)'},
+    {id:'clientes_dia',label:'Clientes que entran por día'},
+    {id:'ticket_prom',label:'Ticket promedio por cliente (S/)'},
+    {id:'permanencia',label:'Tiempo de permanencia estimado (minutos)'},
+    {id:'conv_local',label:'% de clientes que compran vs que solo entran'},
+    {id:'google_rating',label:'Calificación en Google Maps (1–5)'},
+  ],
+  restaurante:[
+    {id:'ventas_dia',label:'Ventas promedio por día (S/)'},
+    {id:'mesas_hora',label:'Mesas ocupadas en hora punta'},
+    {id:'ticket_mesa',label:'Ticket promedio por mesa (S/)'},
+    {id:'rotacion',label:'Rotación de mesas por servicio'},
+    {id:'tiempo_espera',label:'Tiempo de espera para ser atendido (min)'},
+    {id:'google_rating',label:'Calificación en Google Maps (1–5)'},
+  ],
+  corporativo:[
+    {id:'satisfaccion',label:'Satisfacción del equipo (encuesta 1–10)'},
+    {id:'ausentismo',label:'Días de ausentismo por mes'},
+    {id:'rotacion_personal',label:'Rotación de personal (bajas por trimestre)'},
+    {id:'productividad',label:'Productividad percibida (1–10, según gerencia)'},
+    {id:'candidatos',label:'% candidatos que aceptan oferta de trabajo'},
+    {id:'reuniones',label:'N° de reuniones efectivas por semana'},
+  ],
+  residencial:[
+    {id:'orden',label:'Sensación de orden y control (1–10)'},
+    {id:'estres',label:'Nivel de estrés en el hogar percibido (1–10, donde 10 es máximo)'},
+    {id:'descanso',label:'Calidad de descanso percibida (1–10)'},
+    {id:'tiempo_hogar',label:'Horas que pasan voluntariamente en casa por día'},
+    {id:'conflictos',label:'Fricciones o discusiones por el espacio (veces/semana)'},
+  ]
+};
+
+function renderKPIFields(){
+  const tipo=document.getElementById('di-tipo')?.value||'retail';
+  const campos=KPIS_POR_TIPO[tipo]||[];
+  const antesEl=document.getElementById('kpi-antes-fields');
+  const despuesEl=document.getElementById('kpi-despues-fields');
+  if(!antesEl||!despuesEl)return;
+  antesEl.innerHTML=campos.map(c=>`<div class="fg"><label class="fl">${c.label}</label><input class="fi" id="antes-${c.id}" placeholder="Valor actual" style="font-size:12px"></div>`).join('');
+  despuesEl.innerHTML=campos.map(c=>`<div class="fg"><label class="fl">${c.label}</label><input class="fi" id="despues-${c.id}" placeholder="Valor a los 90 días" style="font-size:12px"></div>`).join('');
+}
+
+function generarFicha(){
+  const tipo=document.getElementById('di-tipo')?.value||'retail';
+  const cli=document.getElementById('di-cli')?.value||'___________';
+  const fecha=document.getElementById('di-fecha')?.value||'___________';
+  const resp=document.getElementById('di-resp')?.value||'H&C Studio';
+  const campos=KPIS_POR_TIPO[tipo]||[];
+  const tipoLabel={retail:'Retail / Local comercial',restaurante:'Restaurante / Cafetería',corporativo:'Corporativo / Oficina',residencial:'Residencial'}[tipo];
+  const decisiones=[...document.querySelectorAll('#sec-diagnostico input[type=checkbox]:checked')].map(c=>c.parentElement.textContent.trim()).filter(Boolean);
+
+  const filaTabla=(c)=>{
+    const antes=document.getElementById('antes-'+c.id)?.value||'—';
+    const despues=document.getElementById('despues-'+c.id)?.value||'';
+    const hay=antes!=='—'&&despues&&antes!==despues;
+    const sube=hay&&parseFloat(despues)>parseFloat(antes);
+    const baja=hay&&parseFloat(despues)<parseFloat(antes);
+    return`<tr>
+      <td>${c.label}</td>
+      <td style="text-align:center;font-weight:600">${antes}</td>
+      <td style="text-align:center;font-weight:600;color:${hay?(sube?'#22C55E':'#EF4444'):'#666'}">${despues||'Pendiente'}</td>
+      <td style="text-align:center">${hay?(sube?'📈 Mejoró':'📉 Bajó'):'—'}</td>
+    </tr>`;
+  };
+
+  document.getElementById('ficha-preview').innerHTML=`<div class="doc-preview">
+    <div class="doc-logo"><span class="h">HOT</span>&<span class="c">COLD</span> STUDIO</div>
+    <div style="font-size:11px;color:#666">Diagnóstico Estratégico de Impacto</div>
+    <div class="doc-title">FICHA DE IMPACTO — ${tipoLabel.toUpperCase()}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px;font-size:12px">
+      <div><div class="doc-sec" style="margin-top:0">Cliente</div><strong>${cli}</strong></div>
+      <div><div class="doc-sec" style="margin-top:0">Fecha diagnóstico</div><strong>${fecha}</strong></div>
+      <div><div class="doc-sec" style="margin-top:0">Responsable H&C</div><strong>${resp}</strong></div>
+    </div>
+    ${decisiones.length?`<div class="doc-sec">DECISIONES DE DISEÑO APLICADAS</div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">${decisiones.map(d=>`<span style="background:#fff8f5;border:1px solid #ffd5c5;border-radius:4px;padding:2px 8px;font-size:11px;color:#FF5A1F">${d}</span>`).join('')}</div>`:''}
+    <div class="doc-sec">INDICADORES DE IMPACTO</div>
+    <div class="doc-nota">Los valores "Antes" fueron registrados y firmados por el cliente en la fecha indicada. Los valores "A los 90 días" se registran en el seguimiento post-entrega.</div>
+    <table class="doc-table">
+      <thead><tr><th>Indicador</th><th style="text-align:center;width:120px">Antes</th><th style="text-align:center;width:120px">A los 90 días</th><th style="text-align:center;width:80px">Resultado</th></tr></thead>
+      <tbody>${campos.map(filaTabla).join('')}</tbody>
+    </table>
+    <div class="doc-sec">NOTA METODOLÓGICA</div>
+    <p style="font-size:11px;color:#666;line-height:1.7">Este diagnóstico mide la correlación entre la intervención de diseño de Hot and Cold Studio y los indicadores del negocio. No pretende establecer causalidad exclusiva, sino documentar los cambios observados en el período posterior a la intervención. Cada decisión de diseño aplicada cuenta con respaldo en investigación publicada sobre comportamiento del consumidor y psicología ambiental.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:20px">
+      <div><div class="doc-firma">___________________________</div><div style="font-size:11px"><strong>H&C STUDIO — ${resp}</strong><br>Fecha diagnóstico inicial: ${fecha}</div></div>
+      <div><div class="doc-firma">___________________________</div><div style="font-size:11px"><strong>CLIENTE: ${cli}</strong><br>Confirmo que los datos de línea base son correctos.</div></div>
+    </div>
+  </div>`;
+}
+
+document.addEventListener('DOMContentLoaded',()=>{renderQItems();renderKPIFields()});
 
 </script>
 </body>
