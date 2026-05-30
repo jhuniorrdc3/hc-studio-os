@@ -3,103 +3,739 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>H&C Studio — Plantillas</title>
+<title>H&C Studio — Sistema Operativo</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--hot:#FF5A1F;--cold:#38BDF8;--bg:#0B0B0B;--s1:#141414;--s2:#1C1C1C;--border:#262626;--text:#F0F0F0;--muted:#666;--ok:#22C55E;--warn:#F59E0B;--err:#EF4444}
+:root{
+  --hot:#FF5A1F;--cold:#38BDF8;--bg:#0B0B0B;--s1:#141414;--s2:#1C1C1C;
+  --border:#262626;--text:#F0F0F0;--muted:#666;--ok:#22C55E;
+  --warn:#F59E0B;--err:#EF4444;--purple:#A855F7;
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
+
+/* HEADER */
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px;border-bottom:1px solid var(--border);background:var(--s1);position:sticky;top:0;z-index:100}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;display:flex;align-items:center;gap:6px}
 .logo .h{color:var(--hot)}.logo .c{color:var(--cold)}
-.nav{display:flex;overflow-x:auto;border-bottom:1px solid var(--border);background:var(--s1);padding:0 16px}
-.nb{padding:11px 14px;background:none;border:none;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s}
+.logo .os{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:2px;margin-left:4px}
+.hdr-r{display:flex;align-items:center;gap:16px;font-size:11px;color:var(--muted)}
+.sync-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;background:var(--border)}
+.sync-dot.ok{background:var(--ok)}.sync-dot.syn{background:var(--warn);animation:pulse 1s infinite}
+.sync-dot.err{background:var(--err)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.fase-badge{background:rgba(255,90,31,.12);border:1px solid rgba(255,90,31,.3);color:var(--hot);padding:2px 9px;border-radius:4px;font-size:11px;font-weight:700}
+
+/* NAV */
+.nav{display:flex;overflow-x:auto;border-bottom:1px solid var(--border);background:var(--s1);padding:0 16px;gap:2px}
+.nav::-webkit-scrollbar{height:0}
+.nb{padding:12px 14px;background:none;border:none;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;letter-spacing:.2px}
 .nb:hover{color:var(--text)}.nb.on{color:var(--hot);border-bottom-color:var(--hot)}
-.main{padding:20px;max-width:1100px;margin:0 auto}
+
+/* LAYOUT */
+.main{padding:20px;max-width:1300px;margin:0 auto}
 .sec{display:none}.sec.on{display:block}
-.stitle{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;margin-bottom:4px}
-.ssub{font-size:12px;color:var(--muted);margin-bottom:20px}
-.card{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:14px}
-.btn{padding:7px 14px;border-radius:6px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;transition:all .15s;display:inline-flex;align-items:center;gap:5px}
-.bh{background:var(--hot);color:#fff}.bh:hover{background:#e04f1a}
-.bc{background:var(--cold);color:#0a0a0a}
-.bg{background:transparent;color:var(--muted);border:1px solid var(--border)}.bg:hover{color:var(--text)}
-.bsm{padding:4px 10px;font-size:11px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+
+/* CARDS */
+.card{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:18px}
+.card-s{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:13px}
+.card-guide{background:rgba(56,189,248,.04);border:1px solid rgba(56,189,248,.15);border-radius:8px;padding:14px;margin-bottom:14px}
+.guide-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--cold);margin-bottom:5px}
+.guide-text{font-size:12px;color:#aaa;line-height:1.6}
+
+/* KPIs */
+.kpi{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:14px 16px;position:relative;overflow:hidden}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kh::after{background:var(--hot)}.kc::after{background:var(--cold)}
+.ko::after{background:var(--ok)}.kw::after{background:var(--warn)}.ke::after{background:var(--err)}.kp::after{background:var(--purple)}
+.kl{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.kv{font-family:'Bebas Neue',sans-serif;font-size:38px;line-height:1}
+.ks{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* SECTION HEADER */
+.sh{margin-bottom:18px}
+.stitle{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;margin-bottom:2px}
+.ssub{font-size:12px;color:var(--muted)}
+
+/* BUTTONS */
+.btn{padding:7px 14px;border-radius:6px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;transition:all .15s;display:inline-flex;align-items:center;gap:5px;letter-spacing:.1px}
+.bh{background:var(--hot);color:#fff}.bh:hover{background:#e04f1a}
+.bc{background:var(--cold);color:#0a0a0a}.bc:hover{filter:brightness(1.1)}
+.bg{background:transparent;color:var(--muted);border:1px solid var(--border)}.bg:hover{color:var(--text);border-color:#555}
+.bd{background:rgba(239,68,68,.1);color:var(--err);border:1px solid rgba(239,68,68,.2)}
+.bsm{padding:4px 10px;font-size:11px}
+.w100{width:100%}
+
+/* ALERTS */
+.alr{padding:10px 13px;border-radius:6px;font-size:12px;margin-bottom:10px;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.ae{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);color:#fca5a5}
+.aw{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);color:#fcd34d}
+.ao{background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);color:#86efac}
+.ai{background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.2);color:#7dd3fc}
+.ah{background:rgba(255,90,31,.07);border:1px solid rgba(255,90,31,.2);color:#fdba74}
+.ap{background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.2);color:#c4b5fd}
+
+/* FORMS */
 .fg{margin-bottom:12px}
 .fl{display:block;font-size:10px;font-weight:700;color:var(--muted);margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
+.fh{display:block;font-size:11px;color:var(--muted);margin-bottom:5px;font-style:italic}
 .fi,.fsel,.fta{width:100%;padding:8px 10px;background:var(--s2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;transition:border .15s}
 .fi:focus,.fsel:focus,.fta:focus{outline:none;border-color:var(--hot)}
-.fta{min-height:60px;resize:vertical}.fsel option{background:var(--s2)}
-.div{height:1px;background:var(--border);margin:14px 0}
-.fc{display:flex;align-items:center}.fb{display:flex;justify-content:space-between;align-items:center}
-.gap8{gap:8px}.gap12{gap:12px}
-.badge{display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase}
+.fta{min-height:72px;resize:vertical}.fsel option{background:var(--s2)}
+
+/* BADGES */
+.badge{display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px}
 .bgh{background:rgba(255,90,31,.15);color:var(--hot)}.bgc{background:rgba(56,189,248,.15);color:var(--cold)}
-.bgo{background:rgba(34,197,94,.15);color:var(--ok)}.bgm{background:rgba(136,136,136,.12);color:var(--muted)}
+.bgo{background:rgba(34,197,94,.15);color:var(--ok)}.bgw{background:rgba(245,158,11,.15);color:var(--warn)}
+.bge{background:rgba(239,68,68,.15);color:var(--err)}.bgm{background:rgba(136,136,136,.12);color:var(--muted)}
+.bgp{background:rgba(168,85,247,.15);color:var(--purple)}
+
+/* DIVIDER */
+.div{height:1px;background:var(--border);margin:14px 0}
+
+/* KANBAN */
+.kanban{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.kcol{background:var(--s2);border:1px solid var(--border);border-radius:7px;padding:10px;min-height:120px}
+.kcol-h{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.kcard{background:var(--s1);border:1px solid var(--border);border-radius:5px;padding:9px;margin-bottom:6px;cursor:pointer;transition:border-color .15s}
+.kcard:hover{border-color:var(--hot)}
+.kcard .kn{font-weight:600;font-size:12px;margin-bottom:2px}
+.kcard .km{color:var(--muted);font-size:10px}
+
+/* ROADMAP */
+.road{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.rph{border:1px solid var(--border);border-radius:8px;padding:16px;position:relative;overflow:hidden}
+.rph.cur{border-color:var(--hot);background:rgba(255,90,31,.02)}
+.rph.done{border-color:var(--ok);background:rgba(34,197,94,.02)}
+.rph.lock{opacity:.45;pointer-events:none}
+.rph-n{font-family:'Bebas Neue',sans-serif;font-size:48px;opacity:.08;position:absolute;top:4px;right:10px;line-height:1}
+.rph-name{font-family:'Bebas Neue',sans-serif;font-size:16px;margin-bottom:3px}
+.rph-obj{font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.45}
+.rprog{height:4px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.rprogf{height:100%;border-radius:3px;transition:width .4s}
+.rpct{font-family:'Bebas Neue',sans-serif;font-size:24px;margin-bottom:8px}
+.ms{display:flex;align-items:flex-start;gap:7px;padding:5px 0;border-bottom:1px solid var(--s2);font-size:11px;line-height:1.45}
+.ms:last-child{border-bottom:none}
+.msdot{width:14px;height:14px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:7px}
+.msdot.done{background:var(--ok);border-color:var(--ok);color:#000}
+.msdot.next{border-color:var(--hot);background:rgba(255,90,31,.15);animation:pulse 2s infinite}
+
+/* PATTERN CARD */
+.ptcard{background:var(--s2);border:1px solid var(--border);border-radius:7px;padding:13px;margin-bottom:9px;display:flex;gap:11px}
+.pticon{font-size:20px;flex-shrink:0;margin-top:1px}
+.pttitle{font-weight:600;font-size:13px;margin-bottom:2px}
+.pttext{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* NEXT STEP BOX */
+.nsbox{background:linear-gradient(135deg,rgba(255,90,31,.07),rgba(56,189,248,.04));border:1px solid rgba(255,90,31,.25);border-radius:8px;padding:16px}
+
+/* PROGBAR */
+.pb{height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.pbf{height:100%;border-radius:3px;background:var(--hot);transition:width .4s}
+
+/* CALENDAR */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.calday{background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:7px;min-height:70px}
+.calday.pub{border-color:var(--ok)}.calday.plan{border-color:var(--cold)}.calday.hoy{box-shadow:0 0 0 1px var(--hot)}
+.caldayn{font-size:8px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+
+/* MODALS */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;align-items:center;justify-content:center;padding:14px}
+.overlay.open{display:flex}
+.modal{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:24px;width:100%;max-width:560px;max-height:92vh;overflow-y:auto}
+.mtitle{font-family:'Bebas Neue',sans-serif;font-size:22px;margin-bottom:4px}
+.msub{font-size:12px;color:var(--muted);margin-bottom:16px}
+
+/* ONBOARDING */
+.onb-step{background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:10px;display:flex;gap:14px;align-items:flex-start}
+.onb-num{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--hot);line-height:1;flex-shrink:0;width:36px}
+.onb-title{font-weight:700;font-size:14px;margin-bottom:3px}
+.onb-desc{font-size:12px;color:var(--muted);line-height:1.55}
+.onb-step.done-step{opacity:.5}
+.onb-step.done-step .onb-num{color:var(--ok)}
+
+/* MISC */
+.fc{display:flex;align-items:center}.fb{display:flex;justify-content:space-between;align-items:center}
+.gap6{gap:6px}.gap8{gap:8px}.gap10{gap:10px}.gap12{gap:12px}
+.mb4{margin-bottom:4px}.mb8{margin-bottom:8px}.mb10{margin-bottom:10px}.mb12{margin-bottom:12px}.mb14{margin-bottom:14px}.mb16{margin-bottom:16px}.mb20{margin-bottom:20px}
+.hot{color:var(--hot)}.cold{color:var(--cold)}.ok{color:var(--ok)}.warn{color:var(--warn)}.muted{color:var(--muted)}
 .disp{font-family:'Bebas Neue',sans-serif}
-/* PREVIEW DOC */
-.doc-preview{background:#fff;color:#111;padding:40px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.8;max-width:780px;margin:0 auto;box-shadow:0 4px 40px rgba(0,0,0,.4)}
-.doc-logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;margin-bottom:4px}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--border)}
+.tbl td{padding:8px 8px;border-bottom:1px solid var(--s2);font-size:12px;vertical-align:middle}
+.tbl tr:hover td{background:var(--s2)}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.pitch-box{background:var(--s2);border:1px solid var(--border);border-left:3px solid var(--hot);border-radius:6px;padding:16px;font-size:13px;line-height:1.75}
+.tmpl{background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:12px;font-size:12px;line-height:1.7;white-space:pre-wrap}
+.bprog{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:4px}
+.bpf{height:100%;background:var(--hot);border-radius:3px;transition:width .4s}
+.spin{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.ai-box{background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:16px}
+.ai-sec{margin-bottom:12px}
+.ai-sec-t{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px}
+.ai-item{display:flex;gap:8px;padding:5px 0;font-size:12px;line-height:1.5;border-bottom:1px solid var(--border)}
+.ai-item:last-child{border-bottom:none}
+.empty-state{text-align:center;padding:30px 20px;color:var(--muted)}
+.empty-icon{font-size:32px;margin-bottom:8px}
+.empty-title{font-size:14px;font-weight:600;color:#888;margin-bottom:4px}
+.empty-desc{font-size:12px;line-height:1.6;max-width:320px;margin:0 auto}
+.pres-res{background:var(--s2);border:1px solid var(--hot);border-radius:8px;padding:16px;margin-top:12px;display:none}
+.doc-preview{background:#fff;color:#111;padding:36px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.8;box-shadow:0 4px 40px rgba(0,0,0,.4)}
+.doc-logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;margin-bottom:4px}
 .doc-logo .h{color:#FF5A1F}.doc-logo .c{color:#0284c7}
-.doc-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;margin:20px 0 4px;color:#111;border-bottom:2px solid #FF5A1F;padding-bottom:6px}
-.doc-sec{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#FF5A1F;margin:16px 0 4px}
-.doc-field{border-bottom:1px solid #ccc;min-height:20px;margin-bottom:8px;padding:2px 0;color:#333}
-.doc-field.fill{background:#fff8f5;border:1px solid #ffd5c5;border-radius:3px;padding:4px 6px;color:#FF5A1F;font-weight:600}
-.doc-table{width:100%;border-collapse:collapse;margin:10px 0}
-.doc-table th{background:#111;color:#fff;padding:7px 10px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
-.doc-table td{padding:7px 10px;border-bottom:1px solid #eee;font-size:12px}
+.doc-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;margin:18px 0 4px;color:#111;border-bottom:2px solid #FF5A1F;padding-bottom:6px}
+.doc-sec{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#FF5A1F;margin:14px 0 4px}
+.doc-table{width:100%;border-collapse:collapse;margin:8px 0}
+.doc-table th{background:#111;color:#fff;padding:6px 9px;text-align:left;font-size:11px;text-transform:uppercase}
+.doc-table td{padding:6px 9px;border-bottom:1px solid #eee;font-size:12px}
 .doc-table tr:nth-child(even) td{background:#f9f9f9}
-.doc-total{background:#FF5A1F;color:#fff;font-weight:700;padding:10px;border-radius:4px;text-align:right;margin-top:6px}
-.doc-firma{border-top:1px solid #ccc;padding-top:6px;margin-top:20px;font-size:11px;color:#666}
-.doc-nota{background:#fff8f5;border-left:3px solid #FF5A1F;padding:8px 12px;font-size:11px;color:#666;margin:10px 0;border-radius:0 4px 4px 0}
-/* CHECKLIST */
-.ck-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.doc-total{background:#FF5A1F;color:#fff;font-weight:700;padding:9px;border-radius:4px;text-align:right;margin-top:6px}
+.doc-firma{border-top:1px solid #ccc;padding-top:6px;margin-top:18px}
+.doc-nota{background:#fff8f5;border-left:3px solid #FF5A1F;padding:8px 12px;font-size:11px;color:#666;margin:8px 0;border-radius:0 4px 4px 0}
+.type-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.ttab{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-size:11px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all .15s}
+.ttab:hover{border-color:var(--muted);color:var(--text)}.ttab.on{background:var(--hot);border-color:var(--hot);color:#fff}
+.ck-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
 .ck-item:last-child{border-bottom:none}
-.ck-num{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--hot);flex-shrink:0;width:24px;line-height:1.2}
-.ck-txt{font-size:12px;line-height:1.5}
-.ck-sub{font-size:10px;color:var(--muted);margin-top:2px}
-.phase-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:2px 7px;border-radius:3px;margin-bottom:10px;display:inline-block}
+.ck-num{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--hot);flex-shrink:0;width:22px;line-height:1.3}
+.ck-txt{font-size:12px;line-height:1.5}.ck-sub{font-size:10px;color:var(--muted);margin-top:1px}
+.phase-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:2px 8px;border-radius:3px;margin-bottom:10px;display:inline-block}
 .phase-pre{background:rgba(56,189,248,.15);color:var(--cold)}
 .phase-dur{background:rgba(255,90,31,.15);color:var(--hot)}
 .phase-post{background:rgba(34,197,94,.15);color:var(--ok)}
-/* SELECTOR TABS */
-.type-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
-.ttab{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-size:11px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all .15s}
-.ttab:hover{border-color:var(--muted);color:var(--text)}
-.ttab.on{background:var(--hot);border-color:var(--hot);color:#fff}
-@media print{.hdr,.nav,.controls{display:none!important}.doc-preview{box-shadow:none;padding:20px}}
-@media(max-width:600px){.g2,.g3{grid-template-columns:1fr}.main{padding:12px}}
+@media print{.hdr,.nav{display:none!important}.doc-preview{box-shadow:none}}
+@media(max-width:600px){.g2,.g3{grid-template-columns:1fr}.road{grid-template-columns:1fr}.main{padding:12px}.cal{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
 
 <div class="hdr">
-  <div class="logo"><span class="h">HOT</span><span style="color:var(--border)">&</span><span class="c">COLD</span>
-    <span style="font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;color:var(--muted);margin-left:6px;letter-spacing:2px">PLANTILLAS</span>
+  <div class="logo">
+    <span class="h">HOT</span><span style="color:var(--border)">&</span><span class="c">COLD</span>
+    <span class="os">STUDIO OS</span>
   </div>
-  <div class="fc gap8">
-    <button class="btn bg bsm" onclick="window.print()">🖨 Imprimir</button>
-    <button class="btn bh bsm" onclick="copiarDoc()">Copiar texto</button>
+  <div class="hdr-r">
+    <div class="fc gap6"><span class="sync-dot" id="sync-dot"></span><span id="sync-lbl">Sin Firebase</span></div>
+    <div class="fase-badge" id="hdr-fase">Fase 1 — Ordenar la oferta</div>
+    <div id="hdr-fecha" style="font-size:10px"></div>
   </div>
 </div>
 
 <div class="nav">
-  <button class="nb on" onclick="ir('contratos',this)">📄 Contratos</button>
+  <button class="nb on" onclick="ir('inicio',this)">🏠 Inicio</button>
+  <button class="nb" onclick="ir('oportunidades',this)">🎯 Oportunidades</button>
+  <button class="nb" onclick="ir('bni',this)">🤝 BNI</button>
+  <button class="nb" onclick="ir('redes',this)">📱 Instagram</button>
+  <button class="nb" onclick="ir('herramientas',this)">🛠 Herramientas</button>
+  <button class="nb" onclick="ir('seguimiento',this)">✅ Post-Entrega</button>
+  <button class="nb" onclick="ir('ruta',this)">🗺 Hoja de Ruta</button>
+  <button class="nb" onclick="ir('analisis',this)">🧠 ¿Cómo vamos?</button>
+  <button class="nb" onclick="ir('contratos',this)">📄 Contratos</button>
   <button class="nb" onclick="ir('cotizaciones',this)">💰 Cotizaciones</button>
-  <button class="nb" onclick="ir('entrega',this)">📦 Protocolo Entrega</button>
-  <button class="nb" onclick="ir('instalacion',this)">🔧 Cuidados Instalación</button>
-  <button class="nb" onclick="ir('kpis',this)">📊 KPIs del Estudio</button>
+  <button class="nb" onclick="ir('entrega',this)">📦 Entrega</button>
+  <button class="nb" onclick="ir('kpis',this)">📊 KPIs</button>
+  <button class="nb" onclick="ir('config',this)">⚙️ Ajustes</button>
 </div>
 
 <div class="main">
 
-<!-- ═══════════ CONTRATOS ═══════════ -->
-<div id="sec-contratos" class="sec on">
-  <div class="stitle">Contratos de Servicio</div>
-  <div class="ssub">Selecciona el tipo de proyecto. Completa los campos y copia o imprime.</div>
+<!-- ══════════ INICIO ══════════ -->
+<div id="sec-inicio" class="sec on">
+  <div class="sh fb">
+    <div>
+      <div class="stitle">¿Qué hacer esta semana?</div>
+      <div class="ssub">Tu guía de acciones concretas. Actualizada en base a tus datos reales.</div>
+    </div>
+    <button class="btn bg bsm" onclick="sync(true)">↻ Actualizar</button>
+  </div>
 
+  <div id="inicio-alerts" class="mb14"></div>
+
+  <!-- KPIs -->
+  <div class="g5 mb16">
+    <div class="kpi ke"><div class="kl">Conversión</div><div class="kv" id="k-conv">0%</div><div class="ks">propuestas → cierres</div></div>
+    <div class="kpi kw"><div class="kl">Propuestas enviadas</div><div class="kv" id="k-props">—</div><div class="ks">este mes</div></div>
+    <div class="kpi kh"><div class="kl">Ticket promedio</div><div class="kv" id="k-ticket">—</div><div class="ks">por proyecto</div></div>
+    <div class="kpi kc"><div class="kl">Instagram</div><div class="kv" id="k-ig">—</div><div class="ks" id="k-igp">— posts</div></div>
+    <div class="kpi kp"><div class="kl">En negociación</div><div class="kv" id="k-pipe">S/0</div><div class="ks">valor potencial</div></div>
+  </div>
+
+  <div class="g3 mb14">
+    <!-- PRÓXIMO PASO -->
+    <div id="ns-inicio"></div>
+
+    <!-- ACCIONES DE LA SEMANA -->
+    <div class="card">
+      <div class="fb mb10">
+        <div>
+          <div class="disp" style="font-size:15px">ACCIONES DE LA SEMANA</div>
+          <div class="muted" style="font-size:10px">Máximo 3 abiertas a la vez — regla interna</div>
+        </div>
+        <button class="btn bg bsm" onclick="abrirM('m-accion')">+</button>
+      </div>
+      <div class="alr aw mb8" style="font-size:11px;padding:7px 10px">⚠️ No agregues nueva acción sin cerrar una activa primero.</div>
+      <div id="acc-list"></div>
+    </div>
+
+    <!-- SESIONES -->
+    <div>
+      <div class="card mb10">
+        <div class="disp mb6" style="font-size:14px">PRÓXIMAS SESIONES FIJAS</div>
+        <div style="margin-bottom:8px">
+          <div class="disp" style="font-size:28px;color:var(--cold)">Mié 19:00–21:00</div>
+          <div class="muted" style="font-size:11px">Revisión semanal · Jhunior + Daniela · Post UPC</div>
+        </div>
+        <div class="div" style="margin:8px 0"></div>
+        <div>
+          <div class="disp" style="font-size:22px;color:var(--hot)">Mar 6:30 AM</div>
+          <div class="muted" style="font-size:11px">BNI · Meta: 2 reuniones 1:1 esa semana</div>
+        </div>
+      </div>
+      <div class="card-s" style="border-left:3px solid var(--hot)">
+        <div class="muted mb4" style="font-size:9px;text-transform:uppercase;letter-spacing:1px">Frase que define todo</div>
+        <div style="font-size:12px;font-weight:500;line-height:1.6">"Ayudamos a marcas a convertir su espacio en una herramienta de <span class="hot">posicionamiento</span>, <span class="cold">experiencia</span> y venta."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MINI RUTA -->
+  <div class="card mb14" id="mini-ruta"></div>
+
+  <!-- PATRONES TOP -->
+  <div class="card">
+    <div class="fb mb12">
+      <div>
+        <div class="disp" style="font-size:15px">LO QUE DETECTAMOS EN TUS DATOS</div>
+        <div class="muted" style="font-size:10px">Se actualiza sola cada vez que registras algo nuevo</div>
+      </div>
+      <button class="btn bg bsm" onclick="ir('analisis',document.querySelectorAll('.nb')[7])">Ver análisis completo →</button>
+    </div>
+    <div id="inicio-patrones"></div>
+  </div>
+</div>
+
+<!-- ══════════ OPORTUNIDADES (antes Pipeline) ══════════ -->
+<div id="sec-oportunidades" class="sec">
+  <div class="sh fb">
+    <div>
+      <div class="stitle">Oportunidades Comerciales</div>
+      <div class="ssub">Registra aquí a toda persona o empresa que podría contratarte — aunque todavía no haya nada concreto.</div>
+    </div>
+    <button class="btn bh bsm" onclick="abrirM('m-op')">+ Nueva oportunidad</button>
+  </div>
+
+  <div class="card-guide mb14">
+    <div class="guide-label">¿Para qué sirve esta sección?</div>
+    <div class="guide-text">
+      Cada oportunidad pasa por 5 etapas: <strong style="color:#ccc">Primer contacto → Reunión → Propuesta enviada → Proyecto cerrado → No avanzó</strong>.<br>
+      El sistema detecta automáticamente dónde se está rompiendo el proceso. Hoy el problema es que propuestas llegan a la etapa final pero no cierran — registrar los motivos es lo que activa el diagnóstico.
+    </div>
+  </div>
+
+  <div id="op-alerta" class="mb12"></div>
+
+  <div style="overflow-x:auto;margin-bottom:14px">
+    <div class="kanban" style="min-width:700px">
+      <div class="kcol"><div class="kcol-h"><span style="width:7px;height:7px;border-radius:50%;background:var(--cold);display:inline-block"></span>Primer contacto</div><div id="col-lead"></div></div>
+      <div class="kcol"><div class="kcol-h"><span style="width:7px;height:7px;border-radius:50%;background:var(--warn);display:inline-block"></span>Reunión agendada</div><div id="col-reunion"></div></div>
+      <div class="kcol"><div class="kcol-h"><span style="width:7px;height:7px;border-radius:50%;background:var(--hot);display:inline-block"></span>Propuesta enviada</div><div id="col-propuesta"></div></div>
+      <div class="kcol"><div class="kcol-h"><span style="width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block"></span>Proyecto cerrado ✓</div><div id="col-cerrado"></div></div>
+      <div class="kcol"><div class="kcol-h"><span style="width:7px;height:7px;border-radius:50%;background:var(--err);display:inline-block"></span>No avanzó</div><div id="col-perdido"></div></div>
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card-s">
+      <div class="muted mb6" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px">¿Por qué no avanzan?</div>
+      <div class="muted mb4" style="font-size:10px">Los motivos más repetidos en oportunidades perdidas</div>
+      <div id="op-motivos" style="font-size:12px"></div>
+    </div>
+    <div class="card-s">
+      <div class="muted mb6" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px">¿Qué tipo de proyecto cierra más?</div>
+      <div id="op-seg" style="font-size:12px"></div>
+    </div>
+    <div class="card-s">
+      <div class="muted mb4" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px">Valor total en negociación</div>
+      <div class="disp hot" style="font-size:36px" id="op-total">S/0</div>
+      <div class="muted" style="font-size:10px">suma de oportunidades activas</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ BNI ══════════ -->
+<div id="sec-bni" class="sec">
+  <div class="sh">
+    <div class="stitle">BNI — Registro Semanal</div>
+    <div class="ssub">Martes 6:30–8:30 AM. Especialidad registrada: locales comerciales / retail. No ampliar.</div>
+  </div>
+
+  <div class="card-guide mb14">
+    <div class="guide-label">¿Qué hacer aquí cada martes?</div>
+    <div class="guide-text">
+      Después de cada reunión 1:1 que tengas esa semana, regístrala aquí. La meta es <strong style="color:#ccc">2 reuniones 1:1 por semana</strong> — no el evento principal, sino las reuniones individuales que agendas con otros miembros.<br>
+      Esto mide si BNI está siendo rentable para el estudio: cuánto cuesta vs cuánto trae.
+    </div>
+  </div>
+
+  <div class="g2 mb14">
+    <div class="card">
+      <div class="fb mb10">
+        <div class="disp" style="font-size:15px">PITCH DE ESTA SEMANA</div>
+        <select class="fsel" style="width:auto;font-size:11px" id="pitch-sel" onchange="cambiaPitch()">
+          <option value="0">Pitch 1 — Metodología</option>
+          <option value="1">Pitch 2 — Problema / Solución</option>
+          <option value="2">Pitch 3 — Caso de éxito ⚠️</option>
+          <option value="3">Pitch 4 — Anti-pitch</option>
+          <option value="4">Pitch 5 — Credibilidad académica</option>
+        </select>
+      </div>
+      <div class="pitch-box" id="pitch-txt"></div>
+      <div class="alr aw mt8" id="pitch-warn" style="display:none;font-size:11px">⚠️ Este pitch solo funciona si el caso de éxito es real y tienes los números documentados.</div>
+    </div>
+
+    <div>
+      <div class="card mb10">
+        <div class="disp mb8" style="font-size:15px">REUNIONES 1:1 ESTA SEMANA</div>
+        <div class="fc gap12 mb10">
+          <div class="disp hot" style="font-size:52px" id="bni-cnt">0</div>
+          <div>
+            <div class="muted mb2" style="font-size:12px">de <strong style="color:var(--text)">2</strong> que debes hacer</div>
+            <div class="bprog" style="width:130px"><div class="bpf" id="bni-pf" style="width:0%"></div></div>
+          </div>
+        </div>
+        <button class="btn bh w100 bsm" onclick="abrirM('m-bni')">+ Registrar reunión 1:1</button>
+      </div>
+      <div class="card-s">
+        <div class="muted mb6" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px">¿Está siendo rentable BNI?</div>
+        <div class="g2" style="gap:8px">
+          <div><div class="muted" style="font-size:9px">Cuota/mes</div><div class="disp" style="font-size:22px;color:var(--hot)" id="bni-cuota-v">S/—</div></div>
+          <div><div class="muted" style="font-size:9px">Cerrado desde BNI</div><div class="disp ok" style="font-size:22px" id="bni-cierres">S/0</div></div>
+        </div>
+        <div class="muted mt6" style="font-size:10px">ROI mínimo esperado: 3× la cuota mensual</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="fb mb10">
+      <div class="disp" style="font-size:15px">HISTORIAL COMPLETO</div>
+      <span class="badge bgc" id="bni-tot">0 reuniones</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="tbl">
+        <thead><tr><th>Fecha</th><th>Contacto</th><th>Empresa</th><th>Oportunidad detectada</th><th>¿Referido?</th><th>Notas</th><th></th></tr></thead>
+        <tbody id="bni-tbody"></tbody>
+      </table>
+    </div>
+    <div id="bni-empty" class="empty-state">
+      <div class="empty-icon">🤝</div>
+      <div class="empty-title">Sin reuniones registradas</div>
+      <div class="empty-desc">Después de cada martes, agrega las reuniones 1:1 que tuviste. Eso es lo que te dice si BNI vale la pena o no.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ REDES ══════════ -->
+<div id="sec-redes" class="sec">
+  <div class="sh">
+    <div class="stitle">Instagram</div>
+    <div class="ssub">@hotandcold_studio · <span id="ig-seg">972</span> seguidores · <span id="ig-posts">115</span> posts publicados</div>
+  </div>
+
+  <div class="card-guide mb14">
+    <div class="guide-label">¿Qué publicar y cuándo?</div>
+    <div class="guide-text">
+      <strong style="color:#ccc">Lunes:</strong> Portfolio — un proyecto real explicando por qué ese diseño funciona estratégicamente.<br>
+      <strong style="color:#ccc">Miércoles:</strong> Expert View — algo educativo que el cliente no sabe. Ej: "Por qué tu oficina te cansa sin que te des cuenta".<br>
+      <strong style="color:#ccc">Viernes:</strong> Behind the Trident — los 3 socios trabajando, revisando, en obra. Humaniza el estudio.<br>
+      <strong style="color:var(--err)">Prohibido:</strong> publicar solo renders sin explicar el problema que resuelven.
+    </div>
+  </div>
+
+  <div class="g2 mb14">
+    <div class="card">
+      <div class="fb mb10">
+        <div class="disp" style="font-size:15px">SEMANA</div>
+        <div class="fc gap8">
+          <button class="btn bg bsm" onclick="cambiarSemana(-1)">←</button>
+          <span id="sem-lbl" style="font-size:11px;color:var(--muted)"></span>
+          <button class="btn bg bsm" onclick="cambiarSemana(1)">→</button>
+        </div>
+      </div>
+      <div id="cal-grid" class="cal"></div>
+      <div class="div" style="margin:10px 0"></div>
+      <button class="btn bc w100 bsm" onclick="abrirM('m-post')">+ Planificar post</button>
+    </div>
+
+    <div class="card">
+      <div class="disp mb4" style="font-size:15px">ANTES DE PUBLICAR</div>
+      <div class="muted mb10" style="font-size:11px">Si no puedes marcar todo, el post no sale. Es la única forma de mantener el nivel.</div>
+      <div id="pub-ck">
+        <div class="ms"><input type="checkbox" class="pck" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div>¿El post explica <strong>por qué</strong> ese diseño funciona — no solo cómo se ve?</div></div>
+        <div class="ms"><input type="checkbox" class="pck" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div>¿El caption tiene un punto de vista claro — no solo descripción?</div></div>
+        <div class="ms"><input type="checkbox" class="pck" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div>¿Está alineado con la fase estratégica actual?</div></div>
+        <div class="ms"><input type="checkbox" class="pck" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div>¿Tiene un llamado a la acción claro al final?</div></div>
+        <div class="ms"><input type="checkbox" class="pck" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div>¿La calidad visual refleja el nivel que cobran?</div></div>
+        <div class="ms"><input type="checkbox" class="pck" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div>¿Lo aprobarían los tres socios?</div></div>
+      </div>
+      <div class="div" style="margin:10px 0"></div>
+      <div id="ck-res" style="font-size:12px;color:var(--muted);text-align:center">0/6 criterios marcados</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="fb mb10">
+      <div>
+        <div class="disp" style="font-size:15px">GENERADOR DE CAPTION CON IA</div>
+        <div class="muted" style="font-size:10px">Necesitas configurar tu API Key en Ajustes</div>
+      </div>
+      <span class="badge bgh">Requiere API Key</span>
+    </div>
+    <div class="g3 mb10">
+      <div class="fg"><label class="fl">Tipo de post</label><select class="fsel" id="ai-tipo"><option>Portfolio — Retail / Comercial</option><option>Portfolio — Corporativo</option><option>Expert View — Educativo</option><option>Behind the Trident</option></select></div>
+      <div class="fg"><label class="fl">¿De qué trata?</label><input class="fi" id="ai-det" placeholder="Ej: Remodelación de café en Miraflores con foco en zona de espera"></div>
+      <div class="fg"><label class="fl">Tono</label><select class="fsel" id="ai-tono"><option>Estratégico y directo</option><option>Educativo y accesible</option><option>Provocador</option><option>Humano y cercano</option></select></div>
+    </div>
+    <button class="btn bh bsm" id="ai-btn" onclick="generarCaption()">✦ Generar</button>
+    <div id="ai-out" style="display:none;background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:12px;font-size:13px;line-height:1.7;white-space:pre-wrap;margin-top:10px"></div>
+    <button class="btn bg bsm" id="ai-copy" style="display:none;margin-top:7px" onclick="copiarAI()">Copiar</button>
+  </div>
+</div>
+
+<!-- ══════════ HERRAMIENTAS ══════════ -->
+<div id="sec-herramientas" class="sec">
+  <div class="sh">
+    <div class="stitle">Herramientas</div>
+    <div class="ssub">Todo lo que necesitas para preparar propuestas, comunicarte con clientes y estimar precios.</div>
+  </div>
+  <div class="fc gap8 mb16" id="tool-tabs">
+    <button class="btn bh bsm" onclick="tool('presupuesto',this)">💰 Estimar precio</button>
+    <button class="btn bg bsm" onclick="tool('correos',this)">📧 Correos listos</button>
+    <button class="btn bg bsm" onclick="tool('cronograma',this)">📅 Cronograma base</button>
+    <button class="btn bg bsm" onclick="tool('propuesta',this)">📋 Checklist propuesta</button>
+    <button class="btn bg bsm" onclick="tool('contrato',this)">📄 Contrato — puntos clave</button>
+  </div>
+  <div id="tool-presupuesto" class="tool-p">
+    <div class="card">
+      <div class="disp mb2" style="font-size:18px">ESTIMADOR DE PRECIO</div>
+      <div class="muted mb14" style="font-size:11px">Para uso interno. No reemplaza el presupuesto formal al cliente.</div>
+      <div class="g3 mb10">
+        <div class="fg"><label class="fl">¿Qué tipo de proyecto?</label><select class="fsel" id="pt" onchange="calcPres()"><option value="retail">Retail / Local comercial</option><option value="corp">Corporativo / Oficina</option><option value="rest">Restaurante / Café</option><option value="resi">Residencial</option><option value="diag">Diagnóstico / Consultoría</option></select></div>
+        <div class="fg"><label class="fl">¿Cuántos m² aprox?</label><input class="fi" type="number" id="pm" placeholder="80" onchange="calcPres()"></div>
+        <div class="fg"><label class="fl">Nivel de complejidad</label><select class="fsel" id="pc" onchange="calcPres()"><option value="b">Básico</option><option value="m">Medio</option><option value="a">Alto / Integral</option></select></div>
+      </div>
+      <div class="fg"><label class="fl">¿Incluye ejecución de obra?</label><select class="fsel" id="pe" onchange="calcPres()"><option value="s">Sí — diseño + ejecución (llave en mano)</option><option value="n">No — solo diseño</option></select></div>
+      <div class="pres-res" id="pres-res">
+        <div class="muted mb2" style="font-size:9px;text-transform:uppercase;letter-spacing:1px">Rango estimado neto</div>
+        <div class="disp hot" style="font-size:42px" id="pres-range">S/0</div>
+        <div class="muted mt4" style="font-size:11px" id="pres-nota"></div>
+        <div class="g3 mt10" id="pres-det"></div>
+      </div>
+    </div>
+  </div>
+  <div id="tool-correos" class="tool-p" style="display:none">
+    <div class="g2">
+      <div>
+        <div class="disp mb10" style="font-size:15px">SELECCIONA UNA PLANTILLA</div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <button class="btn bg w100 bsm" onclick="verEmail(0)" style="justify-content:flex-start">📩 Seguimiento a propuesta enviada</button>
+          <button class="btn bg w100 bsm" onclick="verEmail(1)" style="justify-content:flex-start">🎉 Bienvenida al nuevo cliente</button>
+          <button class="btn bg w100 bsm" onclick="verEmail(2)" style="justify-content:flex-start">📅 Solicitar primera reunión</button>
+          <button class="btn bg w100 bsm" onclick="verEmail(3)" style="justify-content:flex-start">🏁 Entrega del proyecto</button>
+          <button class="btn bg w100 bsm" onclick="verEmail(4)" style="justify-content:flex-start">💰 Recordatorio de pago pendiente</button>
+          <button class="btn bg w100 bsm" onclick="verEmail(5)" style="justify-content:flex-start">⭐ Pedir referido a cliente feliz</button>
+        </div>
+      </div>
+      <div id="email-disp"><div class="card-s" style="text-align:center;color:var(--muted);padding:30px">Selecciona una plantilla a la izquierda</div></div>
+    </div>
+  </div>
+  <div id="tool-cronograma" class="tool-p" style="display:none">
+    <div class="card"><div class="disp mb2" style="font-size:18px">CRONOGRAMA BASE</div><div class="muted mb14" style="font-size:11px">Ajusta los tiempos según el proyecto. Nunca entregues sin tener el cronograma acordado.</div><div id="cron-tbl"></div><div class="div" style="margin:12px 0"></div><button class="btn bg bsm" onclick="copiarCron()">Copiar como texto</button></div>
+  </div>
+  <div id="tool-propuesta" class="tool-p" style="display:none">
+    <div class="card"><div class="disp mb2" style="font-size:18px">CHECKLIST ANTES DE ENVIAR PROPUESTA</div><div class="muted mb12" style="font-size:11px">Si falta algo, no la envíes. Una propuesta incompleta debilita el posicionamiento.</div><div id="prop-ck"></div><div class="div" style="margin:12px 0"></div><div class="alr ah">🔴 Recordatorio: no entregamos planos para que otros ejecuten (excepción solo si el monto neto supera S/5,000). Tampoco ejecutamos diseños de otros.</div></div>
+  </div>
+  <div id="tool-contrato" class="tool-p" style="display:none">
+    <div class="card"><div class="disp mb2" style="font-size:18px">CONTRATO — PUNTOS QUE NUNCA FALTAN</div><div class="muted mb14" style="font-size:11px">Firma antes de iniciar cualquier trabajo. Sin excepción.</div><div id="contr-con"></div></div>
+  </div>
+</div>
+
+<!-- ══════════ SEGUIMIENTO / POST-ENTREGA ══════════ -->
+<div id="sec-seguimiento" class="sec">
+  <div class="sh fb">
+    <div>
+      <div class="stitle">Seguimiento Post-Entrega</div>
+      <div class="ssub">Los referidos vienen de aquí. Es el canal más barato y más efectivo que tienen.</div>
+    </div>
+    <button class="btn bh bsm" onclick="abrirM('m-pv')">+ Proyecto entregado</button>
+  </div>
+
+  <div class="card-guide mb14">
+    <div class="guide-label">¿Qué hacer con cada proyecto entregado?</div>
+    <div class="guide-text">
+      Al cabo de <strong style="color:#ccc">1 semana</strong> de la entrega, escribe al cliente para saber cómo va.<br>
+      Al <strong style="color:#ccc">mes</strong>, le preguntas si hay algo que ajustar y si el espacio está funcionando como esperaba.<br>
+      A los <strong style="color:#ccc">3 meses</strong>, mides resultados reales y documentas el caso de éxito.<br>
+      Al <strong style="color:#ccc">mes y medio</strong>, le pides que te refiera si está contento — ese es el mejor momento.
+    </div>
+  </div>
+
+  <div class="alr ai mb14" style="font-size:12px">💡 Cada check-in que haces es una oportunidad de referido. El sistema te avisa cuándo toca cada uno.</div>
+  <div id="pv-list"></div>
+  <div id="pv-empty" class="empty-state">
+    <div class="empty-icon">📦</div>
+    <div class="empty-title">Sin proyectos entregados aún</div>
+    <div class="empty-desc">Cuando termines y entregues un proyecto, regístralo aquí. El sistema te recordará cuándo hacer cada seguimiento.</div>
+  </div>
+</div>
+
+<!-- ══════════ RUTA ══════════ -->
+<div id="sec-ruta" class="sec">
+  <div class="sh">
+    <div class="stitle">Hoja de Ruta — Las 4 Etapas</div>
+    <div class="ssub">Cada dato que registras mueve el progreso automáticamente.</div>
+  </div>
+
+  <div class="card-guide mb16">
+    <div class="guide-label">¿Cómo funciona esto?</div>
+    <div class="guide-text">
+      El estudio tiene que pasar por 4 etapas para llegar a donde quieren estar. Cada etapa tiene una serie de logros que demuestran que realmente la completaron — no solo que "creen" que sí.<br>
+      Los logros con 🤖 se marcan solos cuando los datos lo confirman. Los logros con ✏️ los marcas tú cuando estén listos. <strong style="color:#ccc">No se pasa a la siguiente etapa sin completar la actual.</strong>
+    </div>
+  </div>
+
+  <div class="road mb20" id="road-grid"></div>
+
+  <div class="nsbox" id="ns-ruta">
+    <div class="disp mb4" style="font-size:20px;color:var(--hot)">🔥 LO QUE TIENES QUE HACER AHORA</div>
+    <div id="ns-ruta-content" style="font-size:13px;line-height:1.7"></div>
+  </div>
+</div>
+
+<!-- ══════════ ANÁLISIS ══════════ -->
+<div id="sec-analisis" class="sec">
+  <div class="sh">
+    <div class="stitle">¿Cómo Vamos?</div>
+    <div class="ssub">Patrones detectados en tus datos + análisis con IA cada vez que lo necesites.</div>
+  </div>
+
+  <div class="g2 mb16">
+    <div>
+      <div class="disp mb10" style="font-size:16px">PATRONES AUTOMÁTICOS <span class="muted" style="font-size:11px;font-family:'DM Sans',sans-serif;font-weight:400">— se calculan solos</span></div>
+      <div class="card-guide mb10">
+        <div class="guide-label">¿De dónde salen estos patrones?</div>
+        <div class="guide-text">Los calculamos en base a lo que has registrado en Oportunidades, BNI, Instagram y Post-Entrega. Mientras más datos tengas, más precisos son.</div>
+      </div>
+      <div id="patrones-list"></div>
+    </div>
+
+    <div>
+      <div class="fb mb10">
+        <div>
+          <div class="disp" style="font-size:16px">ANÁLISIS CON IA</div>
+          <div class="muted" style="font-size:10px">Claude analiza todos tus datos y te dice qué está pasando</div>
+        </div>
+        <button class="btn bh bsm" id="intel-btn" onclick="analizarIA()">✦ Analizar ahora</button>
+      </div>
+      <div class="alr ai mb10" style="font-size:11px">Manda todos tus datos a Claude y recibe: situación real, patrones, alertas, recomendaciones concretas y una oportunidad que quizás no estás viendo.</div>
+      <div id="intel-tiempo" style="font-size:10px;color:var(--muted);margin-bottom:8px"></div>
+      <div id="intel-out"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="fb mb12">
+      <div>
+        <div class="disp" style="font-size:15px">RESUMEN DE LA SEMANA</div>
+        <div class="muted" style="font-size:10px">Números clave de esta semana — de un vistazo</div>
+      </div>
+      <button class="btn bg bsm" onclick="resumenSemanal()">↻ Actualizar</button>
+    </div>
+    <div id="resumen-semanal"></div>
+  </div>
+</div>
+
+<!-- ══════════ CONFIG ══════════ -->
+<div id="sec-config" class="sec">
+  <div class="sh">
+    <div class="stitle">Ajustes</div>
+    <div class="ssub">Firebase, números base, API Key y opciones de datos.</div>
+  </div>
+
+  <!-- FIREBASE -->
+  <div class="card mb14" style="border-color:rgba(255,90,31,.3)">
+    <div class="fb mb10">
+      <div>
+        <div class="disp" style="font-size:16px;color:var(--hot)">FIREBASE — BASE DE DATOS COMPARTIDA</div>
+        <div class="muted" style="font-size:11px">Tú y Daniela ven los mismos datos desde cualquier dispositivo</div>
+      </div>
+      <span id="fb-status" class="badge bgm">Sin configurar</span>
+    </div>
+    <div class="alr ai mb12" style="font-size:12px">
+      <div>
+        <strong>Setup en 4 pasos (5 minutos):</strong><br>
+        1. Ve a <strong>console.firebase.google.com</strong> → Crear proyecto (nombre: hc-studio-os)<br>
+        2. Menú izquierdo → <strong>Realtime Database</strong> → Crear base de datos → Modo de prueba<br>
+        3. En la pestaña <strong>Reglas</strong>, confirma que diga <code style="background:var(--s2);padding:1px 5px;border-radius:3px">".read": true, ".write": true</code><br>
+        4. Copia la URL y pégala aquí abajo → "Probar conexión"
+      </div>
+    </div>
+    <div class="alr ao mb12" style="font-size:11px">✅ Sin Apps Script. Sin login de Google. Funciona desde cualquier celular aunque esté logueado con otra cuenta.</div>
+    <div class="fg"><label class="fl">URL de Firebase</label><input class="fi" id="cfg-fb" placeholder="https://tu-proyecto-default-rtdb.firebaseio.com" onchange="guardarConfig()"></div>
+    <div class="fc gap8">
+      <button class="btn bh bsm" onclick="probarFB()">Probar conexión</button>
+      <button class="btn bg bsm" onclick="sync(true)">↻ Sincronizar ahora</button>
+    </div>
+    <div id="fb-test" style="margin-top:8px;font-size:12px"></div>
+  </div>
+
+  <div class="g2 mb14">
+    <div class="card">
+      <div class="disp mb10" style="font-size:15px">NÚMEROS BASE</div>
+      <div class="muted mb12" style="font-size:11px">Actualiza estos cuando cambien. Son el punto de partida para medir el progreso.</div>
+      <div class="fg"><label class="fl">¿Cuántas propuestas envías por mes?</label><input class="fi" type="number" id="cfg-props" onchange="guardarConfig()"></div>
+      <div class="fg"><label class="fl">¿Cuántos proyectos cerraste en los últimos 30 días?</label><input class="fi" type="number" id="cfg-cerr" onchange="guardarConfig()"></div>
+      <div class="fg"><label class="fl">Ticket promedio por proyecto (S/)</label><input class="fi" type="number" id="cfg-ticket" onchange="guardarConfig()"></div>
+      <div class="fg"><label class="fl">Seguidores en Instagram</label><input class="fi" type="number" id="cfg-ig" onchange="guardarConfig()"></div>
+      <div class="fg"><label class="fl">Posts publicados en Instagram</label><input class="fi" type="number" id="cfg-igp" onchange="guardarConfig()"></div>
+      <div class="fg"><label class="fl">Cuota mensual BNI (S/)</label><input class="fi" type="number" id="cfg-bni" onchange="guardarConfig()"></div>
+      <div class="fg mb0"><label class="fl">¿En qué etapa estratégica están?</label>
+        <select class="fsel" id="cfg-fase" onchange="guardarConfig()">
+          <option value="1">Etapa 1 — Ordenar la oferta</option>
+          <option value="2">Etapa 2 — Productos de entrada</option>
+          <option value="3">Etapa 3 — Construir autoridad</option>
+          <option value="4">Etapa 4 — Escalar con red</option>
+        </select>
+      </div>
+    </div>
+    <div class="card">
+      <div class="disp mb10" style="font-size:15px">API KEY DE ANTHROPIC</div>
+      <div class="alr ai mb10" style="font-size:11px">Para el generador de captions de Instagram y el análisis estratégico con IA. Tu clave nunca sale de tu navegador.</div>
+      <div class="fg"><label class="fl">API Key</label><input class="fi" type="password" id="cfg-api" placeholder="sk-ant-..." onchange="guardarConfig()"></div>
+      <div class="muted mb14" style="font-size:10px">Obtener en: console.anthropic.com</div>
+      <div class="div"></div>
+      <div class="disp mb8" style="font-size:13px">RESPALDO DE DATOS</div>
+      <div class="fc gap8 mb10">
+        <button class="btn bg bsm" onclick="exportar()">↓ Descargar copia de seguridad</button>
+        <button class="btn bg bsm" onclick="document.getElementById('import-f').click()">↑ Restaurar desde copia</button>
+        <input type="file" id="import-f" accept=".json" style="display:none" onchange="importar(this)">
+      </div>
+      <div class="div"></div>
+      <button class="btn bd w100 bsm" onclick="resetTodo()">🗑 Borrar todo — esto es irreversible</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CONTRATOS ══════════ -->
+<div id="sec-contratos" class="sec">
+  <div class="sh fb">
+    <div><div class="stitle">Contratos de Servicio</div><div class="ssub">Selecciona el tipo, completa los datos y genera el contrato listo para firmar.</div></div>
+    <button class="btn bg bsm" onclick="window.print()">🖨 Imprimir</button>
+  </div>
   <div class="type-tabs">
     <button class="ttab on" onclick="tipoContrato('residencial',this)">🏠 Residencial</button>
     <button class="ttab" onclick="tipoContrato('corporativo',this)">🏢 Corporativo</button>
@@ -108,13 +744,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
     <button class="ttab" onclick="tipoContrato('stand',this)">🎪 Stand / Evento</button>
     <button class="ttab" onclick="tipoContrato('referido',this)">🤝 Referido</button>
   </div>
-
   <div class="g2" style="align-items:start">
     <div class="card">
       <div class="disp mb10" style="font-size:14px">DATOS DEL CONTRATO</div>
-      <div class="fg"><label class="fl">Razón social o nombre H&C</label><input class="fi" id="c-hc" value="Hot and Cold Studio S.A.C."></div>
+      <div class="fg"><label class="fl">Razón social H&C</label><input class="fi" id="c-hc" value="Hot and Cold Studio S.A.C."></div>
       <div class="g2">
-        <div class="fg"><label class="fl">RUC H&C</label><input class="fi" id="c-hcruc" placeholder="20XXXXXXXXX"></div>
+        <div class="fg"><label class="fl">RUC de H&C</label><input class="fi" id="c-hcruc" placeholder="20XXXXXXXXX"></div>
         <div class="fg"><label class="fl">Representante H&C</label><input class="fi" id="c-hcrep" placeholder="Jhunior Rodríguez"></div>
       </div>
       <div class="div"></div>
@@ -129,32 +764,25 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
       <div class="fg"><label class="fl">Descripción del proyecto</label><textarea class="fta" id="c-desc" placeholder="Breve descripción del alcance..."></textarea></div>
       <div class="g2">
         <div class="fg"><label class="fl">Monto total (S/)</label><input class="fi" type="number" id="c-monto" placeholder="15000"></div>
-        <div class="fg"><label class="fl">Adelanto % o monto (S/)</label><input class="fi" id="c-adelanto" placeholder="50% = S/7,500"></div>
+        <div class="fg"><label class="fl">Adelanto (% o monto)</label><input class="fi" id="c-adelanto" placeholder="50% = S/7,500"></div>
       </div>
       <div class="g2">
         <div class="fg"><label class="fl">Fecha de inicio</label><input class="fi" type="date" id="c-inicio"></div>
         <div class="fg"><label class="fl">Plazo estimado</label><input class="fi" id="c-plazo" placeholder="8 semanas"></div>
       </div>
       <div class="fg"><label class="fl">Lugar y fecha del contrato</label><input class="fi" id="c-lugar" placeholder="Lima, __ de ___ de 2025"></div>
-      <button class="btn bh w100" onclick="generarContrato()" style="margin-top:8px">Generar contrato</button>
+      <button class="btn bh w100" style="margin-top:8px" onclick="generarContrato()">Generar contrato</button>
     </div>
-
-    <div>
-      <div id="contrato-preview">
-        <div class="card" style="text-align:center;padding:40px;color:var(--muted)">
-          <div style="font-size:32px;margin-bottom:8px">📄</div>
-          <div>Completa los datos y presiona "Generar contrato"</div>
-        </div>
-      </div>
-    </div>
+    <div id="contrato-preview"><div class="card" style="text-align:center;padding:40px;color:var(--muted)"><div style="font-size:32px;margin-bottom:8px">📄</div><div>Completa los datos y presiona "Generar contrato"</div></div></div>
   </div>
 </div>
 
-<!-- ═══════════ COTIZACIONES ═══════════ -->
+<!-- ══════════ COTIZACIONES ══════════ -->
 <div id="sec-cotizaciones" class="sec">
-  <div class="stitle">Cotizaciones</div>
-  <div class="ssub">Genera una cotización formal para enviar al cliente antes del contrato.</div>
-
+  <div class="sh fb">
+    <div><div class="stitle">Cotizaciones</div><div class="ssub">Genera una cotización formal antes de enviar el contrato.</div></div>
+    <button class="btn bg bsm" onclick="window.print()">🖨 Imprimir</button>
+  </div>
   <div class="g2" style="align-items:start">
     <div class="card">
       <div class="disp mb10" style="font-size:14px">DATOS DE LA COTIZACIÓN</div>
@@ -166,406 +794,1235 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
       </div>
       <div class="fg"><label class="fl">Tipo de proyecto</label>
         <select class="fsel" id="q-tipo">
-          <option>Diseño de interiores residencial</option>
-          <option>Diseño de oficina corporativa</option>
-          <option>Diseño de local comercial / retail</option>
-          <option>Diseño de cafetería / restaurante</option>
-          <option>Diseño de stand / evento</option>
-          <option>Consultoría / Diagnóstico estratégico</option>
+          <option>Diseño de interiores residencial</option><option>Diseño de oficina corporativa</option>
+          <option>Diseño de local comercial / retail</option><option>Diseño de cafetería / restaurante</option>
+          <option>Diseño de stand / evento</option><option>Consultoría / Diagnóstico estratégico</option>
           <option>Remodelación integral</option>
         </select>
       </div>
-      <div class="fg"><label class="fl">Descripción del proyecto</label><textarea class="fta" id="q-desc" placeholder="Espacio a intervenir, m², objetivos..."></textarea></div>
+      <div class="fg"><label class="fl">Descripción del proyecto</label><textarea class="fta" id="q-desc" placeholder="Espacio, m², objetivos..."></textarea></div>
       <div class="div"></div>
-      <div class="disp mb8" style="font-size:13px">ITEMS DE COTIZACIÓN</div>
+      <div class="disp mb8" style="font-size:13px">ITEMS</div>
       <div id="q-items"></div>
-      <button class="btn bg bsm" onclick="addItem()" style="margin-bottom:12px">+ Agregar item</button>
+      <button class="btn bg bsm" onclick="addItem()" style="margin-bottom:10px">+ Agregar item</button>
       <div class="div"></div>
       <div class="g2">
-        <div class="fg"><label class="fl">Descuento (S/)</label><input class="fi" type="number" id="q-desc2" value="0" onchange="calcTotal()"></div>
-        <div class="fg"><label class="fl">Incluye IGV (18%)</label>
-          <select class="fsel" id="q-igv" onchange="calcTotal()"><option value="no">No incluye</option><option value="si">Sí incluye</option></select>
-        </div>
+        <div class="fg"><label class="fl">Descuento (S/)</label><input class="fi" type="number" id="q-descuento" value="0" onchange="calcTotal()"></div>
+        <div class="fg"><label class="fl">¿Incluye IGV 18%?</label><select class="fsel" id="q-igv" onchange="calcTotal()"><option value="no">No incluye</option><option value="si">Sí incluye</option></select></div>
       </div>
-      <div class="fg"><label class="fl">Validez de la cotización</label><input class="fi" id="q-valid" placeholder="15 días calendario"></div>
+      <div class="fg"><label class="fl">Validez</label><input class="fi" id="q-valid" placeholder="15 días calendario"></div>
       <div class="fg"><label class="fl">Condiciones de pago</label><input class="fi" id="q-pago" placeholder="50% adelanto, 50% contra entrega"></div>
       <div class="fg"><label class="fl">Fecha</label><input class="fi" type="date" id="q-fecha"></div>
-      <button class="btn bh w100" onclick="generarCotizacion()" style="margin-top:8px">Generar cotización</button>
+      <button class="btn bh w100" style="margin-top:8px" onclick="generarCotizacion()">Generar cotización</button>
     </div>
-    <div id="cotizacion-preview">
-      <div class="card" style="text-align:center;padding:40px;color:var(--muted)">
-        <div style="font-size:32px;margin-bottom:8px">💰</div>
-        <div>Completa los datos y presiona "Generar cotización"</div>
-      </div>
-    </div>
+    <div id="cotizacion-preview"><div class="card" style="text-align:center;padding:40px;color:var(--muted)"><div style="font-size:32px;margin-bottom:8px">💰</div><div>Completa los datos y presiona "Generar cotización"</div></div></div>
   </div>
 </div>
 
-<!-- ═══════════ ENTREGA ═══════════ -->
+<!-- ══════════ ENTREGA ══════════ -->
 <div id="sec-entrega" class="sec">
-  <div class="stitle">Protocolo de Entrega de Mobiliario</div>
-  <div class="ssub">Pre-entrega, durante la entrega y post-entrega. Obligatorio para cada proyecto.</div>
-
-  <div class="card" style="border-left:3px solid var(--cold);margin-bottom:14px">
-    <div style="font-size:12px;color:var(--cold);font-weight:600;margin-bottom:4px">¿Por qué este protocolo?</div>
-    <div style="font-size:12px;color:var(--muted);line-height:1.6">Han tenido problemas con accesos al momento de la entrega — mobiliario que no entra, ascensores que no tienen medidas, horarios no coordinados. Este protocolo lo previene todo antes de que pase.</div>
-  </div>
-
-  <!-- PRE -->
-  <div class="card mb14">
-    <div class="phase-tag phase-pre">📋 FASE PRE-ENTREGA — Mínimo 5 días antes</div>
+  <div class="sh"><div class="stitle">Protocolo de Entrega de Mobiliario</div><div class="ssub">Pre-entrega, durante y post. Obligatorio para cada proyecto — previene los problemas de acceso.</div></div>
+  <div class="alr ai mb14" style="font-size:12px">💡 Han tenido problemas con accesos al momento de entregar. Este protocolo lo previene antes de que pase.</div>
+  <div class="card mb12">
+    <div class="phase-tag phase-pre">📋 PRE-ENTREGA — Mínimo 5 días antes</div>
     <div class="disp mb12" style="font-size:16px">ANTES DE SALIR A ENTREGAR</div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+    <div class="g2">
       <div>
-        <div style="font-size:10px;font-weight:700;color:var(--cold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">VERIFICACIÓN DEL ESPACIO</div>
-        <div class="ck-item"><div class="ck-num">1</div><div><div class="ck-txt">Medir el acceso principal: puerta de entrada, ancho y alto</div><div class="ck-sub">Ancho mín. recomendado: 80cm. Registrar medidas exactas.</div></div></div>
-        <div class="ck-item"><div class="ck-num">2</div><div><div class="ck-txt">Verificar si hay ascensor — medir cabina (ancho, fondo, alto)</div><div class="ck-sub">Si no cabe, planificar escaleras o desmontaje parcial.</div></div></div>
-        <div class="ck-item"><div class="ck-num">3</div><div><div class="ck-txt">Medir pasillos y curvas de acceso hasta el espacio final</div><div class="ck-sub">El mueble debe poder girar en cada esquina del recorrido.</div></div></div>
-        <div class="ck-item"><div class="ck-num">4</div><div><div class="ck-txt">Confirmar piso del destino y si hay escaleras adicionales</div></div></div>
-        <div class="ck-item"><div class="ck-num">5</div><div><div class="ck-txt">Fotografiar el acceso completo desde el ingreso hasta el espacio</div><div class="ck-sub">Sirve como evidencia y para planificar la maniobra.</div></div></div>
+        <div style="font-size:9px;font-weight:700;color:var(--cold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">VERIFICACIÓN DEL ESPACIO</div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Medir acceso principal: ancho y alto de puerta</div><div class="ck-sub">Ancho mínimo recomendado: 80cm.</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Verificar ascensor — medir cabina (ancho, fondo, alto)</div><div class="ck-sub">Si el mueble no entra, planificar desmontaje o escaleras.</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Medir pasillos y curvas de acceso hasta el espacio final</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Confirmar piso de destino y si hay escaleras adicionales</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Fotografiar el recorrido completo desde el ingreso</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Verificar restricciones del edificio: horarios, permisos de carga</div></div></div>
       </div>
       <div>
-        <div style="font-size:10px;font-weight:700;color:var(--cold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">VERIFICACIÓN DEL MOBILIARIO</div>
-        <div class="ck-item"><div class="ck-num">6</div><div><div class="ck-txt">Comparar medidas del mueble vs medidas del acceso</div><div class="ck-sub">Si no entra parado, ¿puede entrar de lado o desmontado?</div></div></div>
-        <div class="ck-item"><div class="ck-num">7</div><div><div class="ck-txt">Confirmar que el mueble está completo: piezas, tornillos, accesorios</div></div></div>
-        <div class="ck-item"><div class="ck-num">8</div><div><div class="ck-txt">Verificar que no haya daños antes de empacar</div><div class="ck-sub">Fotografiar cada pieza antes de embalar.</div></div></div>
-        <div class="ck-item"><div class="ck-num">9</div><div><div class="ck-txt">Empacar correctamente: esquinas protegidas, superficie cubierta</div></div></div>
-        <div class="ck-item"><div class="ck-num">10</div><div><div class="ck-txt">Etiquetar cada caja/pieza con nombre del cliente y número de pieza</div></div></div>
+        <div style="font-size:9px;font-weight:700;color:var(--cold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">VERIFICACIÓN DEL MOBILIARIO</div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Comparar medidas del mueble vs medidas del acceso</div><div class="ck-sub">¿Puede entrar de lado? ¿Desmontado?</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Confirmar que el mueble está completo: piezas, tornillos, accesorios</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Fotografiar cada pieza antes de empacar — evidencia de estado</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Empacar con esquinas protegidas y superficie cubierta</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Etiquetar cada caja con nombre del cliente y número de pieza</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Confirmar equipo de entrega — muebles grandes: mínimo 3 personas</div></div></div>
       </div>
     </div>
-
-    <div style="font-size:10px;font-weight:700;color:var(--cold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">COORDINACIÓN LOGÍSTICA</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
-      <div class="ck-item"><div class="ck-num">11</div><div><div class="ck-txt">Confirmar fecha y hora exacta con el cliente</div><div class="ck-sub">Rango de 2 horas máximo, no "en la mañana".</div></div></div>
-      <div class="ck-item"><div class="ck-num">12</div><div><div class="ck-txt">Confirmar quién recibe en el destino (nombre y teléfono)</div></div></div>
-      <div class="ck-item"><div class="ck-num">13</div><div><div class="ck-txt">Verificar restricciones del edificio o condominio</div><div class="ck-sub">Horarios de carga, permisos, día permitido.</div></div></div>
-      <div class="ck-item"><div class="ck-num">14</div><div><div class="ck-txt">Confirmar disponibilidad de estacionamiento o zona de carga</div></div></div>
-      <div class="ck-item"><div class="ck-num">15</div><div><div class="ck-txt">Definir equipo de entrega: cuántas personas se necesitan</div><div class="ck-sub">Muebles grandes: mínimo 3 personas.</div></div></div>
-      <div class="ck-item"><div class="ck-num">16</div><div><div class="ck-txt">Preparar herramientas: desarmador, taladro, nivel, cinta métrica</div></div></div>
+    <div class="div" style="margin:12px 0"></div>
+    <div style="font-size:9px;font-weight:700;color:var(--cold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">COORDINACIÓN</div>
+    <div class="g3">
+      <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Confirmar fecha y hora exacta con el cliente (rango de 2h máx.)</div></div></div>
+      <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Confirmar nombre y teléfono de quien recibe</div></div></div>
+      <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Preparar herramientas: desarmador, taladro, nivel, cinta métrica</div></div></div>
     </div>
   </div>
-
-  <!-- DURANTE -->
-  <div class="card mb14">
-    <div class="phase-tag phase-dur">🚚 FASE DURANTE LA ENTREGA</div>
-    <div class="disp mb12" style="font-size:16px">EN EL MOMENTO DE LA ENTREGA</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+  <div class="card mb12">
+    <div class="phase-tag phase-dur">🚚 DURANTE LA ENTREGA</div>
+    <div class="g2">
       <div>
-        <div style="font-size:10px;font-weight:700;color:var(--hot);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">LLEGADA Y DESCARGA</div>
-        <div class="ck-item"><div class="ck-num">1</div><div><div class="ck-txt">Avisar al cliente con 20 minutos de anticipación</div></div></div>
-        <div class="ck-item"><div class="ck-num">2</div><div><div class="ck-txt">Proteger pisos y paredes del recorrido con cartón o mantas</div><div class="ck-sub">Responsabilidad de H&C durante el traslado interno.</div></div></div>
-        <div class="ck-item"><div class="ck-num">3</div><div><div class="ck-txt">Descargar en orden — primero las piezas que entran al fondo</div></div></div>
-        <div class="ck-item"><div class="ck-num">4</div><div><div class="ck-txt">No arrastrar — siempre levantar o usar deslizadores</div></div></div>
-        <div class="ck-item"><div class="ck-num">5</div><div><div class="ck-txt">Si algo no entra: PARAR. No forzar. Llamar al responsable de H&C.</div><div class="ck-sub">Forzar puede dañar el mueble, paredes o accesos.</div></div></div>
+        <div style="font-size:9px;font-weight:700;color:var(--hot);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">LLEGADA Y DESCARGA</div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Avisar al cliente con 20 minutos de anticipación</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Proteger pisos y paredes del recorrido con cartón o mantas</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Descargar en orden — primero piezas que van al fondo</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">No arrastrar — siempre levantar o usar deslizadores</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt" style="color:var(--err);font-weight:600">Si algo no entra: PARAR. No forzar. Llamar al responsable.</div></div></div>
       </div>
       <div>
-        <div style="font-size:10px;font-weight:700;color:var(--hot);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">INSTALACIÓN Y VERIFICACIÓN</div>
-        <div class="ck-item"><div class="ck-num">6</div><div><div class="ck-txt">Instalar según el plano aprobado — no improvisar posición</div></div></div>
-        <div class="ck-item"><div class="ck-num">7</div><div><div class="ck-txt">Verificar nivel en muebles de TV, estanterías y escritorios</div></div></div>
-        <div class="ck-item"><div class="ck-num">8</div><div><div class="ck-txt">Verificar funcionamiento: cajones, puertas, bisagras</div></div></div>
-        <div class="ck-item"><div class="ck-num">9</div><div><div class="ck-txt">Limpiar el área después de la instalación</div></div></div>
-        <div class="ck-item"><div class="ck-num">10</div><div><div class="ck-txt">Fotografiar resultado final instalado — antes de que firme el cliente</div></div></div>
+        <div style="font-size:9px;font-weight:700;color:var(--hot);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">INSTALACIÓN</div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Instalar según el plano aprobado — no improvisar posición</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Verificar nivel en TV, estanterías y escritorios</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Verificar funcionamiento: cajones, puertas, bisagras</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Limpiar el área después de instalar</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Fotografiar resultado final instalado antes de que el cliente firme</div></div></div>
       </div>
     </div>
   </div>
-
-  <!-- POST -->
   <div class="card">
-    <div class="phase-tag phase-post">✅ FASE POST-ENTREGA</div>
-    <div class="disp mb12" style="font-size:16px">DESPUÉS DE LA ENTREGA</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div class="phase-tag phase-post">✅ POST-ENTREGA</div>
+    <div class="g2 mb12">
       <div>
-        <div style="font-size:10px;font-weight:700;color:var(--ok);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">CIERRE EN SITIO</div>
-        <div class="ck-item"><div class="ck-num">1</div><div><div class="ck-txt">Recorrido final con el cliente — verificar cada pieza juntos</div></div></div>
-        <div class="ck-item"><div class="ck-num">2</div><div><div class="ck-txt">El cliente firma la ficha de conformidad de entrega</div><div class="ck-sub">Sin firma, la entrega no está completa.</div></div></div>
-        <div class="ck-item"><div class="ck-num">3</div><div><div class="ck-txt">Entregar manual de cuidado del mobiliario</div></div></div>
-        <div class="ck-item"><div class="ck-num">4</div><div><div class="ck-txt">Recoger todos los empaques y residuos</div></div></div>
+        <div style="font-size:9px;font-weight:700;color:var(--ok);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">CIERRE EN SITIO</div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Recorrido final con el cliente — verificar cada pieza juntos</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt" style="font-weight:600">El cliente firma la ficha de conformidad — sin firma no hay entrega completa</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Entregar manual de cuidado del mobiliario</div></div></div>
+        <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Recoger todos los empaques y residuos</div></div></div>
       </div>
       <div>
-        <div style="font-size:10px;font-weight:700;color:var(--ok);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">SEGUIMIENTO</div>
-        <div class="ck-item"><div class="ck-num">5</div><div><div class="ck-txt">Mensaje al cliente 1 semana después: ¿cómo va todo?</div></div></div>
-        <div class="ck-item"><div class="ck-num">6</div><div><div class="ck-txt">Documentar el caso en el sistema (Post-Entrega del dashboard)</div></div></div>
-        <div class="ck-item"><div class="ck-num">7</div><div><div class="ck-txt">Fotografías profesionales del espacio terminado para portafolio</div></div></div>
-        <div class="ck-item"><div class="ck-num">8</div><div><div class="ck-txt">A los 30 días: solicitar testimonio o referido si el cliente está satisfecho</div></div></div>
+        <div style="font-size:9px;font-weight:700;color:var(--ok);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">CUIDADOS POR TIPO DE MUEBLE</div>
+        <div class="ck-item"><div class="ck-num" style="font-size:11px;color:var(--cold)">TV</div><div><div class="ck-txt">No exponer al sol directo. Limpiar con paño seco suave. Revisar bisagras cada 6 meses.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:11px;color:var(--cold)">ESC</div><div><div class="ck-txt">Nivelar siempre. No apoyar objetos calientes. Limpiar derrames inmediatamente.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:11px;color:var(--cold)">TAP</div><div><div class="ck-txt">Aspirar antes de limpiar. Manchas: de afuera hacia adentro, nunca frotar.</div></div></div>
+        <div class="ck-item"><div class="ck-num" style="font-size:11px;color:var(--cold)">CLO</div><div><div class="ck-txt">No superar carga máxima. Verificar anclaje a pared cada año.</div></div></div>
       </div>
     </div>
-
     <div class="div"></div>
-    <div style="background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:12px;font-size:12px;color:#fca5a5">
-      🔴 <strong>Ficha de conformidad obligatoria:</strong> El cliente debe firmar antes de que el equipo se retire. Si hay observaciones, se registran en la misma ficha y se da un plazo máximo de 5 días para resolverlas.
+    <div style="font-size:9px;font-weight:700;color:var(--ok);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">SEGUIMIENTO POST-ENTREGA</div>
+    <div class="g3">
+      <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">1 semana: mensaje "¿cómo va todo?"</div></div></div>
+      <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">Registrar en Post-Entrega del dashboard</div></div></div>
+      <div class="ck-item"><input type="checkbox" style="accent-color:var(--hot);flex-shrink:0;margin-top:2px"><div><div class="ck-txt">30 días: fotos profesionales + solicitar testimonio</div></div></div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════ INSTALACIÓN ═══════════ -->
-<div id="sec-instalacion" class="sec">
-  <div class="stitle">Cuidados para Instalación de Mobiliario</div>
-  <div class="ssub">Guía para el equipo y para entregar al cliente después de la instalación.</div>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-    <div class="card">
-      <div class="disp mb10" style="font-size:16px;color:var(--cold)">MUEBLES DE TV / ENTRETENIMIENTO</div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Verificar que la pared soporte el peso del soporte + TV</div><div class="ck-sub">Pared de drywall requiere anclajes especiales en parantes.</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Los cables deben quedar ocultos antes de la entrega final</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">No exponer al sol directo — decolora lacas y chapas</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Limpiar con paño suave seco o levemente húmedo — sin químicos</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Revisar bisagras y correderas cada 6 meses</div></div></div>
-    </div>
-    <div class="card">
-      <div class="disp mb10" style="font-size:16px;color:var(--cold)">ESCRITORIOS Y MESAS</div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Nivelar siempre — una superficie desnivelada fuerza las uniones</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">No apoyar objetos calientes directamente — usar posavasos o base</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Evitar humedad excesiva — afecta el MDF y la madera natural</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Limpiar derrames inmediatamente — especialmente en melamina</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">No arrastrar por el piso — levantar siempre para mover</div></div></div>
-    </div>
-    <div class="card">
-      <div class="disp mb10" style="font-size:16px;color:var(--cold)">MUEBLES TAPIZADOS / SILLAS</div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Aspirar regularmente antes de limpiar con paño</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Manchas: limpiar de afuera hacia adentro, nunca frotar</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Tela: producto neutro diluido. Cuero: crema específica para cuero.</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Mantener alejado de fuentes de calor directo</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Revisar patas y tornillos cada 3 meses</div></div></div>
-    </div>
-    <div class="card">
-      <div class="disp mb10" style="font-size:16px;color:var(--cold)">CLOSETS Y ESTANTERÍAS</div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">No superar la carga máxima por estante (indicada en ficha técnica)</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Distribuir el peso uniformemente — no concentrar en un solo estante</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Verificar anclaje a pared cada año — especialmente en zonas sísmicas</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">Correderas de cajones: aplicar cera de parafina si chirrían</div></div></div>
-      <div class="ck-item"><div class="ck-num">→</div><div><div class="ck-txt">No mojar la parte inferior — el MDF hincha con humedad</div></div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════ KPIs ═══════════ -->
+<!-- ══════════ KPIs ══════════ -->
 <div id="sec-kpis" class="sec">
-  <div class="stitle">KPIs de Hot and Cold Studio</div>
-  <div class="ssub">Los números que realmente importan para saber si el estudio va bien. Actualizarlos cada semana.</div>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px">
-
+  <div class="sh"><div class="stitle">KPIs del Estudio</div><div class="ssub">Los números que realmente importan. Actualizarlos cada semana en Ajustes.</div></div>
+  <div class="g3 mb14">
     <div class="card" style="border-top:3px solid var(--hot)">
-      <div class="disp mb2" style="font-size:13px;color:var(--hot)">COMERCIALES</div>
-      <div style="font-size:10px;color:var(--muted);margin-bottom:12px">Medir cada mes</div>
-      <div class="ck-item"><div class="ck-num">1</div><div><div class="ck-txt"><strong>Tasa de conversión</strong></div><div class="ck-sub">Propuestas cerradas ÷ propuestas enviadas × 100. Meta: ≥30%</div></div></div>
-      <div class="ck-item"><div class="ck-num">2</div><div><div class="ck-txt"><strong>Ticket promedio por proyecto</strong></div><div class="ck-sub">Ingresos totales ÷ proyectos cerrados. Meta: ≥S/8,000</div></div></div>
+      <div class="disp mb2" style="font-size:14px;color:var(--hot)">COMERCIALES</div>
+      <div class="muted mb10" style="font-size:10px">Medir cada mes</div>
+      <div class="ck-item"><div class="ck-num">1</div><div><div class="ck-txt"><strong>Tasa de conversión</strong></div><div class="ck-sub">Cerrados ÷ propuestas enviadas × 100. Meta: ≥30%</div></div></div>
+      <div class="ck-item"><div class="ck-num">2</div><div><div class="ck-txt"><strong>Ticket promedio</strong></div><div class="ck-sub">Ingresos ÷ proyectos cerrados. Meta: ≥S/8,000</div></div></div>
       <div class="ck-item"><div class="ck-num">3</div><div><div class="ck-txt"><strong>Tiempo de cierre</strong></div><div class="ck-sub">Días desde primer contacto hasta firma. Meta: ≤21 días</div></div></div>
-      <div class="ck-item"><div class="ck-num">4</div><div><div class="ck-txt"><strong>Costo de adquisición (CAC)</strong></div><div class="ck-sub">Gasto en BNI + marketing ÷ nuevos clientes. Meta: menor que ticket promedio</div></div></div>
-      <div class="ck-item"><div class="ck-num">5</div><div><div class="ck-txt"><strong>Valor de vida del cliente (LTV)</strong></div><div class="ck-sub">Cuánto genera un cliente en todos sus proyectos con H&C</div></div></div>
-      <div class="ck-item"><div class="ck-num">6</div><div><div class="ck-txt"><strong>% de proyectos por referido</strong></div><div class="ck-sub">Proyectos de referido ÷ total. Meta: ≥40%</div></div></div>
+      <div class="ck-item"><div class="ck-num">4</div><div><div class="ck-txt"><strong>CAC — Costo de adquisición</strong></div><div class="ck-sub">Gasto BNI + marketing ÷ nuevos clientes</div></div></div>
+      <div class="ck-item"><div class="ck-num">5</div><div><div class="ck-txt"><strong>LTV — Valor de vida del cliente</strong></div><div class="ck-sub">Ingresos totales de un cliente en todos sus proyectos</div></div></div>
+      <div class="ck-item"><div class="ck-num">6</div><div><div class="ck-txt"><strong>% proyectos por referido</strong></div><div class="ck-sub">Meta: ≥40% del total</div></div></div>
     </div>
-
     <div class="card" style="border-top:3px solid var(--cold)">
-      <div class="disp mb2" style="font-size:13px;color:var(--cold)">OPERATIVOS</div>
-      <div style="font-size:10px;color:var(--muted);margin-bottom:12px">Medir por proyecto</div>
-      <div class="ck-item"><div class="ck-num">1</div><div><div class="ck-txt"><strong>Cumplimiento de plazo</strong></div><div class="ck-sub">% de fases entregadas en la fecha acordada. Meta: ≥85%</div></div></div>
-      <div class="ck-item"><div class="ck-num">2</div><div><div class="ck-txt"><strong>Margen neto por proyecto</strong></div><div class="ck-sub">(Ingresos - costos directos) ÷ ingresos. Meta: ≥45%</div></div></div>
-      <div class="ck-item"><div class="ck-num">3</div><div><div class="ck-txt"><strong>Horas por proyecto</strong></div><div class="ck-sub">Horas reales vs horas cotizadas. Detecta si están regalando tiempo.</div></div></div>
-      <div class="ck-item"><div class="ck-num">4</div><div><div class="ck-txt"><strong>N° de cambios por proyecto</strong></div><div class="ck-sub">Cambios fuera de alcance. Meta: ≤2 por proyecto</div></div></div>
-      <div class="ck-item"><div class="ck-num">5</div><div><div class="ck-txt"><strong>Incidencias en entrega</strong></div><div class="ck-sub">Problemas de acceso, daños, re-entregas. Meta: 0 por protocolo.</div></div></div>
-      <div class="ck-item"><div class="ck-num">6</div><div><div class="ck-txt"><strong>Satisfacción del cliente (1-10)</strong></div><div class="ck-sub">Preguntarlo siempre en el check-in de 1 mes. Meta: ≥9</div></div></div>
+      <div class="disp mb2" style="font-size:14px;color:var(--cold)">OPERATIVOS</div>
+      <div class="muted mb10" style="font-size:10px">Medir por proyecto</div>
+      <div class="ck-item"><div class="ck-num">1</div><div><div class="ck-txt"><strong>Cumplimiento de plazo</strong></div><div class="ck-sub">Fases entregadas a tiempo. Meta: ≥85%</div></div></div>
+      <div class="ck-item"><div class="ck-num">2</div><div><div class="ck-txt"><strong>Margen neto por proyecto</strong></div><div class="ck-sub">(Ingresos - costos) ÷ ingresos. Meta: ≥45%</div></div></div>
+      <div class="ck-item"><div class="ck-num">3</div><div><div class="ck-txt"><strong>Horas reales vs cotizadas</strong></div><div class="ck-sub">Detecta si están regalando tiempo sin cobrar</div></div></div>
+      <div class="ck-item"><div class="ck-num">4</div><div><div class="ck-txt"><strong>Cambios fuera de alcance</strong></div><div class="ck-sub">Meta: ≤2 por proyecto sin cobro adicional</div></div></div>
+      <div class="ck-item"><div class="ck-num">5</div><div><div class="ck-txt"><strong>Incidencias en entrega</strong></div><div class="ck-sub">Problemas de acceso, daños, re-entregas. Meta: 0</div></div></div>
+      <div class="ck-item"><div class="ck-num">6</div><div><div class="ck-txt"><strong>Satisfacción del cliente (1-10)</strong></div><div class="ck-sub">Preguntarlo en el check-in de 1 mes. Meta: ≥9</div></div></div>
     </div>
-
     <div class="card" style="border-top:3px solid var(--ok)">
-      <div class="disp mb2" style="font-size:13px;color:var(--ok)">POSICIONAMIENTO</div>
-      <div style="font-size:10px;color:var(--muted);margin-bottom:12px">Medir cada mes</div>
-      <div class="ck-item"><div class="ck-num">1</div><div><div class="ck-txt"><strong>Seguidores en Instagram</strong></div><div class="ck-sub">Crecimiento mensual. Meta: +50/mes mínimo</div></div></div>
+      <div class="disp mb2" style="font-size:14px;color:var(--ok)">POSICIONAMIENTO</div>
+      <div class="muted mb10" style="font-size:10px">Medir cada mes</div>
+      <div class="ck-item"><div class="ck-num">1</div><div><div class="ck-txt"><strong>Crecimiento IG</strong></div><div class="ck-sub">Nuevos seguidores por mes. Meta: +50/mes mínimo</div></div></div>
       <div class="ck-item"><div class="ck-num">2</div><div><div class="ck-txt"><strong>Engagement rate</strong></div><div class="ck-sub">(Likes + comentarios) ÷ seguidores × 100. Meta: ≥3%</div></div></div>
-      <div class="ck-item"><div class="ck-num">3</div><div><div class="ck-txt"><strong>Consistencia de publicación</strong></div><div class="ck-sub">Posts publicados ÷ posts planificados. Meta: ≥80%</div></div></div>
-      <div class="ck-item"><div class="ck-num">4</div><div><div class="ck-txt"><strong>Vistas del portafolio web</strong></div><div class="ck-sub">Visitas mensuales a hotandcoldstudio.myportfolio.com</div></div></div>
+      <div class="ck-item"><div class="ck-num">3</div><div><div class="ck-txt"><strong>Consistencia de publicación</strong></div><div class="ck-sub">Posts publicados ÷ planificados. Meta: ≥80%</div></div></div>
+      <div class="ck-item"><div class="ck-num">4</div><div><div class="ck-txt"><strong>Vistas del portafolio web</strong></div><div class="ck-sub">Visitas mensuales — actualizar en Ajustes</div></div></div>
       <div class="ck-item"><div class="ck-num">5</div><div><div class="ck-txt"><strong>ROI de BNI</strong></div><div class="ck-sub">Ingresos desde BNI ÷ cuota anual. Meta: ≥3×</div></div></div>
-      <div class="ck-item"><div class="ck-num">6</div><div><div class="ck-txt"><strong>Casos de éxito documentados</strong></div><div class="ck-sub">Proyectos con métricas reales publicados. Meta: 1 por trimestre</div></div></div>
+      <div class="ck-item"><div class="ck-num">6</div><div><div class="ck-txt"><strong>Casos de éxito documentados</strong></div><div class="ck-sub">Con métricas reales publicados. Meta: 1 por trimestre</div></div></div>
     </div>
   </div>
-
-  <div class="card" style="border-left:3px solid var(--warn)">
-    <div class="disp mb6" style="font-size:14px;color:var(--warn)">⚠️ SEÑALES DE ALERTA — ACTUAR DE INMEDIATO</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <div class="ck-item"><div class="ck-num">!</div><div><div class="ck-txt">Conversión por debajo del 10% durante 2 meses seguidos</div></div></div>
-      <div class="ck-item"><div class="ck-num">!</div><div><div class="ck-txt">Ningún proyecto cerrado en 45 días</div></div></div>
-      <div class="ck-item"><div class="ck-num">!</div><div><div class="ck-txt">Margen neto por debajo del 30% en 2 proyectos seguidos</div></div></div>
-      <div class="ck-item"><div class="ck-num">!</div><div><div class="ck-txt">Más de 3 cambios fuera de alcance sin cobrar en un proyecto</div></div></div>
-      <div class="ck-item"><div class="ck-num">!</div><div><div class="ck-txt">Cero publicaciones en Instagram por 2 semanas</div></div></div>
-      <div class="ck-item"><div class="ck-num">!</div><div><div class="ck-txt">ROI de BNI menor a 1× después de 3 meses</div></div></div>
+  <div class="card" style="border-left:3px solid var(--err)">
+    <div class="disp mb8" style="font-size:14px;color:var(--err)">⚠️ SEÑALES DE ALERTA — ACTUAR DE INMEDIATO</div>
+    <div class="g2">
+      <div class="ck-item"><div class="ck-num" style="color:var(--err)">!</div><div><div class="ck-txt">Conversión por debajo del 10% durante 2 meses seguidos</div></div></div>
+      <div class="ck-item"><div class="ck-num" style="color:var(--err)">!</div><div><div class="ck-txt">Ningún proyecto cerrado en 45 días</div></div></div>
+      <div class="ck-item"><div class="ck-num" style="color:var(--err)">!</div><div><div class="ck-txt">Margen neto por debajo del 30% en 2 proyectos seguidos</div></div></div>
+      <div class="ck-item"><div class="ck-num" style="color:var(--err)">!</div><div><div class="ck-txt">Más de 3 cambios fuera de alcance sin cobrar en un proyecto</div></div></div>
+      <div class="ck-item"><div class="ck-num" style="color:var(--err)">!</div><div><div class="ck-txt">Cero publicaciones en Instagram 2 semanas seguidas</div></div></div>
+      <div class="ck-item"><div class="ck-num" style="color:var(--err)">!</div><div><div class="ck-txt">ROI de BNI menor a 1× después de 3 meses activos</div></div></div>
     </div>
   </div>
 </div>
 
-</div><!-- /main -->
+<!-- ══════════ MODALES ══════════ -->
+<div class="overlay" id="m-accion"><div class="modal">
+  <div class="mtitle">Nueva Acción</div>
+  <div class="msub">¿Cierra una prioridad activa o abre una nueva? Solo agrega si es lo segundo.</div>
+  <div class="fg"><label class="fl">¿Qué hay que hacer?</label><input class="fi" id="ac-txt" placeholder="Ej: Llamar al lead X para entender por qué no cerró la propuesta"></div>
+  <div class="fg"><label class="fl">¿Quién lo hace?</label><select class="fsel" id="ac-res"><option>Jhunior</option><option>Daniela</option><option>Nick</option><option>Jhunior + Daniela</option><option>Los 3</option></select></div>
+  <div class="fg"><label class="fl">¿Para cuándo?</label><input class="fi" type="date" id="ac-dl"></div>
+  <div class="fc gap8"><button class="btn bh bsm" onclick="addAccion()">Agregar</button><button class="btn bg bsm" onclick="cerrarM('m-accion')">Cancelar</button></div>
+</div></div>
+
+<div class="overlay" id="m-op"><div class="modal">
+  <div class="mtitle">Nueva Oportunidad</div>
+  <div class="msub">Agrega cualquier persona o empresa que podría contratarlos — aunque todavía no haya nada concreto.</div>
+  <div class="g2">
+    <div class="fg"><label class="fl">Empresa o nombre</label><span class="fh">¿A quién le van a diseñar?</span><input class="fi" id="op-nom" placeholder="Ej: Tienda Mango, San Isidro"></div>
+    <div class="fg"><label class="fl">Persona de contacto</label><span class="fh">¿Con quién hablan?</span><input class="fi" id="op-con" placeholder="Ej: María — Gerente"></div>
+  </div>
+  <div class="g2">
+    <div class="fg"><label class="fl">Tipo de proyecto</label><span class="fh">¿Qué tipo de espacio?</span><select class="fsel" id="op-seg"><option>Retail / Local comercial</option><option>Corporativo / Oficina</option><option>Restaurante / Café</option><option>Residencial</option><option>Stand / Evento</option><option>Diagnóstico / Consultoría</option><option>Otro</option></select></div>
+    <div class="fg"><label class="fl">¿Cómo llegó este contacto?</label><select class="fsel" id="op-can"><option>BNI</option><option>Referido</option><option>Instagram</option><option>UPC</option><option>Portafolio web</option><option>Otro</option></select></div>
+  </div>
+  <div class="g2">
+    <div class="fg"><label class="fl">Valor estimado (S/)</label><span class="fh">Aproximado, no tiene que ser exacto</span><input class="fi" type="number" id="op-mon" placeholder="5000"></div>
+    <div class="fg"><label class="fl">¿En qué punto están?</label><select class="fsel" id="op-eta"><option value="lead">Primer contacto — apenas lo conocí</option><option value="reunion">Reunión agendada o hecha</option><option value="propuesta">Propuesta ya enviada</option></select></div>
+  </div>
+  <div class="fg"><label class="fl">Contexto y próximos pasos</label><textarea class="fta" id="op-not" placeholder="¿Qué necesita? ¿Qué dijo? ¿Qué sigue?"></textarea></div>
+  <div class="fc gap8"><button class="btn bh bsm" onclick="addOp()">Registrar</button><button class="btn bg bsm" onclick="cerrarM('m-op')">Cancelar</button></div>
+</div></div>
+
+<div class="overlay" id="m-op-edit"><div class="modal">
+  <div class="mtitle">Editar Oportunidad</div>
+  <div class="msub">Actualiza el estado cada vez que algo cambie.</div>
+  <input type="hidden" id="oe-id">
+  <div class="g2">
+    <div class="fg"><label class="fl">Empresa</label><input class="fi" id="oe-nom"></div>
+    <div class="fg"><label class="fl">Contacto</label><input class="fi" id="oe-con"></div>
+  </div>
+  <div class="g2">
+    <div class="fg"><label class="fl">Tipo de proyecto</label><select class="fsel" id="oe-seg"><option>Retail / Local comercial</option><option>Corporativo / Oficina</option><option>Restaurante / Café</option><option>Residencial</option><option>Stand / Evento</option><option>Diagnóstico / Consultoría</option><option>Otro</option></select></div>
+    <div class="fg"><label class="fl">Valor estimado (S/)</label><input class="fi" type="number" id="oe-mon"></div>
+  </div>
+  <div class="fg"><label class="fl">Estado actual</label>
+    <select class="fsel" id="oe-eta" onchange="togglePerdido()">
+      <option value="lead">Primer contacto</option><option value="reunion">Reunión agendada</option>
+      <option value="propuesta">Propuesta enviada</option><option value="cerrado">Proyecto cerrado ✓</option>
+      <option value="perdido">No avanzó</option>
+    </select>
+  </div>
+  <div class="fg" id="mot-row" style="display:none">
+    <label class="fl">¿Por qué no avanzó?</label>
+    <span class="fh">Esto es crítico — es lo que activa el diagnóstico de conversión</span>
+    <select class="fsel" id="oe-mot">
+      <option>Precio muy alto</option><option>Eligió otro estudio</option><option>Sin presupuesto ahora</option>
+      <option>Proyecto pausado indefinidamente</option><option>No contestó más</option>
+      <option>Solo quería diseño sin ejecución</option><option>Otro</option>
+    </select>
+  </div>
+  <div class="fg"><label class="fl">Notas actualizadas</label><textarea class="fta" id="oe-not"></textarea></div>
+  <div class="fc gap8"><button class="btn bh bsm" onclick="updateOp()">Guardar cambios</button><button class="btn bd bsm" onclick="deleteOp()">Eliminar</button><button class="btn bg bsm" onclick="cerrarM('m-op-edit')">Cancelar</button></div>
+</div></div>
+
+<div class="overlay" id="m-bni"><div class="modal">
+  <div class="mtitle">Reunión 1:1 BNI</div>
+  <div class="msub">Registra cada reunión individual que tengas — no el evento del martes en sí, sino las reuniones privadas con otros miembros.</div>
+  <div class="g2">
+    <div class="fg"><label class="fl">¿Cuándo fue?</label><input class="fi" type="date" id="bn-fec"></div>
+    <div class="fg"><label class="fl">Nombre del contacto</label><input class="fi" id="bn-con" placeholder="Juan Pérez"></div>
+  </div>
+  <div class="g2">
+    <div class="fg"><label class="fl">Empresa</label><input class="fi" id="bn-emp" placeholder="Empresa S.A.C."></div>
+    <div class="fg"><label class="fl">¿Salió algo concreto?</label><select class="fsel" id="bn-ref"><option value="no">No por ahora</option><option value="si">Sí — referido concreto</option><option value="potencial">Potencial, hay interés</option></select></div>
+  </div>
+  <div class="fg"><label class="fl">¿Qué necesita esta persona?</label><textarea class="fta" id="bn-opp" placeholder="¿Tiene algún local o empresa que podría necesitar diseño? ¿Conoce a alguien?"></textarea></div>
+  <div class="fg"><label class="fl">¿Qué sigue?</label><input class="fi" id="bn-not" placeholder="Ej: Escribirle en 2 semanas cuando termine su remodelación actual"></div>
+  <div class="fc gap8"><button class="btn bh bsm" onclick="addBni()">Guardar</button><button class="btn bg bsm" onclick="cerrarM('m-bni')">Cancelar</button></div>
+</div></div>
+
+<div class="overlay" id="m-post"><div class="modal">
+  <div class="mtitle">Planificar Post</div>
+  <div class="msub">Planifica antes de publicar. Si no sabes qué vas a decir, no es momento de publicar.</div>
+  <div class="g2">
+    <div class="fg"><label class="fl">¿Qué día?</label><select class="fsel" id="po-dia"><option value="lunes">Lunes — Portfolio H&C</option><option value="miercoles">Miércoles — Expert View</option><option value="viernes">Viernes — Behind the Trident</option></select></div>
+    <div class="fg"><label class="fl">Semana (lunes de esa semana)</label><input class="fi" type="date" id="po-sem"></div>
+  </div>
+  <div class="fg"><label class="fl">¿De qué trata?</label><textarea class="fta" id="po-desc" placeholder="Ej: Remodelación de tienda de ropa — mostramos cómo rediseñamos el flujo de entrada para aumentar el tiempo de permanencia"></textarea></div>
+  <div class="fg"><label class="fl">Caption (opcional — puedes generarlo con IA arriba)</label><textarea class="fta" id="po-cap" style="min-height:80px"></textarea></div>
+  <div class="fc gap8"><button class="btn bc bsm" onclick="addPost()">Guardar</button><button class="btn bg bsm" onclick="cerrarM('m-post')">Cancelar</button></div>
+</div></div>
+
+<div class="overlay" id="m-pv"><div class="modal">
+  <div class="mtitle">Proyecto Entregado</div>
+  <div class="msub">Registra el proyecto cuando lo terminas y entregas. El sistema te avisará cuándo hacer cada seguimiento.</div>
+  <div class="g2">
+    <div class="fg"><label class="fl">Cliente / Empresa</label><input class="fi" id="pv-cli"></div>
+    <div class="fg"><label class="fl">Nombre del proyecto</label><input class="fi" id="pv-pro" placeholder="Ej: Rediseño tienda Mango San Isidro"></div>
+  </div>
+  <div class="g2">
+    <div class="fg"><label class="fl">Fecha de entrega</label><input class="fi" type="date" id="pv-fec"></div>
+    <div class="fg"><label class="fl">Monto final cobrado (S/)</label><input class="fi" type="number" id="pv-mon"></div>
+  </div>
+  <div class="fg"><label class="fl">Tipo de proyecto</label><select class="fsel" id="pv-seg"><option>Retail / Local comercial</option><option>Corporativo / Oficina</option><option>Restaurante / Café</option><option>Residencial</option><option>Stand / Evento</option></select></div>
+  <div class="fg"><label class="fl">Resultado logrado / notas</label><textarea class="fta" id="pv-not" placeholder="Ej: Cliente muy satisfecho. Las ventas subieron ~30% la primera semana. Tienen planeado un segundo local."></textarea></div>
+  <div class="fc gap8"><button class="btn bh bsm" onclick="addPV()">Registrar</button><button class="btn bg bsm" onclick="cerrarM('m-pv')">Cancelar</button></div>
+</div></div>
 
 <script>
+// ═══════════════════════════════════════
+// CONSTANTES
+// ═══════════════════════════════════════
+const KEY='hc_v4';
+const FASES={1:'Ordenar la oferta',2:'Productos de entrada',3:'Construir autoridad',4:'Escalar con red'};
+const PITCHES=[
+  {t:`"En Hot and Cold Studio no empezamos preguntando qué color te gusta, sino qué quieres que la gente sienta cuando pasa frente a tu negocio. Pensamos en tres cosas: dónde mira la gente, dónde se detiene y qué los hace volver. No solo diseñamos locales comerciales — diseñamos espacios que se quedan en la memoria de tus clientes."`,w:false},
+  {t:`"¿Sabías que el 70% de los locales comerciales pierden clientes en los primeros 3 segundos? En Hot and Cold Studio diseñamos escaparates y entradas que convierten miradas en pisadas y pisadas en ventas. No decoramos — ingeniamos flujos de compra. Si tu local no vende solo, hablemos."`,w:false},
+  {t:`"Hace 3 meses un café en Miraflores vendía S/800 al día. Rediseñamos su barra, su zona de espera y su iluminación. Hoy vende S/1,400. En Hot and Cold Studio no cambiamos muebles — cambiamos el comportamiento de tus clientes."`,w:true},
+  {t:`"Si buscas un diseñador que te pregunte tu color favorito, no somos nosotros. En Hot and Cold Studio empezamos preguntando: ¿cuánto vendes hoy? ¿Cuánto quieres vender? Y diseñamos el espacio que cierra esa brecha. Somos ingenieros de retail, no decoradores."`,w:false},
+  {t:`"Enseñamos diseño de espacios comerciales en la UPC. Nuestros 3 socios tienen maestrías en UX, diseño gráfico y diseño industrial. En Hot and Cold Studio cada decisión estética tiene una justificación científica. Diseñamos con evidencia, no con intuición."`,w:false}
+];
+const RUTA=[
+  {id:1,name:'Ordenar la oferta',color:'var(--hot)',obj:'Claridad comercial antes de salir a vender',
+   hitos:[
+    {id:'f1_1',label:'El posicionamiento está definido y escrito',auto:s=>true,tipo:'auto'},
+    {id:'f1_2',label:'Al menos 2 oportunidades perdidas con motivo documentado',auto:s=>s.ops.filter(o=>o.etapa==='perdido'&&o.motivoPerdida).length>=2,tipo:'auto',tip:'En Oportunidades, cambia el estado a "No avanzó" y elige el motivo.'},
+    {id:'f1_3',label:'Pipeline activo con 3 o más oportunidades registradas',auto:s=>s.ops.filter(o=>['lead','reunion','propuesta'].includes(o.etapa)).length>=3,tipo:'auto',tip:'Agrega tus oportunidades actuales en la sección Oportunidades.'},
+    {id:'f1_4',label:'Números base completados en Ajustes',auto:s=>s.m.ig>0&&s.m.ticket>0&&s.m.props>0,tipo:'auto',tip:'Completa los campos numéricos en la sección Ajustes.'},
+    {id:'f1_5',label:'Al menos 1 reunión BNI registrada',auto:s=>(s.bni.r||[]).length>=1,tipo:'auto',tip:'Registra tu próxima reunión 1:1 en la sección BNI.'},
+    {id:'f1_6',label:'Las 3 líneas de servicio están clarificadas internamente',tipo:'manual'},
+    {id:'f1_7',label:'El Diagnóstico Express está definido como producto vendible',tipo:'manual'},
+  ]},
+  {id:2,name:'Productos de entrada',color:'var(--cold)',obj:'Bajar la barrera para que clientes entren por servicios menores',
+   hitos:[
+    {id:'f2_1',label:'Primer diagnóstico o consultoría vendido y cobrado',auto:s=>s.ops.some(o=>o.etapa==='cerrado'&&(o.seg==='Diagnóstico / Consultoría'||o.nombre?.toLowerCase().includes('diagnós'))),tipo:'auto',tip:'Regístralo en Oportunidades con tipo "Diagnóstico / Consultoría" y estado cerrado.'},
+    {id:'f2_2',label:'Tasa de conversión supera el 20%',auto:s=>{const t=s.ops.filter(o=>['cerrado','perdido'].includes(o.etapa));return t.length>=3&&t.filter(o=>o.etapa==='cerrado').length/t.length>=0.2},tipo:'auto'},
+    {id:'f2_3',label:'5 o más reuniones BNI acumuladas',auto:s=>(s.bni.r||[]).length>=5,tipo:'auto'},
+    {id:'f2_4',label:'Plantilla de Brief Estratégico lista para enviar',tipo:'manual'},
+    {id:'f2_5',label:'Precios definidos y en formato enviable al cliente',tipo:'manual'},
+  ]},
+  {id:3,name:'Construir autoridad',color:'var(--purple)',obj:'Contenido que explica estrategia — no solo renders',
+   hitos:[
+    {id:'f3_1',label:'1,000 o más seguidores en Instagram',auto:s=>s.m.ig>=1000,tipo:'auto',tip:'Actualiza los seguidores en Ajustes cuando lleguen a 1K.'},
+    {id:'f3_2',label:'12 o más posts publicados con metodología explicada',auto:s=>(s.social.posts||[]).filter(p=>p.status==='publicado').length>=12,tipo:'auto'},
+    {id:'f3_3',label:'3 o más proyectos cerrados documentados',auto:s=>s.ops.filter(o=>o.etapa==='cerrado').length>=3,tipo:'auto'},
+    {id:'f3_4',label:'Un caso de éxito con métricas reales publicado',tipo:'manual'},
+    {id:'f3_5',label:'Una charla, taller o workshop dado',tipo:'manual'},
+    {id:'f3_6',label:'Conversión igual o mayor al 30%',auto:s=>{const t=s.ops.filter(o=>['cerrado','perdido'].includes(o.etapa));return t.length>=5&&t.filter(o=>o.etapa==='cerrado').length/t.length>=0.3},tipo:'auto'},
+  ]},
+  {id:4,name:'Escalar con red',color:'var(--ok)',obj:'Más proyectos sin más carga operativa propia',
+   hitos:[
+    {id:'f4_1',label:'Red de 3 o más implementadores aliados activos',tipo:'manual'},
+    {id:'f4_2',label:'2 o más proyectos simultáneos en curso',auto:s=>s.ops.filter(o=>['reunion','propuesta'].includes(o.etapa)).length>=2,tipo:'auto'},
+    {id:'f4_3',label:'Ticket promedio igual o mayor a S/8,000',auto:s=>{const c=s.ops.filter(o=>o.etapa==='cerrado');return c.length>0&&c.reduce((a,o)=>a+(Number(o.monto)||0),0)/c.length>=8000},tipo:'auto'},
+    {id:'f4_4',label:'Ingresos recurrentes establecidos con al menos un cliente',tipo:'manual'},
+    {id:'f4_5',label:'Un cliente que contrató 2 o más proyectos',auto:s=>{const c={};s.ops.filter(o=>o.etapa==='cerrado').forEach(o=>{c[o.nombre]=(c[o.nombre]||0)+1});return Object.values(c).some(v=>v>=2)},tipo:'auto'},
+  ]}
+];
+
+// ═══════════════════════════════════════
+// ESTADO
+// ═══════════════════════════════════════
+function getS(){const s=localStorage.getItem(KEY);return s?JSON.parse(s):defS()}
+function defS(){return{
+  m:{props:2,cerr:0,ticket:5000,ig:972,igPosts:115,bniCuota:0,fase:1},
+  acciones:[
+    {id:1,txt:'Diagnosticar por qué las 2 propuestas no convirtieron',res:'Jhunior + Daniela',dl:'',done:false},
+    {id:2,txt:'Definir pitch rotativo para las próximas 4 semanas de BNI',res:'Jhunior',dl:'',done:false},
+    {id:3,txt:'Completar los números base en Ajustes',res:'Los 3',dl:'',done:false},
+  ],
+  ops:[],bni:{pitchIdx:0,r:[]},social:{posts:[],wOff:0},pv:[],roadManual:{},
+  lastAnalisis:null,cfg:{fbUrl:'',apiKey:''}
+}}
+function save(s){localStorage.setItem(KEY,JSON.stringify(s))}
+
+// ═══════════════════════════════════════
+// FIREBASE
+// ═══════════════════════════════════════
+let syncSt='off';
+function setSS(s,msg){
+  syncSt=s;
+  const d=document.getElementById('sync-dot'),l=document.getElementById('sync-lbl');
+  d.className='sync-dot '+(s==='ok'?'ok':s==='syn'?'syn':s==='err'?'err':'');
+  l.textContent=msg||{ok:'Sincronizado',syn:'Sincronizando...',err:'Error Firebase',off:'Sin Firebase'}[s]||s;
+}
+function fbBase(){return(getS().cfg.fbUrl||'').trim().replace(/\/+$/,'')}
+
+async function push(key){
+  const base=fbBase();if(!base)return;
+  setSS('syn');
+  const s=getS();
+  const data={
+    ops:s.ops,bni:s.bni.r||[],posts:s.social.posts||[],pv:s.pv||[],
+    acciones:s.acciones||[],roadManual:s.roadManual||{},metrics:s.m
+  }[key];
+  if(data===undefined)return;
+  try{
+    await fetch(`${base}/hc/${key}.json`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    setSS('ok');
+  }catch(e){setSS('err')}
+}
+
+async function sync(manual=false){
+  const base=fbBase();
+  if(!base){setSS('off');return}
+  setSS('syn');
+  try{
+    const r=await fetch(`${base}/hc.json?t=${Date.now()}`);
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    const rem=await r.json();
+    if(!rem){setSS('ok');return}
+    const s=getS();let ch=false;
+    if(Array.isArray(rem.ops)){s.ops=rem.ops.map(o=>({...o,monto:Number(o.monto)||0}));ch=true}
+    if(Array.isArray(rem.bni)){s.bni.r=rem.bni;ch=true}
+    if(Array.isArray(rem.posts)){s.social.posts=rem.posts;ch=true}
+    if(Array.isArray(rem.pv)){s.pv=rem.pv;ch=true}
+    if(Array.isArray(rem.acciones)){s.acciones=rem.acciones;ch=true}
+    if(rem.roadManual&&typeof rem.roadManual==='object'){s.roadManual=rem.roadManual;ch=true}
+    if(rem.metrics&&typeof rem.metrics==='object'){
+      ['props','cerr','ticket','ig','igPosts','bniCuota','fase'].forEach(k=>{if(rem.metrics[k]!==undefined)s.m[k]=rem.metrics[k]});ch=true;
+    }
+    if(ch)save(s);
+    setSS('ok');
+    if(manual){const nb=document.querySelector('.nb.on');if(nb)nb.click()}
+  }catch(e){setSS('err')}
+}
+
+async function probarFB(){
+  const url=document.getElementById('cfg-fb').value.trim().replace(/\/+$/,'');
+  const el=document.getElementById('fb-test'),st=document.getElementById('fb-status');
+  if(!url){el.textContent='Ingresa la URL primero.';el.style.color='var(--err)';return}
+  el.textContent='Probando...';el.style.color='var(--warn)';
+  try{
+    await fetch(`${url}/hc/ping.json`,{method:'PUT',headers:{'Content-Type':'application/json'},body:'"ok"'});
+    const r=await fetch(`${url}/hc/ping.json`);
+    const d=await r.json();
+    if(d==='ok'){
+      el.innerHTML='✓ Conexión exitosa. Firebase funciona correctamente.';el.style.color='var(--ok)';
+      st.textContent='Conectado';st.className='badge bgo';
+      guardarConfig();sync(true);
+    }else{el.textContent='Respuesta inesperada.';el.style.color='var(--err)'}
+  }catch(e){
+    el.innerHTML='Error: '+e.message+'<br><span style="color:var(--muted);font-size:10px">Verifica que las reglas de Firebase permitan lectura y escritura pública.</span>';
+    el.style.color='var(--err)';
+  }
+}
+
+// ═══════════════════════════════════════
 // NAV
+// ═══════════════════════════════════════
 function ir(id,btn){
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   document.getElementById('sec-'+id).classList.add('on');
   if(btn)btn.classList.add('on');
+  render(id);
+}
+function abrirM(id){document.getElementById(id).classList.add('open')}
+function cerrarM(id){document.getElementById(id).classList.remove('open')}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')}));
+function render(id){
+  ({inicio:renderInicio,oportunidades:renderOps,bni:renderBNI,redes:renderRedes,
+    herramientas:renderTools,seguimiento:renderPV,ruta:renderRuta,analisis:renderAnalisis,config:cargarConfig})[id]?.();
 }
 
-// TIPO CONTRATO
+// evalRuta y siguientePaso definidas al final del script (versión correcta)
+
+// ═══════════════════════════════════════
+// PATRONES
+// ═══════════════════════════════════════
+function detectarPatrones(s){
+  const p=[];
+  const ops=s.ops||[];
+  const cerr=ops.filter(o=>o.etapa==='cerrado');
+  const perd=ops.filter(o=>o.etapa==='perdido');
+  const act=ops.filter(o=>['lead','reunion','propuesta'].includes(o.etapa));
+  const conRes=ops.filter(o=>['cerrado','perdido'].includes(o.etapa));
+
+  if(conRes.length>=2){
+    const conv=Math.round(cerr.length/conRes.length*100);
+    p.push({tipo:conv>=30?'ok':conv>=10?'warn':'err',icon:'📊',
+      titulo:`Conversión: ${conv}%`,
+      texto:`${cerr.length} cerrado(s) de ${conRes.length} con resultado. ${conv<20?'Urgente — analizar por qué no están cerrando.':'Buen ritmo, mantenerlo.'}`});
+  }else if(conRes.length===0){
+    p.push({tipo:'err',icon:'🚨',titulo:'Sin datos de conversión',
+      texto:'Tienes propuestas activas pero ninguna marcada como cerrada o perdida. Actualiza el estado de cada oportunidad para activar el diagnóstico.'});
+  }
+
+  const segs={};
+  ops.forEach(o=>{if(!segs[o.seg])segs[o.seg]={t:0,c:0};segs[o.seg].t++;if(o.etapa==='cerrado')segs[o.seg].c++});
+  const topSeg=Object.entries(segs).filter(([_,v])=>v.t>=2).sort((a,b)=>(b[1].c/b[1].t)-(a[1].c/a[1].t))[0];
+  if(topSeg){const[seg,v]=topSeg;p.push({tipo:'insight',icon:'🎯',titulo:`Mejor tipo de proyecto: ${seg}`,texto:`${Math.round(v.c/v.t*100)}% de conversión (${v.c} de ${v.t}). Priorizarlo en el pipeline.`})}
+
+  const cans={};cerr.forEach(o=>{cans[o.canal]=(cans[o.canal]||0)+1});
+  const topCan=Object.entries(cans).sort((a,b)=>b[1]-a[1])[0];
+  if(topCan)p.push({tipo:'insight',icon:'📡',titulo:`Canal que más cierra: ${topCan[0]}`,texto:`Ha generado ${topCan[1]} cierre(s). Invertir más energía aquí.`});
+
+  const mots={};perd.forEach(o=>{if(o.motivoPerdida)mots[o.motivoPerdida]=(mots[o.motivoPerdida]||0)+1});
+  const topMot=Object.entries(mots).sort((a,b)=>b[1]-a[1])[0];
+  if(topMot&&topMot[1]>=2)p.push({tipo:'warn',icon:'⚠️',titulo:`Fricción repetida: "${topMot[0]}"`,texto:`Aparece en ${topMot[1]} oportunidades perdidas. Requiere acción concreta — no se va a resolver solo.`});
+
+  const posts=s.social.posts||[];
+  const pub=posts.filter(p=>p.status==='publicado');
+  if(posts.length>0){
+    const cons=Math.round(pub.length/posts.length*100);
+    p.push({tipo:cons>=70?'ok':cons>=40?'warn':'err',icon:'📱',titulo:`Consistencia en Instagram: ${cons}%`,texto:`${pub.length} de ${posts.length} posts publicados. ${cons<50?'Baja consistencia — el algoritmo penaliza esto.':'Buen ritmo de publicación.'}`});
+  }else{
+    p.push({tipo:'warn',icon:'📱',titulo:'Sin posts planificados',texto:'Ve a Instagram y planifica los posts de la semana (lunes, miércoles, viernes).'});
+  }
+
+  const bniSem=(s.bni.r||[]).filter(r=>new Date(r.fecha)>=getLunes(0));
+  if(bniSem.length<2)p.push({tipo:'warn',icon:'🤝',titulo:`BNI: ${bniSem.length}/2 reuniones esta semana`,texto:`Meta: 2 reuniones 1:1 por semana. ${bniSem.length===0?'No se registró ninguna aún.':'Falta una más.'}`});
+
+  const bniCuota=s.m.bniCuota;
+  const bniCerr=cerr.filter(o=>o.canal==='BNI').reduce((t,o)=>t+(Number(o.monto)||0),0);
+  if(bniCuota>0){
+    const roi=Math.round(bniCerr/bniCuota*100);
+    p.push({tipo:roi>=300?'ok':roi>=100?'warn':'err',icon:'💰',titulo:`ROI BNI: ${roi}%`,texto:`S/${bniCerr.toLocaleString()} generado vs S/${bniCuota}/mes. ${roi<100?'BNI aún no es rentable para el estudio.':'Positivo.'}`});
+  }
+
+  const pvPend=(s.pv||[]).filter(p=>{
+    const d=Math.floor((new Date()-new Date(p.fechaEntrega||p.fecha))/(86400000));
+    return(!p.ci1&&d>=7)||(!p.ci2&&d>=30)||(!p.ci3&&d>=90)||(!p.ref&&d>=45);
+  });
+  if(pvPend.length>0)p.push({tipo:'warn',icon:'✉️',titulo:`${pvPend.length} seguimiento(s) pendiente(s)`,texto:'Hay clientes entregados con check-ins atrasados. Los referidos vienen de ahí.'});
+
+  return p.slice(0,8);
+}
+function tarjetaPatron(p){
+  const col={ok:'var(--ok)',warn:'var(--warn)',err:'var(--err)',insight:'var(--cold)'};
+  const bg={ok:'bgo',warn:'bgw',err:'bge',insight:'bgc'};
+  const lbl={ok:'Positivo',warn:'Atención',err:'Crítico',insight:'Insight'};
+  return`<div class="ptcard"><div class="pticon">${p.icon}</div><div style="flex:1">
+    <span class="badge ${bg[p.tipo]||'bgm'}" style="margin-bottom:4px">${lbl[p.tipo]||p.tipo}</span>
+    <div class="pttitle">${p.titulo}</div><div class="pttext">${p.texto}</div>
+  </div></div>`;
+}
+
+// ═══════════════════════════════════════
+// INICIO
+// ═══════════════════════════════════════
+function renderInicio(){
+  const s=getS();const m=s.m;
+  const conv=m.props>0?Math.round((m.cerr/m.props)*100):0;
+  const fase=s.m.fase||1;
+
+  document.getElementById('hdr-fase').textContent='Fase '+fase+' — '+FASES[fase];
+  document.getElementById('k-conv').textContent=conv+'%';
+  document.getElementById('k-conv').closest('.kpi').className='kpi '+(conv>=30?'ko':conv>=10?'kw':'ke');
+  document.getElementById('k-props').textContent=m.props;
+  document.getElementById('k-ticket').textContent='S/'+(m.ticket>=1000?(m.ticket/1000).toFixed(0)+'K':m.ticket);
+  document.getElementById('k-ig').textContent=m.ig.toLocaleString();
+  document.getElementById('k-igp').textContent=m.igPosts+' posts';
+  const act=s.ops.filter(o=>['lead','reunion','propuesta'].includes(o.etapa));
+  document.getElementById('k-pipe').textContent='S/'+act.reduce((t,o)=>t+(Number(o.monto)||0),0).toLocaleString();
+
+  const alrts=[];
+  if(conv===0&&m.props>=2)alrts.push(`<div class="alr ae">🔴 <strong>Problema urgente:</strong> enviaste ${m.props} propuestas y no cerró ninguna. Antes de buscar más clientes, hay que entender por qué. Ve a Oportunidades y marca las que se perdieron con su motivo.</div>`);
+  if(bniSemana(s).length===0)alrts.push(`<div class="alr aw">⏰ Sin reuniones BNI registradas esta semana. Meta: 2 antes del próximo martes.</div>`);
+  const pvPend=(s.pv||[]).filter(p=>{const d=Math.floor((new Date()-new Date(p.fechaEntrega||p.fecha))/(86400000));return(!p.ci1&&d>=7)||(!p.ci2&&d>=30)||(!p.ci3&&d>=90)||(!p.ref&&d>=45);});
+  if(pvPend.length>0)alrts.push(`<div class="alr aw">✉️ ${pvPend.length} seguimiento(s) atrasado(s) a clientes entregados. Ve a Post-Entrega.</div>`);
+  document.getElementById('inicio-alerts').innerHTML=alrts.join('');
+
+  renderAcciones();
+
+  const ev=evalRuta(s);const ns=siguientePaso(s,ev);
+  const nsEl=document.getElementById('ns-inicio');
+  if(ns&&!ns.todoDone){
+    nsEl.innerHTML=`<div class="nsbox" style="height:100%">
+      <div class="disp mb4" style="font-size:13px;color:var(--hot)">🔥 LO QUE SIGUE</div>
+      <div class="muted mb4" style="font-size:10px;text-transform:uppercase;letter-spacing:.8px">Fase ${ns.fase} — ${ns.faseName}</div>
+      <div style="font-weight:600;font-size:14px;margin-bottom:6px;line-height:1.5">${ns.hito.label}</div>
+      ${ns.hito.tip?`<div style="font-size:11px;color:var(--cold)">→ ${ns.hito.tip}</div>`:''}
+      <div style="font-size:10px;color:var(--muted);margin-top:6px">${ns.hito.tipo==='auto'?'🤖 Se activa automáticamente cuando registres los datos':'✏️ Márcalo tú cuando esté listo en Hoja de Ruta'}</div>
+    </div>`;
+  }else if(ns?.todoDone&&ns.sigFase){
+    nsEl.innerHTML=`<div class="nsbox" style="height:100%"><div class="disp mb4" style="font-size:13px;color:var(--ok)">✅ FASE ${ns.fase} COMPLETA</div><div style="font-size:13px">Listos para avanzar a <strong>Fase ${ns.sigFase}: ${ns.sigFaseName}</strong>. Actualiza la etapa en Ajustes.</div></div>`;
+  }
+
+  const total=RUTA.reduce((t,f)=>t+f.hitos.length,0);
+  const done=RUTA.reduce((t,f)=>t+ev[f.id].done,0);
+  const pct=Math.round(done/total*100);
+  document.getElementById('mini-ruta').innerHTML=`
+    <div class="fb mb10"><div><div class="disp" style="font-size:14px">PROGRESO HACIA LA META</div><div class="muted" style="font-size:10px">Hoja de Ruta completa — 4 etapas</div></div><span class="disp hot" style="font-size:28px">${pct}%</span></div>
+    <div class="pb mb10"><div class="pbf" style="width:${pct}%"></div></div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+      ${RUTA.map(f=>{const e=ev[f.id];const cur=f.id===s.m.fase;
+        return`<div style="text-align:center;padding:8px;background:var(--s2);border-radius:6px;border:1px solid ${cur?'rgba(255,90,31,.3)':'var(--border)'}">
+          <div style="font-size:9px;color:${cur?'var(--hot)':'var(--muted)'};font-weight:700;text-transform:uppercase;margin-bottom:3px">Etapa ${f.id}</div>
+          <div class="disp" style="font-size:22px;color:${e.pct>=100?'var(--ok)':cur?'var(--hot)':'var(--muted)'}">${e.pct}%</div>
+          <div style="font-size:9px;color:var(--muted)">${e.done}/${e.total} logros</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+
+  const pats=detectarPatrones(s).slice(0,3);
+  document.getElementById('inicio-patrones').innerHTML=pats.length?pats.map(tarjetaPatron).join(''):'<div class="empty-state" style="padding:20px"><div class="empty-desc">Agrega datos en Oportunidades, BNI e Instagram para que el sistema detecte patrones.</div></div>';
+}
+
+// ═══════════════════════════════════════
+// ACCIONES
+// ═══════════════════════════════════════
+function renderAcciones(){
+  const s=getS();
+  const el=document.getElementById('acc-list');
+  if(!el)return;
+  if(!s.acciones.length){el.innerHTML='<div class="muted" style="font-size:12px;padding:6px">Sin acciones pendientes.</div>';return}
+  el.innerHTML=s.acciones.map(a=>`
+    <div style="display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)">
+      <input type="checkbox" ${a.done?'checked':''} style="accent-color:var(--hot);margin-top:3px;flex-shrink:0" onchange="toggleAcc(${a.id})">
+      <div style="flex:1">
+        <div style="font-size:12px;${a.done?'text-decoration:line-through;color:var(--muted)':''}">${a.txt}</div>
+        <div style="font-size:10px;color:var(--muted)">${a.res}${a.dl?' · '+a.dl:''}</div>
+      </div>
+      <button onclick="delAcc(${a.id})" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:0 2px;line-height:1">×</button>
+    </div>`).join('');
+}
+function addAccion(){
+  const txt=document.getElementById('ac-txt').value.trim();if(!txt)return;
+  const s=getS();
+  s.acciones.push({id:Date.now(),txt,res:document.getElementById('ac-res').value,dl:document.getElementById('ac-dl').value,done:false});
+  save(s);push('acciones');renderAcciones();cerrarM('m-accion');
+  document.getElementById('ac-txt').value='';
+}
+function toggleAcc(id){const s=getS();const a=s.acciones.find(x=>x.id==id);if(a)a.done=!a.done;save(s);push('acciones');renderAcciones()}
+function delAcc(id){const s=getS();s.acciones=s.acciones.filter(x=>x.id!=id);save(s);push('acciones');renderAcciones()}
+
+// ═══════════════════════════════════════
+// OPORTUNIDADES
+// ═══════════════════════════════════════
+function renderOps(){
+  const s=getS();
+  const cols={lead:[],reunion:[],propuesta:[],cerrado:[],perdido:[]};
+  s.ops.forEach(o=>{if(cols[o.etapa])cols[o.etapa].push(o)});
+  Object.keys(cols).forEach(k=>{
+    const el=document.getElementById('col-'+k);if(!el)return;
+    el.innerHTML=cols[k].map(o=>`<div class="kcard" onclick="editOp(${o.id})">
+      <div class="kn">${o.nombre}</div>
+      <div class="km">${o.seg||''}</div>
+      <div class="km fc gap4" style="margin-top:3px">
+        <span style="color:var(--hot);font-weight:700">${o.monto?'S/'+Number(o.monto).toLocaleString():'-'}</span>
+        <span>· ${o.canal||''}</span>
+      </div>
+      ${o.motivoPerdida?`<div style="color:var(--err);font-size:9px;margin-top:2px">${o.motivoPerdida}</div>`:''}
+    </div>`).join('')||`<div class="empty-state" style="padding:12px"><div style="font-size:10px;color:var(--border)">vacío</div></div>`;
+  });
+
+  const conRes=s.ops.filter(o=>['cerrado','perdido'].includes(o.etapa));
+  const cerr=s.ops.filter(o=>o.etapa==='cerrado');
+  const conv=conRes.length>0?Math.round(cerr.length/conRes.length*100):0;
+  const alEl=document.getElementById('op-alerta');
+  if(conv===0&&conRes.length===0)alEl.innerHTML=`<div class="alr ai">💡 Registra el resultado de tus propuestas activas (cerrado o no avanzó) para activar el diagnóstico de conversión.</div>`;
+  else if(conv===0&&conRes.length>0)alEl.innerHTML=`<div class="alr ae">🔍 ${conRes.length} resultado(s) registrados y ninguno cerró. Mira los motivos abajo y actúa sobre el patrón.</div>`;
+  else alEl.innerHTML=`<div class="alr ao">✅ Conversión actual: ${conv}% (${cerr.length} de ${conRes.length}).</div>`;
+
+  const mots={};s.ops.filter(o=>o.etapa==='perdido').forEach(o=>{if(o.motivoPerdida)mots[o.motivoPerdida]=(mots[o.motivoPerdida]||0)+1});
+  const topMots=Object.entries(mots).sort((a,b)=>b[1]-a[1]).slice(0,4);
+  document.getElementById('op-motivos').innerHTML=topMots.length?topMots.map(([m,c])=>`<div class="fb" style="padding:3px 0;border-bottom:1px solid var(--s2)"><span>${m}</span><span class="hot" style="font-weight:700">${c}×</span></div>`).join(''):'<span class="muted">Sin datos aún. Registra por qué no avanzan.</span>';
+
+  const segs={};s.ops.forEach(o=>{if(!segs[o.seg])segs[o.seg]={t:0,c:0};segs[o.seg].t++;if(o.etapa==='cerrado')segs[o.seg].c++});
+  const top=Object.entries(segs).filter(([_,v])=>v.t>=2).sort((a,b)=>(b[1].c/b[1].t)-(a[1].c/a[1].t))[0];
+  document.getElementById('op-seg').innerHTML=top?`<span class="badge bgc">${top[0]}</span><br><span class="muted" style="font-size:11px">${Math.round(top[1].c/top[1].t*100)}% conversión</span>`:'<span class="muted">Necesitas al menos 2 oportunidades por tipo para ver tendencias.</span>';
+
+  document.getElementById('op-total').textContent='S/'+s.ops.filter(o=>['lead','reunion','propuesta'].includes(o.etapa)).reduce((t,o)=>t+(Number(o.monto)||0),0).toLocaleString();
+}
+function addOp(){
+  const nom=document.getElementById('op-nom').value.trim();if(!nom)return alert('Escribe el nombre de la empresa o persona.');
+  const s=getS();
+  s.ops.push({id:Date.now(),nombre:nom,contacto:document.getElementById('op-con').value,
+    seg:document.getElementById('op-seg').value,canal:document.getElementById('op-can').value,
+    monto:Number(document.getElementById('op-mon').value)||0,
+    etapa:document.getElementById('op-eta').value.split(' ')[0]||'lead',
+    notas:document.getElementById('op-not').value,motivoPerdida:'',fecha:hoy()});
+  save(s);push('ops');renderOps();cerrarM('m-op');
+  ['op-nom','op-con','op-mon','op-not'].forEach(id=>document.getElementById(id).value='');
+}
+function editOp(id){
+  const s=getS();const o=s.ops.find(x=>x.id==id);if(!o)return;
+  document.getElementById('oe-id').value=o.id;
+  document.getElementById('oe-nom').value=o.nombre;
+  document.getElementById('oe-con').value=o.contacto||'';
+  document.getElementById('oe-seg').value=o.seg||'Retail / Local comercial';
+  document.getElementById('oe-mon').value=o.monto||'';
+  document.getElementById('oe-eta').value=o.etapa;
+  document.getElementById('oe-mot').value=o.motivoPerdida||'Precio muy alto';
+  document.getElementById('oe-not').value=o.notas||'';
+  togglePerdido();abrirM('m-op-edit');
+}
+function togglePerdido(){document.getElementById('mot-row').style.display=document.getElementById('oe-eta').value==='perdido'?'block':'none'}
+document.getElementById('oe-eta').addEventListener('change',togglePerdido);
+function updateOp(){
+  const id=document.getElementById('oe-id').value;const s=getS();const o=s.ops.find(x=>x.id==id);if(!o)return;
+  o.nombre=document.getElementById('oe-nom').value;o.contacto=document.getElementById('oe-con').value;
+  o.seg=document.getElementById('oe-seg').value;o.monto=Number(document.getElementById('oe-mon').value)||0;
+  o.etapa=document.getElementById('oe-eta').value;o.notas=document.getElementById('oe-not').value;
+  o.motivoPerdida=o.etapa==='perdido'?document.getElementById('oe-mot').value:'';
+  save(s);push('ops');renderOps();cerrarM('m-op-edit');
+}
+function deleteOp(){if(!confirm('¿Eliminar esta oportunidad?'))return;const id=document.getElementById('oe-id').value;const s=getS();s.ops=s.ops.filter(x=>x.id!=id);save(s);push('ops');renderOps();cerrarM('m-op-edit')}
+
+// ═══════════════════════════════════════
+// BNI
+// ═══════════════════════════════════════
+function bniSemana(s){return(s.bni.r||[]).filter(r=>new Date(r.fecha)>=getLunes(0))}
+function cambiaPitch(){
+  const idx=parseInt(document.getElementById('pitch-sel').value);
+  const p=PITCHES[idx];
+  document.getElementById('pitch-txt').textContent=p.t;
+  document.getElementById('pitch-warn').style.display=p.w?'flex':'none';
+  const s=getS();s.bni.pitchIdx=idx;save(s);
+}
+function renderBNI(){
+  const s=getS();
+  document.getElementById('pitch-sel').value=s.bni.pitchIdx||0;cambiaPitch();
+  document.getElementById('bni-cuota-v').textContent=s.m.bniCuota?'S/'+s.m.bniCuota:'S/—';
+  const bniCerr=s.ops.filter(o=>o.etapa==='cerrado'&&o.canal==='BNI').reduce((t,o)=>t+(Number(o.monto)||0),0);
+  document.getElementById('bni-cierres').textContent='S/'+bniCerr.toLocaleString();
+  const sem=bniSemana(s);
+  document.getElementById('bni-cnt').textContent=sem.length;
+  document.getElementById('bni-pf').style.width=Math.min(100,sem.length/2*100)+'%';
+  document.getElementById('bni-tot').textContent=(s.bni.r||[]).length+' reuniones';
+  const all=[...(s.bni.r||[])].sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  const tbody=document.getElementById('bni-tbody');
+  const empty=document.getElementById('bni-empty');
+  if(!all.length){tbody.innerHTML='';empty.style.display='flex';empty.style.flexDirection='column';return}
+  empty.style.display='none';
+  tbody.innerHTML=all.map(r=>`<tr>
+    <td>${r.fecha}</td><td style="font-weight:600">${r.contacto}</td><td>${r.empresa||'-'}</td>
+    <td style="max-width:160px;font-size:11px">${r.opp||'-'}</td>
+    <td><span class="badge ${r.ref==='si'?'bgo':r.ref==='potencial'?'bgw':'bgm'}">${r.ref==='si'?'Sí':r.ref==='potencial'?'Potencial':'No'}</span></td>
+    <td class="muted" style="font-size:11px">${r.notas||'-'}</td>
+    <td><button class="btn bg bsm" onclick="delBni(${r.id})" style="padding:2px 6px">×</button></td>
+  </tr>`).join('');
+}
+function addBni(){
+  const s=getS();if(!s.bni.r)s.bni.r=[];
+  s.bni.r.push({id:Date.now(),fecha:document.getElementById('bn-fec').value||hoy(),
+    contacto:document.getElementById('bn-con').value.trim()||'Sin nombre',
+    empresa:document.getElementById('bn-emp').value,ref:document.getElementById('bn-ref').value,
+    opp:document.getElementById('bn-opp').value,notas:document.getElementById('bn-not').value});
+  save(s);push('bni');renderBNI();cerrarM('m-bni');
+  ['bn-con','bn-emp','bn-opp','bn-not'].forEach(id=>document.getElementById(id).value='');
+}
+function delBni(id){const s=getS();s.bni.r=(s.bni.r||[]).filter(r=>r.id!=id);save(s);push('bni');renderBNI()}
+
+// ═══════════════════════════════════════
+// REDES
+// ═══════════════════════════════════════
+const DIAS_POST={lunes:{label:'Portfolio H&C',color:'var(--hot)'},miercoles:{label:'Expert View',color:'var(--cold)'},viernes:{label:'Behind the Trident',color:'var(--ok)'}};
+const DN=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+const DK=['lunes','martes','miercoles','jueves','viernes','sabado','domingo'];
+function getLunes(off){const d=new Date();const day=d.getDay();const diff=d.getDate()-day+(day===0?-6:1)+(off*7);const n=new Date(d);n.setDate(diff);return n}
+function hoy(){return new Date().toISOString().split('T')[0]}
+
+function renderRedes(){
+  const s=getS();
+  const off=s.social.wOff||0;
+  const lun=getLunes(off);const lunStr=lun.toISOString().split('T')[0];
+  const fin=new Date(lun);fin.setDate(fin.getDate()+6);
+  document.getElementById('sem-lbl').textContent=lun.toLocaleDateString('es-PE',{day:'numeric',month:'short'})+' — '+fin.toLocaleDateString('es-PE',{day:'numeric',month:'short'});
+  document.getElementById('ig-seg').textContent=s.m.ig;document.getElementById('ig-posts').textContent=s.m.igPosts;
+  const semPosts=(s.social.posts||[]).filter(p=>p.semana===lunStr);
+  const td=hoy();
+  document.getElementById('cal-grid').innerHTML=DK.map((dk,i)=>{
+    const dt=new Date(lun);dt.setDate(dt.getDate()+i);const dts=dt.toISOString().split('T')[0];
+    const tipo=DIAS_POST[dk];const post=semPosts.find(p=>p.dia===dk);const esHoy=dts===td;
+    const cls='calday'+(post?(post.status==='publicado'?' pub':' plan'):(tipo?' plan':''))+(esHoy?' hoy':'');
+    return`<div class="${cls}">
+      <div class="caldayn">${DN[i]} ${dt.getDate()}</div>
+      ${tipo?`<div style="font-size:8px;font-weight:700;color:${tipo.color};margin-bottom:2px">${tipo.label}</div>`:''}
+      ${post?`<div style="font-size:9px;line-height:1.3;margin-bottom:3px">${post.desc||''}</div>
+        <span class="badge ${post.status==='publicado'?'bgo':'bgc'}" style="font-size:8px">${post.status==='publicado'?'✓ Pub':'Planif.'}</span>
+        <button onclick="togglePost(${post.id})" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:9px;margin-left:4px">${post.status==='publicado'?'↩':'✓'}</button>`
+      :(tipo?`<div style="font-size:8px;color:var(--muted)">Sin planificar</div>`:'<div style="font-size:8px;color:var(--border)">Libre</div>')}
+    </div>`;
+  }).join('');
+
+  document.querySelectorAll('.pck').forEach(ck=>{
+    ck.onchange=function(){
+      const tot=document.querySelectorAll('.pck').length;
+      const ok=document.querySelectorAll('.pck:checked').length;
+      const el=document.getElementById('ck-res');
+      el.textContent=ok===tot?'✅ Listo para publicar.':ok+'/'+tot+' criterios marcados';
+      el.style.color=ok===tot?'var(--ok)':'var(--muted)';
+    };
+  });
+}
+function cambiarSemana(n){const s=getS();s.social.wOff=(s.social.wOff||0)+n;save(s);renderRedes()}
+function addPost(){
+  const s=getS();if(!s.social.posts)s.social.posts=[];
+  const lun=getLunes(s.social.wOff||0);
+  s.social.posts.push({id:Date.now(),semana:lun.toISOString().split('T')[0],
+    dia:document.getElementById('po-dia').value,desc:document.getElementById('po-desc').value,
+    caption:document.getElementById('po-cap').value,status:'planificado'});
+  save(s);push('posts');renderRedes();cerrarM('m-post');
+  ['po-desc','po-cap'].forEach(id=>document.getElementById(id).value='');
+}
+function togglePost(id){const s=getS();const p=(s.social.posts||[]).find(x=>x.id==id);if(p){p.status=p.status==='publicado'?'planificado':'publicado';save(s);push('posts');renderRedes()}}
+
+// ═══════════════════════════════════════
+// CAPTION IA
+// ═══════════════════════════════════════
+async function generarCaption(){
+  const s=getS();const key=s.cfg.apiKey;
+  if(!key){alert('Agrega tu API Key en Ajustes primero.');return}
+  const det=document.getElementById('ai-det').value.trim();if(!det){alert('Describe de qué trata el post.');return}
+  const btn=document.getElementById('ai-btn');const out=document.getElementById('ai-out');const cp=document.getElementById('ai-copy');
+  btn.innerHTML='<span class="spin">⟳</span> Generando...';btn.disabled=true;
+  out.style.display='block';out.textContent='...';
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:
+        `Eres el estratega de contenido de Hot and Cold Studio, Lima, Perú. Posicionamiento: "Ayudamos a marcas a convertir su espacio en una herramienta de posicionamiento, experiencia y venta."
+Tipo: ${document.getElementById('ai-tipo').value}. Tema: ${det}. Tono: ${document.getElementById('ai-tono').value}.
+Reglas: explica el por qué estratégico del diseño, no solo cómo se ve. CTA claro. 150-220 palabras. Máx 3 emojis. 5-7 hashtags al final. Nunca "decoramos". Solo el caption, sin introducción.`
+      }]})});
+    const d=await r.json();
+    out.textContent=d.content?.[0]?.text||'Error.';cp.style.display='block';
+  }catch(e){out.textContent='Error: '+e.message}
+  btn.innerHTML='✦ Generar';btn.disabled=false;
+}
+function copiarAI(){navigator.clipboard.writeText(document.getElementById('ai-out').textContent).then(()=>{const b=document.getElementById('ai-copy');b.textContent='✓ Copiado';setTimeout(()=>b.textContent='Copiar',2000)})}
+
+// ═══════════════════════════════════════
+// HERRAMIENTAS
+// ═══════════════════════════════════════
+function tool(id,btn){
+  document.querySelectorAll('.tool-p').forEach(p=>p.style.display='none');
+  document.getElementById('tool-'+id).style.display='block';
+  document.querySelectorAll('#tool-tabs .btn').forEach(b=>b.className='btn bg bsm');
+  btn.className='btn bh bsm';
+}
+function renderTools(){renderCron();renderPropCk();renderContrato()}
+
+const RATES={retail:{b:[28,42],m:[42,62],a:[62,95]},corp:{b:[32,48],m:[48,72],a:[72,115]},rest:{b:[32,52],m:[52,78],a:[78,125]},resi:{b:[38,62],m:[62,95],a:[95,155]}};
+function calcPres(){
+  const tipo=document.getElementById('pt').value;const m2=parseFloat(document.getElementById('pm').value)||0;
+  const comp=document.getElementById('pc').value;const ejec=document.getElementById('pe').value;
+  const res=document.getElementById('pres-res');
+  if(tipo==='diag'){res.style.display='block';document.getElementById('pres-range').textContent='S/800 — S/2,500';document.getElementById('pres-nota').textContent='Diagnóstico de fricción. Producto de entrada al ecosistema H&C.';document.getElementById('pres-det').innerHTML='';return}
+  if(!m2){res.style.display='none';return}
+  const rate=RATES[tipo][comp];
+  let lo=Math.round(m2*rate[0]),hi=Math.round(m2*rate[1]);
+  if(ejec==='s'){lo=Math.round(lo*1.6);hi=Math.round(hi*1.7)}
+  res.style.display='block';
+  document.getElementById('pres-range').textContent=`S/${lo.toLocaleString()} — S/${hi.toLocaleString()}`;
+  document.getElementById('pres-nota').textContent=ejec==='s'?'Diseño + ejecución (llave en mano).':'Solo diseño. Si el neto es menor a S/5,000 requiere aprobación interna.';
+  document.getElementById('pres-det').innerHTML=`
+    <div style="background:var(--s1);border-radius:4px;padding:8px"><div class="muted" style="font-size:9px;text-transform:uppercase">Tarifa/m²</div><div style="font-weight:600;font-size:13px">S/${rate[0]}–S/${rate[1]}</div></div>
+    <div style="background:var(--s1);border-radius:4px;padding:8px"><div class="muted" style="font-size:9px;text-transform:uppercase">Metros</div><div style="font-weight:600;font-size:13px">${m2} m²</div></div>
+    <div style="background:var(--s1);border-radius:4px;padding:8px"><div class="muted" style="font-size:9px;text-transform:uppercase">Complejidad</div><div style="font-weight:600;font-size:13px">${{b:'Básico',m:'Medio',a:'Alto'}[comp]}</div></div>`;
+}
+
+const EMAILS=[
+  {t:'📩 Seguimiento a propuesta',a:'Seguimiento — Propuesta [Empresa] / H&C Studio',b:`Hola [Nombre],\n\nEspero estés bien. Te escribo para hacer seguimiento a la propuesta que te enviamos el [fecha].\n\nEstamos listos para comenzar cuando lo decidas. Si tienes alguna duda sobre el alcance o el proceso, con gusto la resolvemos en 15 minutos por videollamada.\n\n¿Tienes disponibilidad esta semana?\n\nSaludos,\n[Tu nombre]\nHot and Cold Studio`},
+  {t:'🎉 Bienvenida al cliente',a:'¡Empezamos! — Proyecto [Empresa]',b:`Hola [Nombre],\n\nNos alegra mucho comenzar este proyecto juntos.\n\nEsto es lo que sigue:\n1. Kick-off: [fecha y hora]\n2. Diagnóstico de fricción: [duración aprox]\n3. Primeros entregables: [fecha]\n\nNos comunicaremos principalmente por [canal] y tendremos revisiones cada [frecuencia].\n\n¡Vamos con todo!\n[Tu nombre] · Hot and Cold Studio`},
+  {t:'📅 Primera reunión',a:'Reunión inicial — Hot and Cold Studio',b:`Hola [Nombre],\n\nSoy [nombre] de Hot and Cold Studio. Diseñamos espacios comerciales y corporativos que convierten marca en experiencia y venta — no solo decoramos.\n\nMe gustaría conocer tu proyecto y entender qué resultado estás buscando.\n\n¿Tienes 30 minutos?\n— [Día opción 1]\n— [Día opción 2]\n\n[Tu nombre]\nhotandcoldstudio.myportfolio.com`},
+  {t:'🏁 Entrega del proyecto',a:'Entrega final — Proyecto [Nombre] ✓',b:`Hola [Nombre],\n\nEl proyecto fue completado y entregado en su totalidad.\n\nEntregables:\n- [Entregable 1]\n- [Entregable 2]\n\nEncuentras los archivos en: [link]\n\nEn los próximos días haremos seguimiento para confirmar que todo esté funcionando como esperabas.\n\nFue un placer trabajar contigo.\n[Tu nombre] · Hot and Cold Studio`},
+  {t:'💰 Recordatorio de pago',a:'Recordatorio de pago — [Empresa] / H&C Studio',b:`Hola [Nombre],\n\nTe escribo porque tenemos pendiente el pago de [concepto] por S/[monto], con fecha límite el [fecha].\n\nDatos para transferencia:\nBanco: [banco] | Cuenta: [número] | CCI: [número]\nA nombre de: [razón social]\n\nCuando lo realices, confírmame con el comprobante.\n\n[Tu nombre] · Hot and Cold Studio`},
+  {t:'⭐ Pedir referido',a:'Una consulta rápida — H&C Studio',b:`Hola [Nombre],\n\nHan pasado [tiempo] desde que entregamos el proyecto. ¿Cómo va todo? ¿El espacio está funcionando como esperabas?\n\nTe escribo también porque si conoces alguna empresa, local o marca que esté pensando en mejorar su espacio, nos encantaría que nos recomendaras.\n\nGracias por la confianza.\n[Tu nombre] · Hot and Cold Studio`}
+];
+function verEmail(i){const e=EMAILS[i];document.getElementById('email-disp').innerHTML=`<div class="card"><div class="disp mb6" style="font-size:14px">${e.t}</div><div class="muted mb2" style="font-size:9px;text-transform:uppercase">Asunto</div><div style="background:var(--s2);border-radius:4px;padding:7px;font-size:12px;margin-bottom:10px">${e.a}</div><div class="tmpl">${e.b.replace(/\n/g,'<br>')}</div><button class="btn bc bsm" style="margin-top:9px" onclick="copEmail(${i})">Copiar correo</button></div>`}
+function copEmail(i){const e=EMAILS[i];navigator.clipboard.writeText('Asunto: '+e.a+'\n\n'+e.b).then(()=>alert('¡Copiado!'))}
+
+function renderCron(){
+  const rows=[['Diagnóstico y Brief','Nick + Jhunior','1–2 sem.','Informe de fricción, KPIs definidos, ruta acordada'],['Concepto y Diseño','Jhunior + Daniela','2–3 sem.','Moodboard, layout, renders de presentación'],['Desarrollo Técnico','Nick','1–2 sem.','Planos, especificaciones, expediente técnico'],['Revisión con el cliente','Los 3','3–5 días','Presentación, ajustes, aprobación final'],['Ejecución','Nick + aliados','Variable','Supervisión de obra, entrega por etapas'],['Cierre y entrega','Daniela','3–5 días','Auditoría, fotografía, documentación'],['Seguimiento post-entrega','Jhunior','1–3 meses','Check-ins, referido, documentar caso de éxito']];
+  document.getElementById('cron-tbl').innerHTML=`<table class="tbl"><thead><tr><th>Fase</th><th>Responsable</th><th>Tiempo</th><th>Qué incluye</th></tr></thead><tbody>${rows.map(([f,r,t,q])=>`<tr><td style="font-weight:600">${f}</td><td>${r}</td><td style="color:var(--cold)">${t}</td><td class="muted" style="font-size:11px">${q}</td></tr>`).join('')}</tbody></table>`;
+}
+function copiarCron(){const t='CRONOGRAMA H&C STUDIO\n\n'+[['Diagnóstico','Nick+Jhunior','1-2sem'],['Diseño','Jhunior+Daniela','2-3sem'],['Técnico','Nick','1-2sem'],['Revisión','Los 3','3-5d'],['Ejecución','Nick+aliados','Variable'],['Cierre','Daniela','3-5d'],['Post-entrega','Jhunior','1-3m']].map(r=>r.join(' | ')).join('\n');navigator.clipboard.writeText(t).then(()=>alert('Copiado'))}
+
+function renderPropCk(){
+  const items=[['PORTADA',['Logo y nombre del proyecto','Fecha y versión del documento']],['RESUMEN EN UNA PÁGINA',['¿Qué encontramos en el diagnóstico?','¿Qué problema concreto resuelve el diseño?','¿Qué resultado esperamos y cómo lo mediremos?']],['ALCANCE EXACTO',['Qué incluye (con detalle)','Qué NO incluye (explicitamente)','Modalidad: diseño + ejecución']],['NUESTRA METODOLOGÍA',['Fase COLD: diagnóstico, UX, flujos de movimiento','Fase HOT: renders, narrativa visual, presentación','Fase BLINDAJE: viabilidad, presupuesto, cronograma']],['ENTREGABLES',['Lista exacta con formato de archivo','Cronograma por fase con fechas reales','Hitos de revisión y aprobación']],['INVERSIÓN',['Monto con desglose claro','Forma de pago y cuotas','Política de cambios fuera del alcance']],['CONDICIONES',['El inicio está sujeto al adelanto acordado','Propiedad intelectual','Fecha de vencimiento de la propuesta']],['CIERRE',['Llamado a la acción claro: firma + % de adelanto','Datos bancarios completos']]];
+  document.getElementById('prop-ck').innerHTML=items.map(([s,its])=>`<div style="margin-bottom:12px"><div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--hot);margin-bottom:4px">${s}</div>${its.map(it=>`<div style="display:flex;align-items:center;gap:7px;padding:3px 0"><input type="checkbox" style="accent-color:var(--hot)"><span style="font-size:12px">${it}</span></div>`).join('')}</div>`).join('')
+}
+function renderContrato(){
+  const ps=[['1. Las partes','Nombre legal de H&C Studio (con RUC o DNI del responsable) + datos completos del cliente.'],['2. Objeto del contrato','Descripción exacta del proyecto. La propuesta aprobada va como Anexo A.'],['3. Alcance','Qué incluye el contrato. Exclusiones explícitas — por escrito.'],['4. Honorarios','Monto total. Cuotas: % al inicio, % al hito X, % al cierre. Cuenta bancaria.'],['5. Plazos','Fecha de inicio (después del adelanto). Fases con fechas. Margen por cambios del cliente.'],['6. Cambios adicionales','Cómo se cotizan y se aprueban los cambios fuera del alcance original.'],['7. Propiedad intelectual','H&C retiene los diseños hasta el pago total. Al pagar, se transfiere al cliente.'],['8. Resolución del contrato','Incumplimiento de pago mayor a 15 días. Cambio fundamental del alcance sin acuerdo.'],['9. Confidencialidad','Ambas partes. Vigencia: 2 años después de terminado el contrato.'],['10. Firmas','Ambas partes con DNI o RUC. Sin firma no empieza nada.']];
+  document.getElementById('contr-con').innerHTML=ps.map(([t,d])=>`<div style="display:flex;gap:14px;padding:9px 0;border-bottom:1px solid var(--border)"><div style="min-width:150px;font-weight:600;font-size:12px;color:var(--hot)">${t}</div><div style="font-size:12px;line-height:1.6">${d}</div></div>`).join('')
+}
+
+// ═══════════════════════════════════════
+// POST-VENTA
+// ═══════════════════════════════════════
+function renderPV(){
+  const s=getS();const list=document.getElementById('pv-list');const empty=document.getElementById('pv-empty');
+  if(!(s.pv||[]).length){list.innerHTML='';empty.style.display='block';return}
+  empty.style.display='none';
+  const hoyD=new Date();
+  list.innerHTML=s.pv.map(p=>{
+    const del=new Date(p.fechaEntrega||p.fecha);const dias=Math.floor((hoyD-del)/86400000);
+    const cis=[{k:'ci1',dias:7,label:'1 semana',txt:'¿Cómo va todo?'},{k:'ci2',dias:30,label:'1 mes',txt:'¿Funciona como esperabas?'},{k:'ci3',dias:90,label:'3 meses',txt:'Medir resultados'},{k:'ref',dias:45,label:'Pedir referido',txt:'Momento ideal para pedir referido'}];
+    return`<div class="card mb10">
+      <div class="fb mb10">
+        <div><div style="font-weight:700;font-size:14px">${p.cliente}</div><div class="muted" style="font-size:11px">${p.proyecto} · ${p.seg||''} · Entregado: ${p.fechaEntrega||p.fecha||'-'}</div></div>
+        <div class="fc gap8"><span class="disp hot" style="font-size:20px">${p.monto?'S/'+Number(p.monto).toLocaleString():'-'}</span><button class="btn bd bsm" onclick="delPV(${p.id})">×</button></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px">
+        ${cis.map(ci=>{
+          const vence=dias>=ci.dias;const hecho=p[ci.k]===true||p[ci.k]==='true';
+          return`<div style="background:var(--s2);border:1px solid ${hecho?'var(--ok)':vence?'var(--warn)':'var(--border)'};border-radius:6px;padding:9px;text-align:center">
+            <div style="font-size:9px;color:var(--muted);margin-bottom:2px">${ci.label}</div>
+            <div style="font-size:10px;margin-bottom:5px;color:${hecho?'var(--ok)':vence?'var(--warn)':'var(--muted)'}">${hecho?'✓ Hecho':vence?'⚠ Toca ahora':'En espera'}</div>
+            ${!hecho?`<button class="btn bg bsm" onclick="toggleCI(${p.id},'${ci.k}')" style="font-size:9px;padding:2px 7px;width:100%">${vence?'Marcar hecho':'Adelantar'}</button>`:''}
+          </div>`;
+        }).join('')}
+      </div>
+      ${p.notas?`<div class="muted mt8" style="font-size:11px">${p.notas}</div>`:''}
+    </div>`;
+  }).join('');
+}
+function addPV(){
+  const s=getS();if(!s.pv)s.pv=[];
+  s.pv.push({id:Date.now(),cliente:document.getElementById('pv-cli').value,proyecto:document.getElementById('pv-pro').value,
+    fechaEntrega:document.getElementById('pv-fec').value,monto:document.getElementById('pv-mon').value,
+    seg:document.getElementById('pv-seg').value,notas:document.getElementById('pv-not').value,
+    ci1:false,ci2:false,ci3:false,ref:false});
+  save(s);push('pv');renderPV();cerrarM('m-pv');
+  ['pv-cli','pv-pro','pv-fec','pv-mon','pv-not'].forEach(id=>document.getElementById(id).value='');
+}
+function toggleCI(id,k){const s=getS();const p=s.pv.find(x=>x.id==id);if(p){p[k]=!p[k];save(s);push('pv');renderPV()}}
+function delPV(id){if(!confirm('¿Eliminar?'))return;const s=getS();s.pv=s.pv.filter(x=>x.id!=id);save(s);push('pv');renderPV()}
+
+// ═══════════════════════════════════════
+// RUTA
+// ═══════════════════════════════════════
+function renderRuta(){
+  const s=getS();const ev=evalRuta(s);const cur=s.m.fase||1;
+  document.getElementById('road-grid').innerHTML=RUTA.map(f=>{
+    const e=ev[f.id];const esCur=f.id===cur;const esDone=e.pct>=100;const lock=f.id>cur+1;
+    const cls='rph'+(esDone?' done':esCur?' cur':lock?' lock':'');
+    return`<div class="${cls}">
+      <div class="rph-n">${f.id}</div>
+      <div style="margin-bottom:8px"><span class="badge ${esDone?'bgo':esCur?'bgh':'bgm'}">${esDone?'✓ Completada':esCur?'En curso':'Pendiente'}</span></div>
+      <div class="rph-name" style="color:${f.color}">${f.name}</div>
+      <div class="rph-obj">${f.obj}</div>
+      <div class="rprog mb4"><div class="rprogf" style="width:${e.pct}%;background:${f.color}"></div></div>
+      <div class="rpct" style="color:${f.color}">${e.pct}% <span class="muted" style="font-size:12px;font-family:'DM Sans',sans-serif;font-weight:400">(${e.done}/${e.total})</span></div>
+      ${f.hitos.map((h,hi)=>{
+        const ok=e.hitos[h.id];
+        const esNext=esCur&&!ok&&f.hitos.findIndex(x=>!e.hitos[x.id])===hi;
+        const inp=h.tipo==='manual'&&!ok
+          ?`<input type="checkbox" style="accent-color:var(--hot);width:13px;height:13px;flex-shrink:0;margin-top:2px" onchange="toggleManual('${h.id}',this.checked)">`
+          :`<div class="msdot ${ok?'done':esNext?'next':''}">${ok?'✓':''}</div>`;
+        return`<div class="ms">
+          ${inp}
+          <div style="${ok?'color:var(--muted);text-decoration:line-through':''}${esNext?';font-weight:600':''}">
+            ${h.label} <span style="font-size:9px;color:var(--muted)">${h.tipo==='auto'?'🤖':'✏️'}</span>
+            ${esNext&&h.tip?`<div style="font-size:10px;color:var(--cold);margin-top:1px">→ ${h.tip}</div>`:''}
+          </div>
+        </div>`;
+      }).join('')}
+      ${e.pct>=80&&!esDone?`<div class="alr ao mt10" style="font-size:11px;margin-bottom:0">🎯 ${e.pct}% completado. Considera avanzar a Etapa ${f.id+1} en Ajustes.</div>`:''}
+    </div>`;
+  }).join('');
+
+  const ns=siguientePaso(s,ev);
+  const el=document.getElementById('ns-ruta-content');
+  if(ns&&!ns.todoDone){
+    const h=ns.hito;
+    el.innerHTML=`<div style="margin-bottom:8px"><span class="badge bgh">Etapa ${ns.fase} — ${ns.faseName}</span></div>
+      <div style="font-size:15px;font-weight:600;margin-bottom:8px;line-height:1.5">${h.label}</div>
+      ${h.tip?`<div style="font-size:12px;color:var(--cold);margin-bottom:8px">→ ${h.tip}</div>`:''}
+      <div style="font-size:11px;color:var(--muted)">${h.tipo==='auto'?'🤖 Automático — se activa solo cuando registres los datos correspondientes':'✏️ Manual — márcalo aquí abajo cuando esté listo'}</div>
+      ${h.tipo==='manual'?`<button class="btn bh bsm" style="margin-top:10px" onclick="toggleManual('${h.id}',true);renderRuta()">✓ Marcar como completado</button>`:''}`;
+  }else if(ns?.todoDone&&ns.sigFase){
+    el.innerHTML=`<div class="ok" style="font-size:15px;font-weight:600">✅ Etapa ${ns.fase} completada.</div><div style="font-size:13px;margin-top:6px">Actualiza la etapa en <strong>Ajustes</strong> para avanzar a Etapa ${ns.sigFase}: ${ns.sigFaseName}.</div>`;
+  }else{
+    el.innerHTML=`<div class="ok" style="font-size:16px;font-weight:600">🏆 Hot & Cold Studio completó las 4 etapas estratégicas.</div>`;
+  }
+}
+function toggleManual(id,val){const s=getS();if(!s.roadManual)s.roadManual={};s.roadManual[id]=val;save(s);push('roadManual')}
+
+// ═══════════════════════════════════════
+// ANÁLISIS
+// ═══════════════════════════════════════
+function renderAnalisis(){
+  const s=getS();
+  const pats=detectarPatrones(s);
+  document.getElementById('patrones-list').innerHTML=pats.length?pats.map(tarjetaPatron).join(''):`<div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">Sin datos suficientes</div><div class="empty-desc">Agrega oportunidades, registra reuniones BNI y planifica posts de Instagram. Los patrones aparecen solos.</div></div>`;
+
+  if(s.lastAnalisis){
+    document.getElementById('intel-tiempo').textContent='Último análisis: '+s.lastAnalisis.fecha;
+    renderAnalisisOut(s.lastAnalisis.data);
+  }else{
+    document.getElementById('intel-out').innerHTML=`<div class="empty-state"><div class="empty-icon">🧠</div><div class="empty-title">Sin análisis aún</div><div class="empty-desc">Haz clic en "Analizar ahora" para que Claude lea todos tus datos y te diga qué está pasando y qué hacer.</div></div>`;
+  }
+  resumenSemanal();
+}
+
+async function analizarIA(){
+  const s=getS();const key=s.cfg.apiKey;
+  if(!key){alert('Agrega tu API Key en Ajustes primero.');return}
+  const btn=document.getElementById('intel-btn');const out=document.getElementById('intel-out');
+  btn.innerHTML='<span class="spin">⟳</span> Analizando...';btn.disabled=true;
+  out.innerHTML='<div class="muted" style="font-size:12px;padding:14px">Procesando todos los datos del estudio...</div>';
+
+  const ops=s.ops||[];const cerr=ops.filter(o=>o.etapa==='cerrado');const perd=ops.filter(o=>o.etapa==='perdido');
+  const conRes=ops.filter(o=>['cerrado','perdido'].includes(o.etapa));
+  const conv=conRes.length>0?Math.round(cerr.length/conRes.length*100):0;
+  const ev=evalRuta(s);const curEv=ev[s.m.fase||1];
+
+  const ctx=`HOT AND COLD STUDIO — Datos al ${new Date().toLocaleDateString('es-PE')}
+Etapa estratégica actual: ${s.m.fase} de 4 — ${FASES[s.m.fase]}
+Progreso etapa actual: ${curEv.pct}% (${curEv.done}/${curEv.total} logros)
+
+OPORTUNIDADES COMERCIALES:
+- Total registradas: ${ops.length}
+- Activas: ${ops.filter(o=>['lead','reunion','propuesta'].includes(o.etapa)).length}
+- Cerradas: ${cerr.length} — S/${cerr.reduce((t,o)=>t+(Number(o.monto)||0),0).toLocaleString()} total
+- Perdidas: ${perd.length}
+- Tasa de conversión: ${conv}%
+- Motivos de pérdida: ${Object.entries(perd.reduce((m,o)=>{if(o.motivoPerdida)m[o.motivoPerdida]=(m[o.motivoPerdida]||0)+1;return m},{})).map(([k,v])=>k+'('+v+'x)').join(', ')||'ninguno registrado'}
+- Canales de captación: ${Object.entries(ops.reduce((m,o)=>{m[o.canal]=(m[o.canal]||0)+1;return m},{})).map(([k,v])=>k+':'+v).join(', ')}
+
+BNI:
+- Reuniones 1:1 totales: ${(s.bni.r||[]).length}
+- Esta semana: ${bniSemana(s).length}/2
+- Cuota mensual: S/${s.m.bniCuota||'no registrada'}
+- Ingresos cerrados desde BNI: S/${cerr.filter(o=>o.canal==='BNI').reduce((t,o)=>t+(Number(o.monto)||0),0).toLocaleString()}
+
+INSTAGRAM:
+- Seguidores: ${s.m.ig} (meta: 1,000)
+- Posts publicados: ${s.m.igPosts}
+- Posts planificados en el sistema: ${(s.social.posts||[]).length}
+- Posts marcados como publicados: ${(s.social.posts||[]).filter(p=>p.status==='publicado').length}
+
+POST-ENTREGA:
+- Proyectos entregados registrados: ${(s.pv||[]).length}`;
+
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1400,messages:[{role:'user',content:
+        `Eres el asesor estratégico de Hot and Cold Studio, estudio de diseño de espacios comerciales en Lima, Perú. 3 socios con carga docente en UPC ~15h/semana. Posicionamiento: "Ayudamos a marcas a convertir su espacio en una herramienta de posicionamiento, experiencia y venta." Canal BNI: solo retail. Principal problema detectado: 0% conversión.
+
+${ctx}
+
+Responde SOLO con JSON, sin markdown:
+{"situacion":["s1","s2","s3"],"patrones":["p1","p2","p3"],"alertas":["a1","a2"],"recomendaciones":["r1 — responsable — plazo","r2","r3"],"proximos_pasos":["paso1 — quién — cuándo","paso2","paso3"],"oportunidad_oculta":"texto"}`
+      }]})});
+    const d=await r.json();
+    let parsed;
+    try{parsed=JSON.parse((d.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim())}
+    catch{parsed={situacion:['No se pudo parsear la respuesta.'],raw:d.content?.[0]?.text}}
+    const s2=getS();s2.lastAnalisis={fecha:new Date().toLocaleString('es-PE'),data:parsed};save(s2);
+    document.getElementById('intel-tiempo').textContent='Último análisis: '+s2.lastAnalisis.fecha;
+    renderAnalisisOut(parsed);
+  }catch(e){out.innerHTML=`<div class="alr ae">Error: ${e.message}</div>`}
+  btn.innerHTML='✦ Analizar ahora';btn.disabled=false;
+}
+function renderAnalisisOut(d){
+  const out=document.getElementById('intel-out');
+  if(!d||d.situacion?.[0]==='No se pudo parsear la respuesta.'){out.innerHTML=`<div class="alr ae">No se pudo procesar la respuesta. Inténtalo de nuevo.</div>`;return}
+  const secs=[
+    {k:'situacion',t:'SITUACIÓN ACTUAL',c:'var(--cold)',i:'📊'},
+    {k:'patrones',t:'PATRONES DETECTADOS',c:'var(--warn)',i:'🔍'},
+    {k:'alertas',t:'ALERTAS CRÍTICAS',c:'var(--err)',i:'🚨'},
+    {k:'recomendaciones',t:'RECOMENDACIONES',c:'var(--ok)',i:'✅'},
+    {k:'proximos_pasos',t:'PRÓXIMOS 3 PASOS',c:'var(--hot)',i:'🔥'},
+  ];
+  out.innerHTML=`<div class="ai-box">
+    ${secs.map(s=>{const its=d[s.k];if(!its?.length)return'';
+      return`<div class="ai-sec"><div class="ai-sec-t" style="color:${s.c}">${s.i} ${s.t}</div>
+        ${its.map(it=>`<div class="ai-item"><span style="color:${s.c};font-weight:700;flex-shrink:0">→</span><span>${it}</span></div>`).join('')}
+      </div>`;}).join('')}
+    ${d.oportunidad_oculta?`<div class="alr ap" style="margin-top:12px;margin-bottom:0">💡 <div><strong>OPORTUNIDAD QUE NO ESTÁN VIENDO:</strong><br>${d.oportunidad_oculta}</div></div>`:''}
+  </div>`;
+}
+function resumenSemanal(){
+  const s=getS();const el=document.getElementById('resumen-semanal');if(!el)return;
+  const lun=getLunes(0).toISOString().split('T')[0];
+  const bniW=bniSemana(s);
+  const postsW=(s.social.posts||[]).filter(p=>p.semana===lun);
+  const pubW=postsW.filter(p=>p.status==='publicado');
+  const act=s.ops.filter(o=>['lead','reunion','propuesta'].includes(o.etapa));
+  const cerr=s.ops.filter(o=>o.etapa==='cerrado');
+  const ev=evalRuta(s);const curEv=ev[s.m.fase||1];
+  const pvPend=(s.pv||[]).filter(p=>{const d=Math.floor((new Date()-new Date(p.fechaEntrega||p.fecha))/86400000);return(!p.ci1&&d>=7)||(!p.ci2&&d>=30)||(!p.ci3&&d>=90)||(!p.ref&&d>=45);});
+  el.innerHTML=`<div class="g3" style="gap:10px">
+    <div class="card-s"><div class="muted mb2" style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--cold)">BNI esta semana</div><div class="disp ${bniW.length>=2?'ok':'hot'}" style="font-size:30px">${bniW.length}/2</div><div class="muted" style="font-size:10px">reuniones 1:1</div></div>
+    <div class="card-s"><div class="muted mb2" style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--cold)">Instagram esta semana</div><div class="disp ${pubW.length>=2?'ok':'warn'}" style="font-size:30px">${pubW.length}/3</div><div class="muted" style="font-size:10px">posts publicados</div></div>
+    <div class="card-s"><div class="muted mb2" style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--cold)">Oportunidades activas</div><div class="disp hot" style="font-size:30px">${act.length}</div><div class="muted" style="font-size:10px">en proceso</div></div>
+    <div class="card-s"><div class="muted mb2" style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--cold)">Proyectos cerrados</div><div class="disp ok" style="font-size:30px">${cerr.length}</div><div class="muted" style="font-size:10px">S/${cerr.reduce((t,o)=>t+(Number(o.monto)||0),0).toLocaleString()} total</div></div>
+    <div class="card-s"><div class="muted mb2" style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--cold)">Etapa ${s.m.fase||1}</div><div class="disp hot" style="font-size:30px">${curEv.pct}%</div><div class="muted" style="font-size:10px">${curEv.done}/${curEv.total} logros</div></div>
+    <div class="card-s"><div class="muted mb2" style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:${pvPend.length>0?'var(--err)':'var(--cold)'}">Post-entrega</div><div class="disp ${pvPend.length>0?'warn':'ok'}" style="font-size:30px">${pvPend.length}</div><div class="muted" style="font-size:10px">seguimientos pendientes</div></div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════
+function cargarConfig(){
+  const s=getS();const m=s.m;
+  document.getElementById('cfg-props').value=m.props;document.getElementById('cfg-cerr').value=m.cerr;
+  document.getElementById('cfg-ticket').value=m.ticket;document.getElementById('cfg-ig').value=m.ig;
+  document.getElementById('cfg-igp').value=m.igPosts;document.getElementById('cfg-bni').value=m.bniCuota||'';
+  document.getElementById('cfg-fase').value=m.fase||1;
+  document.getElementById('cfg-api').value=s.cfg.apiKey||'';
+  document.getElementById('cfg-fb').value=s.cfg.fbUrl||'';
+  const st=document.getElementById('fb-status');
+  if(s.cfg.fbUrl){st.textContent='Configurado';st.className='badge bgo'}else{st.textContent='Sin configurar';st.className='badge bgm'}
+}
+function guardarConfig(){
+  const s=getS();
+  s.m.props=parseInt(document.getElementById('cfg-props').value)||2;
+  s.m.cerr=parseInt(document.getElementById('cfg-cerr').value)||0;
+  s.m.ticket=parseInt(document.getElementById('cfg-ticket').value)||5000;
+  s.m.ig=parseInt(document.getElementById('cfg-ig').value)||972;
+  s.m.igPosts=parseInt(document.getElementById('cfg-igp').value)||115;
+  s.m.bniCuota=parseInt(document.getElementById('cfg-bni').value)||0;
+  s.m.fase=parseInt(document.getElementById('cfg-fase').value)||1;
+  s.cfg.apiKey=document.getElementById('cfg-api').value.trim();
+  s.cfg.fbUrl=document.getElementById('cfg-fb').value.trim().replace(/\/+$/,'');
+  save(s);
+  document.getElementById('hdr-fase').textContent='Fase '+s.m.fase+' — '+FASES[s.m.fase];
+  if(s.cfg.fbUrl){setSS('ok');document.getElementById('fb-status').textContent='Configurado';document.getElementById('fb-status').className='badge bgo';push('metrics');}
+}
+function exportar(){const s=getS();const b=new Blob([JSON.stringify(s,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='hc_backup_'+hoy()+'.json';a.click()}
+function importar(input){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{try{save(JSON.parse(e.target.result));alert('Importado. Recarga la página.');location.reload()}catch(err){alert('Error: '+err.message)}};r.readAsText(f)}
+function resetTodo(){if(!confirm('⚠️ ¿Borrar TODO? Esto no se puede deshacer.'))return;localStorage.removeItem(KEY);location.reload()}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+function init(){
+  document.getElementById('hdr-fecha').textContent=new Date().toLocaleDateString('es-PE',{weekday:'short',day:'numeric',month:'short'});
+  document.getElementById('bn-fec').value=hoy();
+  document.getElementById('po-sem').value=getLunes(0).toISOString().split('T')[0];
+  const s=getS();
+  document.getElementById('hdr-fase').textContent='Fase '+s.m.fase+' — '+(FASES[s.m.fase]||'');
+  if(s.cfg.fbUrl){setSS('syn');sync().catch(()=>setSS('err'))}else setSS('off');
+  renderInicio();renderTools();
+  setInterval(()=>{if(getS().cfg.fbUrl)sync()},600000);
+}
+
+function evalRuta(s){
+  const r={};
+  RUTA.forEach(f=>{
+    r[f.id]={done:0,total:f.hitos.length,hitos:{}};
+    f.hitos.forEach(h=>{
+      let ok=false;
+      if(h.tipo==='auto')ok=!!h.auto(s);
+      else ok=!!(s.roadManual&&s.roadManual[h.id]);
+      r[f.id].hitos[h.id]=ok;
+      if(ok)r[f.id].done++;
+    });
+    r[f.id].pct=Math.round(r[f.id].done/r[f.id].total*100);
+  });
+  return r;
+}
+
+function siguientePaso(s,ev){
+  const f=s.m.fase||1;
+  const fase=RUTA[f-1];if(!fase)return null;
+  for(const h of fase.hitos){
+    if(!ev[f].hitos[h.id])return{fase:f,faseName:fase.name,hito:h};
+  }
+  return{fase:f,todoDone:true,sigFase:f<4?f+1:null,sigFaseName:f<4?RUTA[f].name:null};
+}
+
+
+// ═══════════════════════════════════════
+// CONTRATOS
+// ═══════════════════════════════════════
 let tipoActual='residencial';
 function tipoContrato(tipo,btn){
   tipoActual=tipo;
   document.querySelectorAll('.ttab').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
 }
-
-// CONTRATO
+function cv(id){return document.getElementById(id)?.value||''}
 function generarContrato(){
-  const hc=v('c-hc'),hcRuc=v('c-hcruc'),hcRep=v('c-hcrep');
-  const cli=v('c-cli'),cliRuc=v('c-cliruc'),cliRep=v('c-clirep'),cliDir=v('c-clidir');
-  const proy=v('c-proy'),desc=v('c-desc'),monto=v('c-monto'),adelanto=v('c-adelanto');
-  const inicio=v('c-inicio'),plazo=v('c-plazo'),lugar=v('c-lugar');
+  const hc=cv('c-hc'),hcRuc=cv('c-hcruc'),hcRep=cv('c-hcrep');
+  const cli=cv('c-cli'),cliRuc=cv('c-cliruc'),cliRep=cv('c-clirep'),cliDir=cv('c-clidir');
+  const proy=cv('c-proy'),desc=cv('c-desc'),monto=cv('c-monto'),adelanto=cv('c-adelanto');
+  const inicio=cv('c-inicio'),plazo=cv('c-plazo'),lugar=cv('c-lugar');
   const tipos={residencial:'DISEÑO DE INTERIORES RESIDENCIAL',corporativo:'DISEÑO DE INTERIORES CORPORATIVO',retail:'DISEÑO DE LOCAL COMERCIAL / RETAIL',restaurante:'DISEÑO DE CAFETERÍA / RESTAURANTE',stand:'DISEÑO DE STAND / EVENTO',referido:'SERVICIO DE DISEÑO POR REFERIDO'};
-  const clausulasExtra={
-    retail:`<div class="doc-sec">CLÁUSULA ESPECIAL — RETAIL</div><p>El servicio incluye el diseño estratégico del flujo de clientes, zonas de alta permanencia y escaparate. Las decisiones de diseño están basadas en análisis de comportamiento de compra y no solo criterios estéticos.</p>`,
-    restaurante:`<div class="doc-sec">CLÁUSULA ESPECIAL — GASTRONOMÍA</div><p>El diseño considera normativas sanitarias básicas, flujo de servicio y experiencia del comensal. El cliente es responsable de validar el cumplimiento de normativas municipales específicas de su distrito.</p>`,
-    stand:`<div class="doc-sec">CLÁUSULA ESPECIAL — STAND / EVENTO</div><p>El servicio incluye diseño y supervisión de montaje. El desmontaje no está incluido salvo acuerdo expreso. El cliente asume los costos de permisos del evento.</p>`,
-    referido:`<div class="doc-sec">CLÁUSULA DE REFERIDO</div><p>El presente contrato se origina por referencia de un cliente anterior de Hot and Cold Studio. Las condiciones comerciales acordadas son confidenciales entre las partes.</p>`
-  };
-  document.getElementById('contrato-preview').innerHTML=`
-  <div class="doc-preview">
+  const extras={retail:`<div class="doc-sec">CLÁUSULA ESPECIAL — RETAIL</div><p>El servicio incluye diseño estratégico del flujo de clientes, zonas de alta permanencia y escaparate. Las decisiones están basadas en análisis de comportamiento de compra.</p>`,restaurante:`<div class="doc-sec">CLÁUSULA ESPECIAL — GASTRONOMÍA</div><p>El diseño considera flujo de servicio y experiencia del comensal. El cliente valida el cumplimiento de normativas municipales de su distrito.</p>`,stand:`<div class="doc-sec">CLÁUSULA ESPECIAL — STAND</div><p>El servicio incluye diseño y supervisión de montaje. El desmontaje no está incluido salvo acuerdo expreso. Los costos de permisos del evento son del cliente.</p>`,referido:`<div class="doc-sec">CLÁUSULA DE REFERIDO</div><p>Este contrato se origina por referencia de un cliente anterior de H&C Studio. Las condiciones comerciales son confidenciales entre las partes.</p>`};
+  document.getElementById('contrato-preview').innerHTML=`<div class="doc-preview">
     <div class="doc-logo"><span class="h">HOT</span>&<span class="c">COLD</span> STUDIO</div>
-    <div style="font-size:11px;color:#666">Diseño estratégico de espacios · Lima, Perú</div>
+    <div style="font-size:11px;color:#666;margin-bottom:4px">Diseño estratégico de espacios · Lima, Perú</div>
     <div class="doc-title">CONTRATO DE SERVICIOS DE ${tipos[tipoActual]||'DISEÑO DE INTERIORES'}</div>
-    <div class="doc-nota">Este contrato es de carácter privado entre las partes. Ninguna cláusula puede modificarse verbalmente — solo por adenda escrita firmada por ambas partes.</div>
-
-    <div class="doc-sec">1. PARTES CONTRATANTES</div>
-    <p><strong>EL PRESTADOR:</strong> ${hc||'Hot and Cold Studio S.A.C.'}, con RUC N° ${hcRuc||'___________'}, representado por ${hcRep||'___________'}, en adelante "H&C Studio".</p>
-    <br>
-    <p><strong>EL CLIENTE:</strong> ${cli||'___________'}, identificado con ${cliRuc||'RUC/DNI: ___________'}, representado por ${cliRep||'___________'}, con domicilio en ${cliDir||'___________'}, en adelante "El Cliente".</p>
-
-    <div class="doc-sec">2. OBJETO DEL CONTRATO</div>
-    <p>H&C Studio se compromete a prestar servicios de diseño de interiores para el proyecto denominado <strong>"${proy||'___________'}"</strong>.</p>
-    <br><p>${desc||'Descripción del proyecto...'}</p>
-
-    <div class="doc-sec">3. ALCANCE DEL SERVICIO</div>
-    <p>El servicio comprende las siguientes fases metodológicas:</p>
-    <ul style="margin:8px 0 8px 20px;font-size:12px;line-height:2">
-      <li><strong>Fase COLD (Diagnóstico):</strong> Análisis de fricción, mapeo UX del espacio, definición de KPIs.</li>
-      <li><strong>Fase HOT (Diseño):</strong> Concepto visual, renders, narrativa del espacio.</li>
-      <li><strong>Fase BLINDAJE (Ejecución):</strong> Planos técnicos, presupuesto, supervisión de obra.</li>
-    </ul>
+    <div class="doc-nota">Contrato privado entre las partes. Ninguna cláusula se modifica verbalmente — solo por adenda escrita y firmada.</div>
+    <div class="doc-sec">1. PARTES</div>
+    <p><strong>PRESTADOR:</strong> ${hc||'Hot and Cold Studio S.A.C.'}, RUC ${hcRuc||'___________'}, representado por ${hcRep||'___________'}.</p><br>
+    <p><strong>CLIENTE:</strong> ${cli||'___________'}, ${cliRuc||'RUC/DNI: ___________'}, representado por ${cliRep||'___________'}, domicilio: ${cliDir||'___________'}.</p>
+    <div class="doc-sec">2. OBJETO</div>
+    <p>H&C Studio presta servicios de diseño de interiores para el proyecto <strong>"${proy||'___________'}"</strong>.<br>${desc||''}</p>
+    <div class="doc-sec">3. ALCANCE</div>
+    <ul style="margin:6px 0 6px 18px;font-size:12px;line-height:2"><li><strong>Fase COLD:</strong> Diagnóstico de fricción, análisis UX, definición de KPIs.</li><li><strong>Fase HOT:</strong> Concepto visual, renders, narrativa del espacio.</li><li><strong>Fase BLINDAJE:</strong> Planos técnicos, presupuesto, supervisión.</li></ul>
     <p style="color:#FF5A1F;font-size:11px">⚠️ H&C Studio no ejecuta diseños de terceros ni entrega planos para que otros ejecuten, salvo acuerdo expreso con monto superior a S/5,000 netos.</p>
-
-    <div class="doc-sec">4. HONORARIOS Y FORMA DE PAGO</div>
-    <p>El monto total acordado es de <strong>S/ ${monto||'_________'} (${monto?'Soles':' ___________ Soles'})</strong>, pagaderos de la siguiente manera:</p>
-    <ul style="margin:8px 0 8px 20px;font-size:12px;line-height:2">
-      <li><strong>Adelanto al inicio:</strong> ${adelanto||'___________'} — condición para el inicio de trabajos.</li>
-      <li><strong>Segundo pago:</strong> Al aprobar los renders y diseño final.</li>
-      <li><strong>Pago final:</strong> Contra entrega del proyecto terminado.</li>
-    </ul>
-    <p>Los pagos se realizan mediante transferencia bancaria a la cuenta indicada por H&C Studio. El comprobante de pago debe enviarse dentro de las 24 horas de realizada la transferencia.</p>
-
-    <div class="doc-sec">5. PLAZO DE EJECUCIÓN</div>
-    <p>El servicio inicia el <strong>${inicio||'___________'}</strong>, previa recepción del adelanto, y tiene una duración estimada de <strong>${plazo||'___________'}</strong>. Los plazos pueden ajustarse por demoras atribuibles al cliente (aprobaciones tardías, cambios de alcance, acceso restringido al espacio).</p>
-
-    <div class="doc-sec">6. CAMBIOS Y ADICIONALES</div>
-    <p>Se incluyen hasta <strong>2 rondas de revisión</strong> por fase. Cambios adicionales o modificaciones fuera del alcance original serán cotizados por separado y requieren aprobación escrita del Cliente antes de ejecutarse.</p>
-
+    <div class="doc-sec">4. HONORARIOS Y PAGO</div>
+    <p>Monto total: <strong>S/ ${monto||'_________'}</strong>. Forma de pago:</p>
+    <ul style="margin:6px 0 6px 18px;font-size:12px;line-height:2"><li><strong>Adelanto al inicio:</strong> ${adelanto||'___________'} — requisito para comenzar.</li><li><strong>Segundo pago:</strong> Al aprobar renders y diseño final.</li><li><strong>Pago final:</strong> Contra entrega del proyecto.</li></ul>
+    <div class="doc-sec">5. PLAZO</div>
+    <p>Inicio: <strong>${inicio||'___________'}</strong> (sujeto a recepción del adelanto). Duración estimada: <strong>${plazo||'___________'}</strong>. Los plazos se ajustan por demoras atribuibles al cliente.</p>
+    <div class="doc-sec">6. CAMBIOS ADICIONALES</div>
+    <p>Se incluyen 2 rondas de revisión por fase. Cambios fuera del alcance se cotizan por separado y requieren aprobación escrita.</p>
     <div class="doc-sec">7. PROPIEDAD INTELECTUAL</div>
-    <p>Todos los diseños, renders y documentos generados son propiedad de H&C Studio hasta el pago total del contrato. Al completar el pago, la propiedad de los entregables se transfiere al Cliente. H&C Studio se reserva el derecho de usar el proyecto en su portafolio y materiales de comunicación.</p>
-
-    ${clausulasExtra[tipoActual]||''}
-
+    <p>Los diseños son propiedad de H&C Studio hasta el pago total. Al completar el pago se transfieren al cliente. H&C se reserva el derecho de usar el proyecto en su portafolio.</p>
+    ${extras[tipoActual]||''}
     <div class="doc-sec">8. CONFIDENCIALIDAD</div>
-    <p>Ambas partes se comprometen a mantener confidencialidad sobre la información comercial y estratégica compartida durante la ejecución del contrato, por un período de 2 años posteriores a la finalización del mismo.</p>
-
-    <div class="doc-sec">9. RESOLUCIÓN DEL CONTRATO</div>
-    <p>El presente contrato puede resolverse por: (a) Incumplimiento de pago superior a 15 días calendario; (b) Modificación sustancial del alcance sin acuerdo entre partes; (c) Acuerdo mutuo por escrito. En caso de resolución por parte del Cliente, el adelanto pagado no es reembolsable si los trabajos ya iniciaron.</p>
-
-    <div class="doc-sec">10. DECLARACIÓN Y FIRMAS</div>
-    <p>Las partes declaran haber leído y comprendido el presente contrato, aceptando sus términos en señal de conformidad.</p>
-    <br>
+    <p>Ambas partes mantienen confidencialidad de la información compartida durante y 2 años después del contrato.</p>
+    <div class="doc-sec">9. RESOLUCIÓN</div>
+    <p>El contrato puede resolverse por: (a) Incumplimiento de pago >15 días; (b) Cambio sustancial de alcance sin acuerdo; (c) Acuerdo mutuo por escrito. El adelanto no es reembolsable si los trabajos ya iniciaron.</p>
+    <div class="doc-sec">10. FIRMAS</div>
     <p style="color:#666;font-size:11px">${lugar||'Lima, ___ de __________ de 20__'}</p>
-    <br>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:20px">
-      <div>
-        <div class="doc-firma">___________________________</div>
-        <div style="font-size:11px"><strong>H&C STUDIO</strong><br>${hcRep||'Representante'}<br>RUC: ${hcRuc||'___________'}</div>
-      </div>
-      <div>
-        <div class="doc-firma">___________________________</div>
-        <div style="font-size:11px"><strong>EL CLIENTE</strong><br>${cliRep||cli||'Nombre completo'}<br>${cliRuc||'RUC/DNI: ___________'}</div>
-      </div>
+      <div><div class="doc-firma">___________________________</div><div style="font-size:11px"><strong>H&C STUDIO</strong><br>${hcRep||'Representante'}<br>RUC: ${hcRuc||'___________'}</div></div>
+      <div><div class="doc-firma">___________________________</div><div style="font-size:11px"><strong>EL CLIENTE</strong><br>${cliRep||cli||'Nombre'}<br>${cliRuc||'RUC/DNI'}</div></div>
     </div>
   </div>`;
 }
 
-// COTIZACIÓN — items
-let items=[{desc:'',qty:1,precio:0}];
-function renderItems(){
-  document.getElementById('q-items').innerHTML=items.map((it,i)=>`
-    <div style="display:grid;grid-template-columns:1fr 60px 90px 30px;gap:6px;margin-bottom:6px;align-items:center">
-      <input class="fi" placeholder="Descripción del servicio" value="${it.desc}" onchange="items[${i}].desc=this.value;calcTotal()" style="font-size:12px">
-      <input class="fi" type="number" placeholder="Cant." value="${it.qty}" onchange="items[${i}].qty=Number(this.value);calcTotal()" style="font-size:12px;text-align:center">
-      <input class="fi" type="number" placeholder="S/ Precio" value="${it.precio||''}" onchange="items[${i}].precio=Number(this.value);calcTotal()" style="font-size:12px">
-      <button onclick="items.splice(${i},1);renderItems();calcTotal()" style="background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.2);color:var(--err);border-radius:4px;cursor:pointer;padding:4px 8px;font-size:12px">×</button>
+// ═══════════════════════════════════════
+// COTIZACIONES
+// ═══════════════════════════════════════
+let qItems=[{desc:'Diagnóstico estratégico del espacio',qty:1,precio:0},{desc:'Diseño de interiores (concepto + renders)',qty:1,precio:0},{desc:'Supervisión de ejecución',qty:1,precio:0}];
+function renderQItems(){
+  const el=document.getElementById('q-items');if(!el)return;
+  el.innerHTML=qItems.map((it,i)=>`
+    <div style="display:grid;grid-template-columns:1fr 55px 90px 28px;gap:5px;margin-bottom:5px;align-items:center">
+      <input class="fi" placeholder="Descripción del servicio" value="${it.desc}" onchange="qItems[${i}].desc=this.value" style="font-size:12px">
+      <input class="fi" type="number" value="${it.qty}" min="1" onchange="qItems[${i}].qty=Number(this.value);calcQTotal()" style="font-size:12px;text-align:center">
+      <input class="fi" type="number" placeholder="S/ precio" value="${it.precio||''}" onchange="qItems[${i}].precio=Number(this.value);calcQTotal()" style="font-size:12px">
+      <button onclick="qItems.splice(${i},1);renderQItems()" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:var(--err);border-radius:4px;cursor:pointer;padding:3px 7px;font-size:12px">×</button>
     </div>`).join('');
-  calcTotal();
 }
-function addItem(){items.push({desc:'',qty:1,precio:0});renderItems()}
-function calcTotal(){
-  const sub=items.reduce((t,it)=>t+(it.qty*it.precio),0);
-  const desc=Number(document.getElementById('q-desc2')?.value)||0;
+function addItem(){qItems.push({desc:'',qty:1,precio:0});renderQItems()}
+function calcQTotal(){
+  const sub=qItems.reduce((t,it)=>t+(it.qty*it.precio),0);
+  const desc=Number(document.getElementById('q-descuento')?.value)||0;
   const igv=document.getElementById('q-igv')?.value==='si';
-  const base=sub-desc;
-  const total=igv?base*1.18:base;
-  document.getElementById('q-total-preview')&&(document.getElementById('q-total-preview').textContent='S/'+total.toFixed(2));
+  const base=sub-desc;return igv?base*1.18:base;
 }
-renderItems();
-
 function generarCotizacion(){
-  const num=v('q-num'),cli=v('q-cli'),ruc=v('q-ruc'),con=v('q-con');
-  const tipo=document.getElementById('q-tipo').value,desc=v('q-desc');
-  const descto=Number(v('q-desc2'))||0,igv=document.getElementById('q-igv').value==='si';
-  const valid=v('q-valid'),pago=v('q-pago'),fecha=v('q-fecha');
-  const sub=items.reduce((t,it)=>t+(it.qty*it.precio),0);
+  const num=cv('q-num'),cli=cv('q-cli'),ruc=cv('q-ruc'),con=cv('q-con');
+  const tipo=document.getElementById('q-tipo')?.value||'',desc=cv('q-desc');
+  const descto=Number(cv('q-descuento'))||0;
+  const igv=document.getElementById('q-igv')?.value==='si';
+  const valid=cv('q-valid'),pago=cv('q-pago'),fecha=cv('q-fecha');
+  const sub=qItems.reduce((t,it)=>t+(it.qty*it.precio),0);
   const base=sub-descto;const total=igv?base*1.18:base;
-  document.getElementById('cotizacion-preview').innerHTML=`
-  <div class="doc-preview">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+  document.getElementById('cotizacion-preview').innerHTML=`<div class="doc-preview">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
       <div><div class="doc-logo"><span class="h">HOT</span>&<span class="c">COLD</span> STUDIO</div><div style="font-size:11px;color:#666">Diseño estratégico de espacios · Lima, Perú</div></div>
-      <div style="text-align:right"><div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#FF5A1F">COTIZACIÓN</div><div style="font-size:11px;color:#666">N° ${num||'COT-2025-001'}</div><div style="font-size:11px;color:#666">Fecha: ${fecha||new Date().toLocaleDateString('es-PE')}</div></div>
+      <div style="text-align:right"><div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#FF5A1F">COTIZACIÓN</div><div style="font-size:11px;color:#666">N° ${num||'COT-2025-001'}</div><div style="font-size:11px;color:#666">${fecha||new Date().toLocaleDateString('es-PE')}</div></div>
     </div>
-    <div class="doc-sec">DATOS DEL CLIENTE</div>
-    <p><strong>${cli||'Nombre del cliente'}</strong> · ${ruc||'RUC/DNI: ___'} · ${con||'Contacto'}</p>
+    <div class="doc-sec">CLIENTE</div>
+    <p><strong>${cli||'___________'}</strong> · ${ruc||'RUC/DNI: ___'} · ${con||'contacto'}</p>
     <div class="doc-sec">PROYECTO</div>
-    <p><strong>${tipo}</strong>${desc?'<br>'+desc:''}</p>
+    <p><strong>${tipo}</strong>${desc?'<br><span style="color:#666">'+desc+'</span>':''}</p>
     <div class="doc-sec">DETALLE DE SERVICIOS</div>
-    <table class="doc-table">
-      <thead><tr><th>Descripción</th><th style="text-align:center">Cant.</th><th style="text-align:right">Precio unit.</th><th style="text-align:right">Total</th></tr></thead>
-      <tbody>
-        ${items.filter(it=>it.desc||it.precio).map(it=>`<tr><td>${it.desc||'Servicio'}</td><td style="text-align:center">${it.qty}</td><td style="text-align:right">S/${it.precio.toFixed(2)}</td><td style="text-align:right">S/${(it.qty*it.precio).toFixed(2)}</td></tr>`).join('')}
-        ${descto>0?`<tr><td colspan="3" style="text-align:right;color:#666">Descuento</td><td style="text-align:right;color:#EF4444">-S/${descto.toFixed(2)}</td></tr>`:''}
-        ${igv?`<tr><td colspan="3" style="text-align:right;color:#666">Subtotal sin IGV</td><td style="text-align:right">S/${base.toFixed(2)}</td></tr><tr><td colspan="3" style="text-align:right;color:#666">IGV (18%)</td><td style="text-align:right">S/${(base*0.18).toFixed(2)}</td></tr>`:''}
-      </tbody>
-    </table>
-    <div class="doc-total">TOTAL A PAGAR: S/ ${total.toFixed(2)}${igv?' (incluye IGV)':' (sin IGV)'}</div>
+    <table class="doc-table"><thead><tr><th>Descripción</th><th style="text-align:center;width:50px">Cant.</th><th style="text-align:right;width:90px">Precio</th><th style="text-align:right;width:90px">Total</th></tr></thead>
+    <tbody>${qItems.filter(it=>it.desc||it.precio).map(it=>`<tr><td>${it.desc||'Servicio'}</td><td style="text-align:center">${it.qty}</td><td style="text-align:right">S/${Number(it.precio).toFixed(2)}</td><td style="text-align:right">S/${(it.qty*it.precio).toFixed(2)}</td></tr>`).join('')}
+    ${descto>0?`<tr><td colspan="3" style="text-align:right;color:#666">Descuento</td><td style="text-align:right;color:#EF4444">-S/${descto.toFixed(2)}</td></tr>`:''}
+    ${igv?`<tr><td colspan="3" style="text-align:right;color:#666">Subtotal</td><td style="text-align:right">S/${base.toFixed(2)}</td></tr><tr><td colspan="3" style="text-align:right;color:#666">IGV 18%</td><td style="text-align:right">S/${(base*0.18).toFixed(2)}</td></tr>`:''}
+    </tbody></table>
+    <div class="doc-total">TOTAL: S/ ${total.toFixed(2)} ${igv?'(incluye IGV)':'(sin IGV)'}</div>
     <div class="doc-sec">CONDICIONES</div>
     <ul style="margin:6px 0 6px 18px;font-size:12px;line-height:2">
       <li><strong>Validez:</strong> ${valid||'15 días calendario'} desde la fecha de emisión.</li>
-      <li><strong>Forma de pago:</strong> ${pago||'50% adelanto para iniciar, 50% contra entrega.'}</li>
-      <li>El inicio del proyecto está sujeto a la recepción del adelanto acordado.</li>
-      <li>Esta cotización no incluye costos de materiales de terceros salvo indicación expresa.</li>
+      <li><strong>Pago:</strong> ${pago||'50% adelanto para iniciar, 50% contra entrega.'}</li>
+      <li>El inicio está sujeto a la recepción del adelanto.</li>
     </ul>
-    <div class="doc-nota">Para aprobar esta cotización, responder este documento con la confirmación escrita o firmar y devolver una copia. El silencio no se interpreta como aceptación.</div>
-    <br>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:16px">
+    <div class="doc-nota">Para aprobar esta cotización, confirmar por escrito o firmar y devolver una copia.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:20px">
       <div><div class="doc-firma">___________________________</div><div style="font-size:11px"><strong>H&C STUDIO</strong><br>hotandcoldstudio.myportfolio.com</div></div>
       <div><div class="doc-firma">___________________________</div><div style="font-size:11px"><strong>CONFORMIDAD DEL CLIENTE</strong><br>${cli||'Nombre'} · ${ruc||'RUC/DNI'}</div></div>
     </div>
   </div>`;
 }
+// init q items on load
+document.addEventListener('DOMContentLoaded',()=>renderQItems());
 
-function v(id){return document.getElementById(id)?.value||''}
-function copiarDoc(){
-  const p=document.querySelector('.doc-preview');
-  if(p){navigator.clipboard.writeText(p.innerText).then(()=>alert('Copiado al portapapeles'))}
-  else alert('Genera primero el documento')
-}
 </script>
 </body>
 </html>
